@@ -1,0 +1,27 @@
+Game:
+
+player> connect
+player> ask for name
+player> ask for age
+
+game> wait for 2 players
+game> shuffle building cards
+
+player> take 4 building cards
+player> take 2 pieces of gold
+
+game> give oldest player the King marker
+game> shuffle the character cards
+game> put 1 open card on the table, put 1 closed card on the table
+game> if the open card is the King, select another card
+
+(king) player> choose one card of the remaining character cards
+(other) player> chose one card of the remaining character cards
+
+game> after cards are chosen the characters will be called to action. The order is set according the overview card
+player> if a player has this characters he gets to choose an action:
+	-> get 2 gold
+	-> get 2 open card of which he can take only 1
+player> after this the player has two options
+	-> build a building from his building cards
+	-> use his characters special ability
