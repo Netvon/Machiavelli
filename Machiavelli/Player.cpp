@@ -7,16 +7,17 @@ namespace machiavelli {
 	Player::Player(const std::string& name)
 		: player_name{ name }
 	{
+
 	}
 
-	const Player::gold_amount & Player::gold() const
+	Gold & Player::gold()
 	{
-		return gold_pieces;
+		return _gold;
 	}
 
-	void Player::gold(gold_amount gold)
+	const Gold & Player::gold() const
 	{
-		gold_pieces = gold;
+		return _gold;
 	}
 
 	const std::string & Player::name() const
@@ -27,5 +28,15 @@ namespace machiavelli {
 	void Player::name(std::string name)
 	{
 		player_name = name;
+	}
+
+	std::ostream & operator<<(std::ostream & os, const Player & player)
+	{
+		std::ostream::sentry s(os);
+		if (s) {
+			os << player.name() << ": " << player.gold();
+		}
+
+		return os;
 	}
 }
