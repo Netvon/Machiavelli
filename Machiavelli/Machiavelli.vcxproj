@@ -119,6 +119,8 @@
     <ClInclude Include="cards\BuildingCard.h" />
     <ClInclude Include="cards\Card.h" />
     <ClInclude Include="cards\CharacterCard.h" />
+    <ClInclude Include="CardEffect.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Gold.h" />
     <ClInclude Include="network\CircularBuffer.h" />
     <ClInclude Include="network\ClientCommand.h" />
@@ -133,6 +135,7 @@
     <ClCompile Include="cards\BuildingCard.cpp" />
     <ClCompile Include="cards\Card.cpp" />
     <ClCompile Include="cards\CharacterCard.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gold.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network\Socket.cpp" />

@@ -11,10 +11,12 @@ namespace machiavelli
 		Gold(value amount);
 		~Gold() = default;
 
-		operator value() const;
+		/*operator value() const;
 		operator unsigned int() const;
-		operator int() const;
+		operator int() const;*/
 		operator bool() const;
+
+		Gold& operator=(const Gold& other);
 
 		Gold& operator++();
 		Gold& operator--();
@@ -29,7 +31,7 @@ namespace machiavelli
 		value _amount = 0;
 	};
 
-	Gold operator "" g(unsigned long long int amount);
+	Gold operator "" _g(unsigned long long int amount);
 	std::ostream& operator<<(std::ostream& os, const Gold& gold);
 	std::istream& operator>>(std::istream& is, Gold& gold);
 }

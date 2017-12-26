@@ -19,6 +19,7 @@
 #include ".\network\ClientCommand.h"
 #include "Player.h"
 #include ".\network\ClientInfo.h"
+#include "Game.h"
 
 namespace machiavelli {
 	const int tcp_port{ 1080 };
@@ -28,6 +29,7 @@ namespace machiavelli {
 static bool running = true;
 
 static Sync_queue<ClientCommand> queue;
+static machiavelli::Game game;
 
 void consume_command() // runs in its own thread
 {
@@ -80,6 +82,12 @@ void handle_client(Socket client) // this function runs in a separate thread
 	try {
 		auto client_info = init_client_session(std::move(client));
 		auto &socket = client_info->get_socket();
+
+		if (!game.addPlayer(client_info)) {
+			socket << "Sorry, there are already two players connected. Please try again later.\r\n";
+			return;
+		}
+		
 		auto &player = client_info->get_player();
 		socket << "Welcome, " << player.name() << ", have fun playing our game!\r\n" << machiavelli::prompt;
 

@@ -7,7 +7,7 @@ namespace machiavelli
 		this->_amount = amount;
 	}
 
-	Gold::operator value() const
+	/*Gold::operator value() const
 	{
 		return _amount;
 	}
@@ -20,11 +20,17 @@ namespace machiavelli
 	Gold::operator int() const
 	{
 		return static_cast<int>(_amount);
-	}
+	}*/
 
 	Gold::operator bool() const
 	{
 		return _amount > 0;
+	}
+
+	Gold & Gold::operator=(const Gold & other)
+	{
+		_amount = other._amount;
+		return *this;
 	}
 
 	Gold & Gold::operator++()
@@ -67,7 +73,7 @@ namespace machiavelli
 		_amount = new_amount;
 	}
 
-	Gold operator""g(unsigned long long int amount)
+	Gold operator""_g(unsigned long long int amount)
 	{
 		return machiavelli::Gold{ amount };
 	}

@@ -57,6 +57,12 @@
     <ClInclude Include="cards\CardCategory.h">
       <Filter>cards</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CardEffect.h">
+      <Filter>cards</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
@@ -85,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="cards\CardCategory.cpp">
       <Filter>cards</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
