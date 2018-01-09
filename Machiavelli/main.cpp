@@ -20,7 +20,6 @@
 #include "Player.h"
 #include ".\network\ClientInfo.h"
 #include "Game.h"
-#include "cards\BuildingCard.h"
 
 namespace machiavelli {
 	const int tcp_port{ 1080 };
@@ -131,10 +130,6 @@ void handle_client(Socket client) // this function runs in a separate thread
 
 int main(int argc, const char * argv[])
 {
-	Deck<machiavelli::BuildingCard> deck{ machiavelli::BuildingCard()};
-
-	deck.discard(deck.draw());
-
 	// start command consumer thread
 	std::vector<std::thread> all_threads;
 	all_threads.emplace_back(consume_command);

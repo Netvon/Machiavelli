@@ -29,6 +29,7 @@ public:
 
 		return false;
 	}
+
 	bool discardPileEmpty() const
 	{
 		if (discardPile.empty()) {
@@ -57,6 +58,7 @@ public:
 		discardPile.push_back(card);
 		deck.erase(std::remove(deck.begin(), deck.end(), card));
 	}
+
 	void discard(T&&  card)
 	{
 		discardPile.push_back(card);
@@ -76,6 +78,7 @@ public:
 	{
 		deck.push_front(card);
 	}
+
 	void push_top_stack(T&& card)
 	{
 		deck.push_front(card);
@@ -98,4 +101,3 @@ private:
 	std::deque<T> deck;
 	std::deque<T> discardPile;
 };
-

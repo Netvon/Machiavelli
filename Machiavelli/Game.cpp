@@ -9,6 +9,9 @@ namespace machiavelli
 {
 	Game::Game()
 	{
+		for (int i = 0; i < 8; i++) {
+			building_deck.push_top_stack(BuildingCard{ "flat", Gold{ 10 }, CardEffect{}, CardAction{} });
+		}
 	}
 
 	Game::~Game()
@@ -26,6 +29,9 @@ namespace machiavelli
 
 			p.gold() = 2_g;
 			
+			for (int i = 0; i < 4; i++) {
+				p.addCardToDeck(building_deck.draw());
+			}
 		}
 	}
 

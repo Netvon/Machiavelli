@@ -24,8 +24,8 @@ namespace machiavelli {
 		const std::string& name() const;
 		void name(std::string name);
 
-		
-
+		void addCardToDeck(building_card pCard);
+		BuildingCard drawFromDeck();
 
 	private:
 		Gold _gold{ 0_g };
