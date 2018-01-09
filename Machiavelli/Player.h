@@ -23,7 +23,7 @@ namespace machiavelli {
 		const std::string& name() const;
 		void name(std::string name);
 
-		void addBuildingCard(building_card pCard);
+		
 
 
 	private:
