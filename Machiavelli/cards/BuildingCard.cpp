@@ -53,5 +53,7 @@ namespace machiavelli
 			os.ignore(std::numeric_limits<std::streamsize>::max(), ';');
 			os >> cost;
 		}
+
+		return os;
 	}
 }

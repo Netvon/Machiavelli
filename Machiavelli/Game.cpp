@@ -1,6 +1,9 @@
 #include "Game.h"
 #include <algorithm>
 #include <random>
+#include "util\RandomGenerator.h"
+
+using util::RandomGenerator;
 
 namespace machiavelli
 {
@@ -39,7 +42,7 @@ namespace machiavelli
 		}
 
 		return true;
-	}
+	}	
 
 	bool Game::started() const
 	{
@@ -48,10 +51,7 @@ namespace machiavelli
 
 	void Game::shuffleDecks()
 	{
-		std::random_device rd;
-		std::mt19937 g(rd());
-
-		std::shuffle(building_deck.begin(), building_deck.end(), g);
-		std::shuffle(character_deck.begin(), character_deck.end(), g);
+		std::shuffle(building_deck.begin(), building_deck.end(), random.random_generator());
+		std::shuffle(character_deck.begin(), character_deck.end(), random.random_generator());
 	}
 }

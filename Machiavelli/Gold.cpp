@@ -7,21 +7,6 @@ namespace machiavelli
 		this->_amount = amount;
 	}
 
-	/*Gold::operator value() const
-	{
-		return _amount;
-	}
-
-	Gold::operator unsigned int() const
-	{
-		return static_cast<unsigned int>(_amount);
-	}
-
-	Gold::operator int() const
-	{
-		return static_cast<int>(_amount);
-	}*/
-
 	Gold::operator bool() const
 	{
 		return _amount > 0;
@@ -82,7 +67,7 @@ namespace machiavelli
 	{
 		std::ostream::sentry s(os);
 		if (s) {
-			os << gold.amount() << "g";
+			os << gold.amount();
 		}
 
 		return os;
