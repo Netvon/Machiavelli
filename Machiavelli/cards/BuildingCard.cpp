@@ -16,6 +16,11 @@ namespace machiavelli
 		return *this;
 	}
 
+	bool BuildingCard::operator==(const BuildingCard & other)
+	{
+		return _name == other._name && _cost == other._cost;
+	}
+
 	BuildingCard::operator const Gold&() const
 	{
 		return _cost;

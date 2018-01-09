@@ -2,6 +2,7 @@
 #include ".\cards\Card.h"
 #include "cards\BuildingCard.h"
 #include "Gold.h"
+#include "Deck.h"
 #include <memory>
 #include <vector>
 #include <string>
@@ -10,8 +11,8 @@ namespace machiavelli {
 	class Player
 	{
 	public:
-		typedef std::shared_ptr<BuildingCard> building_card;
-		typedef std::vector<building_card> building_card_deck;
+		typedef BuildingCard building_card;
+		typedef Deck<building_card> building_card_deck;
 
 		Player();
 		Player(const std::string& name);

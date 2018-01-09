@@ -14,6 +14,7 @@ namespace machiavelli
 		BuildingCard(const std::string& name, const Gold& cost, CardEffect effect, CardAction action);
 		
 		BuildingCard& operator=(const BuildingCard& other);
+		bool operator==(const BuildingCard& other);
 
 		operator const Gold&() const;
 

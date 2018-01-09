@@ -25,7 +25,7 @@ namespace machiavelli
 			auto& p = player->get_player();
 
 			p.gold() = 2_g;
-
+			
 		}
 	}
 
