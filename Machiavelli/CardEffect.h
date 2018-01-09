@@ -7,4 +7,6 @@ namespace machiavelli
 
 	typedef std::function<void(machiavelli::Player&)> CardEffect;
 	typedef std::function<void(machiavelli::Game&)> CardAction;
+
+
 }

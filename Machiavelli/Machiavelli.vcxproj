@@ -129,6 +129,7 @@
     <ClInclude Include="network\Sync_queue.h" />
     <ClInclude Include="network\throw.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="util\RandomGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cards\CardCategory.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="network\Socket.cpp" />
     <ClCompile Include="network\throw.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="util\RandomGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="how-to.txt" />

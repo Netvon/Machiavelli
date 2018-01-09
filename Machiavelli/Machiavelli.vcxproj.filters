@@ -19,6 +19,9 @@
     <Filter Include="cards">
       <UniqueIdentifier>{7791c664-acfc-4d61-b879-9a39cc5db20a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{09bfe71b-23ba-4b38-aba8-ad28cbea27bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -63,6 +66,9 @@
     <ClInclude Include="CardEffect.h">
       <Filter>cards</Filter>
     </ClInclude>
+    <ClInclude Include="util\RandomGenerator.h">
+      <Filter>util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
@@ -94,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="util\RandomGenerator.cpp">
+      <Filter>util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

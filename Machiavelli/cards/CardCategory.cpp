@@ -56,10 +56,12 @@ namespace machiavelli
 	{
 
 	}
+
 	const std::string & CardCategory::name() const
 	{
 		return _name;
 	}
+
 	bool CardCategory::empty() const
 	{
 		return _name.empty();
