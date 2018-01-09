@@ -21,6 +21,8 @@ namespace machiavelli
 
 		void shuffleDecks();
 
+		void giveBuildingCards();
+
 	private:
 		void tick();
 

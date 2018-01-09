@@ -19,10 +19,13 @@ namespace machiavelli
 	{
 		_started = true;
 
+		shuffleDecks();
+
 		for (auto& player : players) {
 			auto& p = player->get_player();
 
 			p.gold() = 2_g;
+
 		}
 	}
 
@@ -50,5 +53,10 @@ namespace machiavelli
 	{
 		std::shuffle(building_deck.begin(), building_deck.end(), random.random_generator());
 		std::shuffle(character_deck.begin(), character_deck.end(), random.random_generator());
+	}
+
+	void Game::giveBuildingCards()
+	{
+		
 	}
 }

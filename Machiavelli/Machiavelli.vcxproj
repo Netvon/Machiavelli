@@ -147,6 +147,10 @@
   <ItemGroup>
     <Text Include="how-to.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="data\Bouwkaarten.csv" />
+    <None Include="data\karakterkaarten.csv" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

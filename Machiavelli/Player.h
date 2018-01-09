@@ -22,6 +22,10 @@ namespace machiavelli {
 
 		const std::string& name() const;
 		void name(std::string name);
+
+		void addBuildingCard(building_card pCard);
+
+
 	private:
 		Gold _gold{ 0_g };
 		std::string player_name{ "<no name>" };
