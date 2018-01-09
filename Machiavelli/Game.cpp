@@ -54,9 +54,4 @@ namespace machiavelli
 		std::shuffle(building_deck.begin(), building_deck.end(), g);
 		std::shuffle(character_deck.begin(), character_deck.end(), g);
 	}
-
-	void Game::giveBuildingCards()
-	{
-		
-	}
 }
