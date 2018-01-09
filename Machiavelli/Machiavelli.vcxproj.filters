@@ -19,6 +19,9 @@
     <Filter Include="cards">
       <UniqueIdentifier>{7791c664-acfc-4d61-b879-9a39cc5db20a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{62487603-42fa-4a03-9509-64cff8808c74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -98,5 +101,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="how-to.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\Bouwkaarten.csv">
+      <Filter>data</Filter>
+    </None>
+    <None Include="data\karakterkaarten.csv">
+      <Filter>data</Filter>
+    </None>
   </ItemGroup>
 </Project>
