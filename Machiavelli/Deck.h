@@ -107,3 +107,21 @@ private:
 	std::deque<T> deck;
 	std::deque<T> discardPile;
 };
+
+template<typename T>
+std::istream& operator>>(std::istream& is, Deck<T>& deck) 
+{
+	std::istream::sentry s(is);
+
+	if (s) {
+		while (!is.eof()) {
+			T temp;
+
+			is >> temp;
+
+			deck.push_bottom_stack(std::move(temp));
+		}
+	}
+
+	return is;
+}

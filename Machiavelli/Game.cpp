@@ -9,12 +9,12 @@ namespace machiavelli
 {
 	Game::Game()
 	{
-		for (int i = 0; i < 4; i++) {
+		/*for (int i = 0; i < 4; i++) {
 			building_deck.push_top_stack(BuildingCard{ "flat", 10_g, [](Player& p) {} , [](Game& g) {} });
 		}
 		for (int i = 0; i < 4; i++) {
 			building_deck.push_top_stack(BuildingCard{ "flat", 20_g, [](Player& p) {} , [](Game& g) {} });
-		}
+		}*/
 	}
 
 	Game::~Game()
@@ -70,5 +70,15 @@ namespace machiavelli
 	bool Game::started() const
 	{
 		return _started;
+	}
+
+	void Game::load_building_deck(std::istream & stream)
+	{
+		while (!stream.eof()) {
+			machiavelli::BuildingCard card;
+			stream >> card;
+
+			building_deck.push_top_stack(std::move(card));
+		}
 	}
 }

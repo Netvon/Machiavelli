@@ -20,6 +20,7 @@
 #include "Player.h"
 #include ".\network\ClientInfo.h"
 #include "Game.h"
+#include <iterator>
 
 namespace machiavelli {
 	const int tcp_port{ 1080 };
@@ -130,12 +131,16 @@ void handle_client(Socket client) // this function runs in a separate thread
 
 int main(int argc, const char * argv[])
 {
-	std::istringstream iss{ "Landgoed;3;geel;\nLandgoed;5;geel;" };
-	machiavelli::BuildingCard bc;
-	machiavelli::BuildingCard bc2;
+	Deck<machiavelli::BuildingCard> deck;
 
-	iss >> bc;
-	iss >> bc2;
+	Deck<int> ints;
+
+	std::istringstream instream{ "10 9 8 7 6" };
+	std::istringstream iss{ "Landgoed;3;geel;hallo\nLandgoed;5;geel;" };
+
+	iss >> deck;
+
+	instream >> ints;
 
 	// start command consumer thread
 	std::vector<std::thread> all_threads;

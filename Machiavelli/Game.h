@@ -23,6 +23,8 @@ namespace machiavelli
 
 		bool started() const;
 
+		void load_building_deck(std::istream& stream);
+
 	private:
 		void tick();
 

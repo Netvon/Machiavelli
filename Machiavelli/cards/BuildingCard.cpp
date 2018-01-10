@@ -58,6 +58,7 @@ namespace machiavelli
 		std::istream::sentry s(is);
 		
 		if (s) {
+
 			std::string description_string;
 			std::string category_string;
 			std::string cost_string;
@@ -69,20 +70,27 @@ namespace machiavelli
 			std::getline(is, category_string, ';');
 			std::getline(is, description_string, '\n');
 
-			if (!cost_string.empty()) {
-				cost = std::stoi(cost_string);
+			if (!name.empty() && !cost_string.empty() && !category_string.empty()) {
+
+				try
+				{
+					cost = std::stoi(cost_string);
+				}
+				catch (const std::exception&)
+				{
+					is.bad();
+				}
+				
 				card._cost = cost;
-			}
-
-			if (!description_string.empty()) {
 				card._description = description_string;
-			}
-
-			if (!category_string.empty()) {
 				card._category = CardCategory::with(category_string);
+				card._name = name;
+				
+				is.good();
 			}
-
-			card._name = name;
+			else {
+				is.bad();
+			}
 		}
 
 		return is;
