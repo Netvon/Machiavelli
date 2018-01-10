@@ -1,5 +1,5 @@
 #pragma once
-#include ".\cards\Card.h"
+
 #include "cards\BuildingCard.h"
 #include "cards\CharacterCard.h"
 #include "Gold.h"

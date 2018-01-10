@@ -15,6 +15,11 @@ namespace machiavelli {
 	{
 	}
 
+	bool CharacterCard::operator==(const CharacterCard & pOther)
+	{
+		return _name == pOther._name && order == pOther.order;
+	}
+
 	const std::string & CharacterCard::name() const
 	{
 		return _name;
