@@ -131,9 +131,9 @@ void handle_client(Socket client) // this function runs in a separate thread
 
 int main(int argc, const char * argv[])
 {
-	Deck<machiavelli::BuildingCard> deck;
+	machiavelli::Deck<machiavelli::BuildingCard> deck;
 
-	Deck<int> ints;
+	machiavelli::Deck<int> ints;
 
 	std::istringstream instream{ "10 9 8 7 6" };
 	std::istringstream iss{ "Landgoed;3;geel;hallo\nLandgoed;5;geel;" };

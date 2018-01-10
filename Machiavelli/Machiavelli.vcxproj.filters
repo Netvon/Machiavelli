@@ -51,9 +51,6 @@
     <ClInclude Include="cards\CharacterCard.h">
       <Filter>cards</Filter>
     </ClInclude>
-    <ClInclude Include="cards\Card.h">
-      <Filter>cards</Filter>
-    </ClInclude>
     <ClInclude Include="cards\BuildingCard.h">
       <Filter>cards</Filter>
     </ClInclude>
@@ -93,9 +90,6 @@
       <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="cards\CharacterCard.cpp">
-      <Filter>cards</Filter>
-    </ClCompile>
-    <ClCompile Include="cards\Card.cpp">
       <Filter>cards</Filter>
     </ClCompile>
     <ClCompile Include="cards\BuildingCard.cpp">

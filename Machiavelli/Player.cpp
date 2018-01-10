@@ -10,6 +10,11 @@ namespace machiavelli {
 
 	}
 
+	bool Player::operator==(const Player & pOther)
+	{
+		return player_name == pOther.player_name && _gold == pOther._gold;
+	}
+
 	Gold & Player::gold()
 	{
 		return _gold;
@@ -30,14 +35,23 @@ namespace machiavelli {
 		player_name = name;
 	}
 
-	void Player::addCardToDeck(const building_card& pCard)
+	void Player::addBuildingCardToDeck(const building_card& pCard)
 	{
 		building_cards.push_top_stack(pCard);
 	}
 
-	BuildingCard Player::drawFromDeck()
+	void Player::addCharacterCardToDeck(const character_card & pCard)
+	{
+	}
+
+	Player::building_card Player::drawFromBuildingDeck()
 	{
 		return building_cards.draw();
+	}
+
+	Player::character_card Player::drawFromCharacterDeck()
+	{
+		return character_cards.draw();
 	}
 
 	std::ostream & operator<<(std::ostream & os, const Player & player)

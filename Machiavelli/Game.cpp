@@ -2,19 +2,25 @@
 #include <algorithm>
 #include <random>
 #include "util\RandomGenerator.h"
+#include "util\CsvValue.h"
 
 using util::RandomGenerator;
+using util::CsvValue;
 
 namespace machiavelli
 {
 	Game::Game()
 	{
-		/*for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) {
 			building_deck.push_top_stack(BuildingCard{ "flat", 10_g, [](Player& p) {} , [](Game& g) {} });
 		}
 		for (int i = 0; i < 4; i++) {
 			building_deck.push_top_stack(BuildingCard{ "flat", 20_g, [](Player& p) {} , [](Game& g) {} });
-		}*/
+		}
+
+		for (int i = 0; i < 8; i++) {
+			character_deck.push_top_stack(CharacterCard{ "Magier" });
+		}
 	}
 
 	Game::~Game()
@@ -26,6 +32,7 @@ namespace machiavelli
 		_started = true;
 
 		building_deck.shuffleStack();
+		setKing();
 
 		for (auto& player : players) {
 			auto& p = player->get_player();
@@ -33,9 +40,19 @@ namespace machiavelli
 			p.gold() = 2_g;
 			
 			for (int i = 0; i < 4; i++) {
-				p.addCardToDeck(building_deck.draw());
+				p.addBuildingCardToDeck(building_deck.draw());
 			}
+		}
+	}
 
+	void Game::doTurn()
+	{
+		for (auto& player : players) {
+			auto& p = player->get_player();
+
+			if (p == getKing()) {
+				
+			}
 		}
 	}
 
@@ -72,13 +89,10 @@ namespace machiavelli
 		return _started;
 	}
 
-	void Game::load_building_deck(std::istream & stream)
+	void Game::setKing()
 	{
-		while (!stream.eof()) {
-			machiavelli::BuildingCard card;
-			stream >> card;
+		auto randomIndex = random(0llu, 1llu);
 
-			building_deck.push_top_stack(std::move(card));
-		}
+		kingIndex = randomIndex;
 	}
 }
