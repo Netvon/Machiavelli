@@ -30,6 +30,16 @@ namespace machiavelli {
 		player_name = name;
 	}
 
+	void Player::addCardToDeck(const building_card& pCard)
+	{
+		building_cards.push_top_stack(pCard);
+	}
+
+	BuildingCard Player::drawFromDeck()
+	{
+		return building_cards.draw();
+	}
+
 	std::ostream & operator<<(std::ostream & os, const Player & player)
 	{
 		std::ostream::sentry s(os);

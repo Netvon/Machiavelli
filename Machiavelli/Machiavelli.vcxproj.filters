@@ -69,6 +69,9 @@
     <ClInclude Include="CardEffect.h">
       <Filter>cards</Filter>
     </ClInclude>
+    <ClInclude Include="Deck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="util\RandomGenerator.h">
       <Filter>util</Filter>
     </ClInclude>

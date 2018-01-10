@@ -5,6 +5,8 @@
 #include "network\ClientInfo.h"
 #include "cards\CharacterCard.h"
 #include "cards\BuildingCard.h"
+#include "Deck.h"
+
 namespace machiavelli
 {
 	class Game
@@ -16,22 +18,21 @@ namespace machiavelli
 		void start();
 
 		bool addPlayer(std::shared_ptr<ClientInfo> player);
+		Player& getPlayerByIndex(size_t pIndex);
+		Player& getKing();
 
 		bool started() const;
-
-		void shuffleDecks();
-
-		void giveBuildingCards();
 
 	private:
 		void tick();
 
 		std::vector<std::shared_ptr<ClientInfo>> players;
 
-		std::vector<BuildingCard> building_deck;
-		std::vector<CharacterCard> character_deck;
+		Deck<BuildingCard> building_deck;
+		Deck<CharacterCard> character_deck;
 
 		bool _started = false;
 		int turn_count = 0;
+		size_t kingIndex = 0llu;
 	};
 }

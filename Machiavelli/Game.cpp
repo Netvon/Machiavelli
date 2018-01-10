@@ -9,6 +9,12 @@ namespace machiavelli
 {
 	Game::Game()
 	{
+		for (int i = 0; i < 4; i++) {
+			building_deck.push_top_stack(BuildingCard{ "flat", 10_g, [](Player& p) {} , [](Game& g) {} });
+		}
+		for (int i = 0; i < 4; i++) {
+			building_deck.push_top_stack(BuildingCard{ "flat", 20_g, [](Player& p) {} , [](Game& g) {} });
+		}
 	}
 
 	Game::~Game()
@@ -19,12 +25,16 @@ namespace machiavelli
 	{
 		_started = true;
 
-		shuffleDecks();
+		building_deck.shuffleStack();
 
 		for (auto& player : players) {
 			auto& p = player->get_player();
 
 			p.gold() = 2_g;
+			
+			for (int i = 0; i < 4; i++) {
+				p.addCardToDeck(building_deck.draw());
+			}
 
 		}
 	}
@@ -42,21 +52,23 @@ namespace machiavelli
 		}
 
 		return true;
-	}	
+	}
+
+	Player & Game::getPlayerByIndex(size_t pIndex)
+	{
+		auto clientInfo = players.at(pIndex);
+
+		return clientInfo->get_player();
+	}
+
+	Player & Game::getKing()
+	{
+		return getPlayerByIndex(kingIndex);
+	}
+
 
 	bool Game::started() const
 	{
 		return _started;
-	}
-
-	void Game::shuffleDecks()
-	{
-		std::shuffle(building_deck.begin(), building_deck.end(), random.random_generator());
-		std::shuffle(character_deck.begin(), character_deck.end(), random.random_generator());
-	}
-
-	void Game::giveBuildingCards()
-	{
-		
 	}
 }
