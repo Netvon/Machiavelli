@@ -17,10 +17,6 @@ public:
 	{
 	}
 
-	~Deck()
-	{
-	}
-
 	bool stackIsEmpty() const
 	{
 		if (deck.empty()) {

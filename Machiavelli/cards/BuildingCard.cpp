@@ -18,7 +18,7 @@ namespace machiavelli
 
 	bool BuildingCard::operator==(const BuildingCard & other)
 	{
-		return _name == other._name && _cost == other._cost;
+		return _name == other._name && _cost == other._cost && _category == other._category;
 	}
 
 	BuildingCard::operator const Gold&() const
