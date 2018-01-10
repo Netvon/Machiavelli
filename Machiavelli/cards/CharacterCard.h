@@ -10,6 +10,8 @@ namespace machiavelli {
 		CharacterCard(const std::string& name);
 		~CharacterCard();
 
+		bool operator==(const CharacterCard& pOther);
+
 		const std::string& name() const;
 		bool getIsVisible() const;
 
