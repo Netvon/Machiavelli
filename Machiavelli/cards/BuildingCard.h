@@ -20,6 +20,7 @@ namespace machiavelli
 
 		const Gold& cost() const;
 		const std::string& name() const;
+		const std::string& description() const;
 
 		void operator () (Game& game);
 		void operator () (Player& player);
@@ -27,9 +28,12 @@ namespace machiavelli
 	private:
 		Gold _cost{ 1_g };
 		std::string _name{ "<no name>" };
+		std::string _description{ "" };
 		CardCategory _category{ CardCategory::none() };
 		CardEffect _effect;
 		CardAction _action;
+
+		friend std::istream & operator>>(std::istream & os, BuildingCard & gold);
 	};
 
 	std::istream& operator>>(std::istream& os, BuildingCard& gold);

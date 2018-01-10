@@ -130,6 +130,13 @@ void handle_client(Socket client) // this function runs in a separate thread
 
 int main(int argc, const char * argv[])
 {
+	std::istringstream iss{ "Landgoed;3;geel;\nLandgoed;5;geel;" };
+	machiavelli::BuildingCard bc;
+	machiavelli::BuildingCard bc2;
+
+	iss >> bc;
+	iss >> bc2;
+
 	// start command consumer thread
 	std::vector<std::thread> all_threads;
 	all_threads.emplace_back(consume_command);

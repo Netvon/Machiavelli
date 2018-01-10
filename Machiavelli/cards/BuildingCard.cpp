@@ -1,4 +1,6 @@
 #include "BuildingCard.h"
+#include <iterator>
+#include "..\util\CsvValue.h"
 
 namespace machiavelli 
 {
@@ -36,6 +38,11 @@ namespace machiavelli
 		return _name;
 	}
 
+	const std::string & BuildingCard::description() const
+	{
+		return _description;
+	}
+
 	void BuildingCard::operator()(Game & game)
 	{
 		if(_action) _action(game);
@@ -46,19 +53,38 @@ namespace machiavelli
 		if(_effect) _effect(player);
 	}
 
-	std::istream & operator>>(std::istream & os, BuildingCard & gold)
+	std::istream & operator>>(std::istream & is, BuildingCard & card)
 	{
-		std::istream::sentry s(os);
+		std::istream::sentry s(is);
 		
 		if (s) {
+			std::string description_string;
+			std::string category_string;
+			std::string cost_string;
 			std::string name;
 			int cost{ 0 };
 
-			os >> name;
-			os.ignore(std::numeric_limits<std::streamsize>::max(), ';');
-			os >> cost;
+			std::getline(is, name, ';');
+			std::getline(is, cost_string, ';');
+			std::getline(is, category_string, ';');
+			std::getline(is, description_string, '\n');
+
+			if (!cost_string.empty()) {
+				cost = std::stoi(cost_string);
+				card._cost = cost;
+			}
+
+			if (!description_string.empty()) {
+				card._description = description_string;
+			}
+
+			if (!category_string.empty()) {
+				card._category = CardCategory::with(category_string);
+			}
+
+			card._name = name;
 		}
 
-		return os;
+		return is;
 	}
 }
