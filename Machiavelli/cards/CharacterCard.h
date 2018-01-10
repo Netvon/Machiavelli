@@ -5,6 +5,11 @@ namespace machiavelli {
 	public:
 		CharacterCard();
 		~CharacterCard();
+
+	private:
+		unsigned int order = 0;
+
+
 	};
 }
 

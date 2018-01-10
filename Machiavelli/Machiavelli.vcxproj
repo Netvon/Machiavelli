@@ -120,6 +120,7 @@
     <ClInclude Include="cards\Card.h" />
     <ClInclude Include="cards\CharacterCard.h" />
     <ClInclude Include="CardEffect.h" />
+    <ClInclude Include="util\CsvValue.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gold.h" />
     <ClInclude Include="network\CircularBuffer.h" />
