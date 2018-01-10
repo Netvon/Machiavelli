@@ -21,6 +21,7 @@
 #include ".\network\ClientInfo.h"
 #include "Game.h"
 #include <iterator>
+#include <fstream>
 
 namespace machiavelli {
 	const int tcp_port{ 1080 };
@@ -131,16 +132,13 @@ void handle_client(Socket client) // this function runs in a separate thread
 
 int main(int argc, const char * argv[])
 {
+	std::ifstream csv("data/Bouwkaarten.csv");
 	machiavelli::Deck<machiavelli::BuildingCard> deck;
+	//std::istringstream iss{ "Landgoed;3;geel;hallo\nLandgoed;5;geel;" };
 
-	machiavelli::Deck<int> ints;
+	csv >> deck;
 
-	std::istringstream instream{ "10 9 8 7 6" };
-	std::istringstream iss{ "Landgoed;3;geel;hallo\nLandgoed;5;geel;" };
-
-	iss >> deck;
-
-	instream >> ints;
+	game.replace_building_deck(deck);
 
 	// start command consumer thread
 	std::vector<std::thread> all_threads;

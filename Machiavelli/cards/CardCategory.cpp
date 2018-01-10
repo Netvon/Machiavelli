@@ -32,12 +32,6 @@ namespace machiavelli
 		return instance;
 	}
 
-	const CardCategory & CardCategory::with(const std::string & name)
-	{
-		static CardCategory instance{ name };
-		return instance;
-	}
-
 	bool CardCategory::operator==(const CardCategory & other)
 	{
 		if (other.empty())

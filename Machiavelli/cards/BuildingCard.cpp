@@ -83,7 +83,7 @@ namespace machiavelli
 				
 				card._cost = cost;
 				card._description = description_string;
-				card._category = CardCategory::with(category_string);
+				card._category = CardCategory(category_string);
 				card._name = name;
 				
 				is.good();

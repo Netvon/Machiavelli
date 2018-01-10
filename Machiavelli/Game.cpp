@@ -89,6 +89,11 @@ namespace machiavelli
 		return _started;
 	}
 
+	void Game::replace_building_deck(Deck<BuildingCard>& other)
+	{
+		building_deck.replace_deck(other);
+	}
+
 	void Game::setKing()
 	{
 		auto randomIndex = random(0llu, 1llu);

@@ -24,7 +24,8 @@ namespace machiavelli
 
 		bool started() const;
 
-		void load_building_deck(std::istream& stream);
+		void replace_building_deck(Deck<BuildingCard>& other);
+		void replace_character_deck(Deck<CharacterCard>& other);
 
 	private:
 		void tick();

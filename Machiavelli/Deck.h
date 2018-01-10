@@ -103,6 +103,10 @@ namespace machiavelli
 			}
 		}
 
+		void replace_deck(Deck<T>& other) {
+			deck = std::move(other.deck);
+		}
+
 	private:
 		std::deque<T> deck;
 		std::deque<T> discardPile;
