@@ -6,8 +6,8 @@ namespace machiavelli {
 	{
 	}
 
-	CharacterCard::CharacterCard(const std::string & name)
-		:_name(name)
+	CharacterCard::CharacterCard(const std::string & name, const unsigned int order)
+		:_name(name), order(order)
 	{
 	}
 

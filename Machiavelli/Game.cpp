@@ -30,7 +30,10 @@ namespace machiavelli
 			p.gold() = 2_g;
 			
 			for (int i = 0; i < 4; i++) {
-				p.addBuildingCardToDeck(building_deck.draw());
+				auto drawnCard = building_deck.draw();
+				p.addBuildingCardToDeck(drawnCard);
+
+				player->get_socket() << "You got " << drawnCard.name() << "!\n";
 			}
 		}
 	}
