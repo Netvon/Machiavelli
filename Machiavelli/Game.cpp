@@ -89,9 +89,14 @@ namespace machiavelli
 		return _started;
 	}
 
-	void Game::replace_building_deck(Deck<BuildingCard>& other)
+	void Game::replace_deck(Deck<BuildingCard>& other)
 	{
 		building_deck.replace_deck(other);
+	}
+
+	void Game::replace_deck(Deck<CharacterCard>& other)
+	{
+		character_deck.replace_deck(other);
 	}
 
 	void Game::setKing()
