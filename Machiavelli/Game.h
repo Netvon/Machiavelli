@@ -24,8 +24,8 @@ namespace machiavelli
 
 		bool started() const;
 
-		void replace_building_deck(Deck<BuildingCard>& other);
-		void replace_character_deck(Deck<CharacterCard>& other);
+		void replace_deck(Deck<BuildingCard>& other);
+		void replace_deck(Deck<CharacterCard>& other);
 
 	private:
 		void tick();

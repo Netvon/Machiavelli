@@ -138,7 +138,7 @@ int main(int argc, const char * argv[])
 
 	csv >> deck;
 
-	game.replace_building_deck(deck);
+	game.replace_deck(deck);
 
 	// start command consumer thread
 	std::vector<std::thread> all_threads;
