@@ -29,4 +29,38 @@ namespace machiavelli {
 	{
 		return isVisible;
 	}
+
+	std::istream & operator>>(std::istream & is, CharacterCard & card)
+	{
+		std::istream::sentry s(is);
+
+		if (s) {
+			std::string order_string;
+			std::string name;
+
+			unsigned int order{ 0 };
+
+			std::getline(is, order_string, ';');
+			std::getline(is, name, '\n');
+
+			if (!order_string.empty() && !name.empty()) {
+				try
+				{
+					order = std::stoi(order_string);
+				}
+				catch (const std::exception&)
+				{
+					is.setstate(is.badbit);
+					return is;
+				}
+
+				card._name = name;
+				card.order = order;
+
+				is.setstate(is.goodbit);
+			}
+		}
+
+		return is;
+	}
 }

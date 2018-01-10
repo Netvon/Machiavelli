@@ -11,16 +11,6 @@ namespace machiavelli
 {
 	Game::Game()
 	{
-		for (int i = 0; i < 4; i++) {
-			building_deck.push_top_stack(BuildingCard{ "flat", 10_g, [](Player& p) {} , [](Game& g) {} });
-		}
-		for (int i = 0; i < 4; i++) {
-			building_deck.push_top_stack(BuildingCard{ "flat", 20_g, [](Player& p) {} , [](Game& g) {} });
-		}
-
-		for (int i = 0; i < 8; i++) {
-			character_deck.push_top_stack(CharacterCard{ "Magier" });
-		}
 	}
 
 	Game::~Game()

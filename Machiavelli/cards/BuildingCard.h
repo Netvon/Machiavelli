@@ -33,9 +33,9 @@ namespace machiavelli
 		CardEffect _effect;
 		CardAction _action;
 
-		friend std::istream & operator>>(std::istream & os, BuildingCard & gold);
+		friend std::istream & operator>>(std::istream & os, BuildingCard & card);
 	};
 
-	std::istream& operator>>(std::istream& os, BuildingCard& gold);
+	std::istream& operator>>(std::istream& os, BuildingCard& card);
 }
 

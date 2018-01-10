@@ -132,13 +132,18 @@ void handle_client(Socket client) // this function runs in a separate thread
 
 int main(int argc, const char * argv[])
 {
-	std::ifstream csv("data/Bouwkaarten.csv");
-	machiavelli::Deck<machiavelli::BuildingCard> deck;
+	std::ifstream csvb("data/Bouwkaarten.csv");
+	machiavelli::Deck<machiavelli::BuildingCard> bdeck;
+
+	std::ifstream csvc("data/karakterkaarten.csv");
+	machiavelli::Deck<machiavelli::CharacterCard> cdeck;
 	//std::istringstream iss{ "Landgoed;3;geel;hallo\nLandgoed;5;geel;" };
 
-	csv >> deck;
+	csvb >> bdeck;
+	csvc >> cdeck;
 
-	game.replace_deck(deck);
+	game.replace_deck(bdeck);
+	game.replace_deck(cdeck);
 
 	// start command consumer thread
 	std::vector<std::thread> all_threads;

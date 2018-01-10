@@ -20,6 +20,9 @@ namespace machiavelli {
 		unsigned int order = 0;
 		bool isVisible = true;
 
+		friend std::istream& operator>>(std::istream& is, CharacterCard& card);
 	};
+
+	std::istream& operator>>(std::istream& is, CharacterCard& card);
 }
 

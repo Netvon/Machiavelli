@@ -123,7 +123,8 @@ namespace machiavelli
 
 				is >> temp;
 
-				deck.push_bottom_stack(std::move(temp));
+				if(is.good())
+					deck.push_bottom_stack(std::move(temp));
 			}
 		}
 

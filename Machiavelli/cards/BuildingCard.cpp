@@ -78,7 +78,8 @@ namespace machiavelli
 				}
 				catch (const std::exception&)
 				{
-					is.bad();
+					is.setstate(is.badbit);
+					return is;
 				}
 				
 				card._cost = cost;
@@ -86,10 +87,10 @@ namespace machiavelli
 				card._category = CardCategory(category_string);
 				card._name = name;
 				
-				is.good();
+				is.setstate(is.goodbit);
 			}
 			else {
-				is.bad();
+				is.setstate(is.badbit);
 			}
 		}
 
