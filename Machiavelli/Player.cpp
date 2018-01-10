@@ -30,7 +30,7 @@ namespace machiavelli {
 		player_name = name;
 	}
 
-	void Player::addCardToDeck(building_card pCard)
+	void Player::addCardToDeck(const building_card& pCard)
 	{
 		building_cards.push_top_stack(pCard);
 	}

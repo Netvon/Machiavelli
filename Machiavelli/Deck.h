@@ -39,17 +39,21 @@ public:
 		return false;
 	}
 
-	template<typename Iter>
-		Deck(Iter b, Iter e);
-
 	void shuffleStack()
 	{
 
 		std::shuffle(deck.begin(), deck.end(), util::RandomGenerator::instance().random_generator());
 	}
 
+	void swapStack(Deck<T>& pOther)
+	{
+		deck.swap(pOther.deck);
+	}
+
 	T draw()
 	{
+		// TODO: make exceptionsafe :)
+
 		return deck.front();
 	}
 
@@ -87,9 +91,11 @@ public:
 	void merge_stacks(bool shuffle_afterwards = true)
 	{
 		if (!discardPileEmpty) {
-			for (auto card : discardPile) {
-				deck.push_back(std::move(card));
+			for (auto& card : discardPile) {
+				deck.push_back(card);
 			}
+
+			discardPile.clear();
 		}
 
 		if (shuffle_afterwards) {

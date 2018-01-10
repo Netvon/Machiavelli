@@ -18,6 +18,8 @@ namespace machiavelli
 		void start();
 
 		bool addPlayer(std::shared_ptr<ClientInfo> player);
+		Player& getPlayerByIndex(size_t pIndex);
+		Player& getKing();
 
 		bool started() const;
 
@@ -31,5 +33,6 @@ namespace machiavelli
 
 		bool _started = false;
 		int turn_count = 0;
+		size_t kingIndex = 0llu;
 	};
 }

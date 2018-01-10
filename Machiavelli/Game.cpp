@@ -9,8 +9,11 @@ namespace machiavelli
 {
 	Game::Game()
 	{
-		for (int i = 0; i < 8; i++) {
-			building_deck.push_top_stack(BuildingCard{ "flat", Gold{ 10 }, CardEffect{}, CardAction{} });
+		for (int i = 0; i < 4; i++) {
+			building_deck.push_top_stack(BuildingCard{ "flat", 10_g, [](Player& p) {} , [](Game& g) {} });
+		}
+		for (int i = 0; i < 4; i++) {
+			building_deck.push_top_stack(BuildingCard{ "flat", 20_g, [](Player& p) {} , [](Game& g) {} });
 		}
 	}
 
@@ -32,6 +35,7 @@ namespace machiavelli
 			for (int i = 0; i < 4; i++) {
 				p.addCardToDeck(building_deck.draw());
 			}
+
 		}
 	}
 
@@ -48,7 +52,20 @@ namespace machiavelli
 		}
 
 		return true;
-	}	
+	}
+
+	Player & Game::getPlayerByIndex(size_t pIndex)
+	{
+		auto clientInfo = players.at(pIndex);
+
+		return clientInfo->get_player();
+	}
+
+	Player & Game::getKing()
+	{
+		return getPlayerByIndex(kingIndex);
+	}
+
 
 	bool Game::started() const
 	{
