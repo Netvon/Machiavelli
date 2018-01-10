@@ -7,7 +7,7 @@ namespace machiavelli {
 	{
 	public:
 		CharacterCard();
-		CharacterCard(const std::string& name);
+		CharacterCard(const std::string& name, const unsigned int order);
 		~CharacterCard();
 
 		bool operator==(const CharacterCard& pOther);
