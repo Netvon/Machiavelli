@@ -46,4 +46,7 @@ namespace machiavelli
 		if(!found_match)
 			socket << "Unknown command: " << command << "\n";
 	}
+	inline std::shared_ptr<State> Phase::state() const {
+		return _state;
+	}
 }

@@ -1,9 +1,8 @@
 #include "TestPhase.h"
 using namespace std::placeholders;
 
-namespace machiavelli {
-
-	
+namespace machiavelli 
+{
 
 	TestPhase::TestPhase(const std::string & name, std::shared_ptr<State> state)
 		: Phase(name, state)

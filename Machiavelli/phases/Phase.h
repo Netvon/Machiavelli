@@ -24,6 +24,8 @@ namespace machiavelli {
 		void virtual print(const Socket & socket, const Player& player) = 0;
 		void handle_input(const Socket & socket, Player& player, const std::string& command);
 
+		std::shared_ptr<State> state() const;
+
 	private:
 		std::vector<Option> options;
 		std::string _name = "<no name>";
