@@ -49,4 +49,9 @@ namespace machiavelli
 	{
 		current_phase()->handle_input(socket, player, command);
 	}
+
+	void State::add_player(std::shared_ptr<ClientInfo> player)
+	{
+		_game.addPlayer(player);
+	}
 }

@@ -111,7 +111,7 @@ void handle_client(Socket client) // this function runs in a separate thread
 		auto client_info = init_client_session(std::move(client));
 		auto &socket = client_info->get_socket();
 
-		if (!state->game().addPlayer(client_info)) {
+		if (!state->add_player(client_info)) {
 			socket << "Sorry, there are already two players connected. Please try again later.\r\n";
 			return;
 		}

@@ -125,6 +125,7 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gold.h" />
+    <ClInclude Include="phases\LobbyPhase.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="network\CircularBuffer.h" />
     <ClInclude Include="network\ClientCommand.h" />
@@ -145,6 +146,7 @@
     <ClCompile Include="cards\CharacterCard.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gold.cpp" />
+    <ClCompile Include="phases\LobbyPhase.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network\Socket.cpp" />
     <ClCompile Include="network\throw.cpp" />

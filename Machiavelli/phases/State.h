@@ -31,6 +31,8 @@ namespace machiavelli
 
 		void handle_input(const Socket & socket, Player& player, const std::string& command);
 
+		void add_player(std::shared_ptr<ClientInfo> player);
+
 	private:
 		std::vector<std::shared_ptr<Phase>> phases;
 		size_t current_location_index;
