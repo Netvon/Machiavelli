@@ -16,7 +16,7 @@ namespace machiavelli {
 		Phase(const std::string& name, std::shared_ptr<State> state);
 		~Phase();
 
-		void add_option(const std::string& command, const std::string & name, Option::handler func);
+		void add_option(const std::string& command, const std::string & name, Option::handler func, bool is_for_current_player = false);
 		const std::string& name() const;
 
 		void clear_options();
@@ -33,6 +33,8 @@ namespace machiavelli {
 		void print_info(const Socket & socket, const Player& player);
 	
 	private:
+
+		virtual void add_options() = 0;
 		
 		void print_cards(const Socket& socket, const Player& player);
 		void print_buildings(const Socket& socket, const Player& player);

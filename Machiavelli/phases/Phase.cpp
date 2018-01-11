@@ -14,9 +14,9 @@ namespace machiavelli
 	{
 	}
 
-	void Phase::add_option(const std::string& command, const std::string & name, Option::handler func)
+	void Phase::add_option(const std::string& command, const std::string & name, Option::handler func, bool is_for_current_player)
 	{
-		options.push_back(Option(command, name, func));
+		options.push_back(Option(command, name, func, is_for_current_player));
 	}
 
 	const std::string & Phase::name() const
@@ -31,6 +31,8 @@ namespace machiavelli
 
 	void Phase::handle_input(const Socket & socket, Player& player, const std::string& command)
 	{
+		bool is_current_player = state()->current_player()->get_player() == player;
+
 		if (command.empty()) {
 			return;
 		}
@@ -40,7 +42,10 @@ namespace machiavelli
 		auto temp_clone = std::vector<Option>(options);
 
 		for (auto& option : temp_clone) {
-			if (option.command() == command) {
+			if (option.is_for_current_player() && !is_current_player)
+				continue;
+
+			if (option.command() == command ) {
 				found_match = true;
 
 				option.function()(socket, player);
@@ -76,17 +81,27 @@ namespace machiavelli
 		if (enable_defaults) {
 			this->enable_defaults();
 		}
+
+		add_options();
 	}
 
 	void Phase::print_info(const Socket & socket, const Player & player)
 	{
+		bool is_current_player = state()->current_player()->get_player() == player;
+
 		socket << "========= Info =========\nCurrent State: " << state()->current_phase()->name()  << " | Name: " << player.name() << " | Gold: " << player.gold() << "\n";
+
+		if (is_current_player)
+			socket << "\n|> it's your turn\n";
 
 		socket << "----------\n";
 		socket << "Commands;\n";
 
 		for (auto& option : options) {
-			socket << " - " << option.command() << "\n   Name: " << option.name() << "\n";
+			if (option.is_for_current_player() && !is_current_player)
+				continue;
+
+			socket << " - [" << option.command() << "]\n   Name: " << option.name() << "\n";
 		}
 
 		socket << "----------\n";
