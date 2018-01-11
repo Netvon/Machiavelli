@@ -133,6 +133,8 @@ void handle_client(Socket client) // this function runs in a separate thread
 					}
 					else if (cmd == "start") {
 						state->add_phase<machiavelli::GamePhase>("game");
+						state->navigate_to("game");
+						continue;
 					}
 					else if (cmd == "quit_server") {
 						running = false;
