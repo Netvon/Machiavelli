@@ -165,6 +165,16 @@ namespace machiavelli
 		return players.at(_current_player);
 	}
 
+	void Game::next_player()
+	{
+		if (_current_player == 0llu) {
+			_current_player = 1llu;
+		}
+		else {
+			_current_player = 0llu;
+		}
+	}
+
 	void Game::setKing()
 	{
 		auto randomIndex = random(0llu, 1llu);

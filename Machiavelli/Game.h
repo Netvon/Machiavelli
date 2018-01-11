@@ -43,6 +43,7 @@ namespace machiavelli
 		void shuffleBuildingCards();
 
 		std::shared_ptr<ClientInfo> current_player() const;
+		void next_player();
 
 	private:
 		void tick();
@@ -53,7 +54,7 @@ namespace machiavelli
 		Deck<CharacterCard> character_deck;
 		Deck<CharacterCard> table_deck;
 
-		size_t _current_player;
+		size_t _current_player = 0llu;
 
 		bool _started = false;
 		int turn_count = 0;

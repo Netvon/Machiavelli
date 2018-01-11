@@ -30,7 +30,7 @@ namespace machiavelli
 
 		if (!characterCardsDrawn) {
 			if (game.current_player()->get_player() == game.getKing()) {
-				add_option("0", "Pak 2 character kaarten", std::bind(&GamePhase::handle_character_cards, this, _1, _2), true);
+				add_option("0", "Pak character kaarten", std::bind(&GamePhase::handle_character_cards, this, _1, _2), true);
 			}
 		}
 	}
@@ -55,7 +55,7 @@ namespace machiavelli
 
 			reset_options(true);
 
-			auto characterCard = game.drawCharacterCard();
+			CharacterCard characterCard = game.drawCharacterCard();
 
 			if (characterCard.name() != "<no name>") {
 				a << "Je hebt deze kaart getrokken: " << characterCard.name() << "\r\n";
