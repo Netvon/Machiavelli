@@ -62,7 +62,7 @@ namespace machiavelli
 		using namespace std::placeholders;
 
 		add_option("cards", "show your cards", std::bind(&Phase::print_cards, this, _1, _2));
-		add_option("building", "show your buildings", std::bind(&Phase::print_buildings, this, _1, _2));
+		add_option("buildings", "show your buildings", std::bind(&Phase::print_buildings, this, _1, _2));
 		add_option("gold", "show your gold", std::bind(&Phase::print_gold, this, _1, _2));
 	}
 
@@ -95,13 +95,35 @@ namespace machiavelli
 	void Phase::print_cards(const Socket & socket, const Player & player)
 	{
 		socket << "========= Your Cards =========\n";
-		socket << "<cards here>\n";
+		socket << "r\n";
+
+		for (auto& card : player.getPlayerBuildingCards()) {
+			if (!card.getIsBuilt()) {
+				if (card.description().empty()) {
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\n\r";
+				}
+				else {
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\n\r";
+				}
+			}
+		}
 	}
 
 	void Phase::print_buildings(const Socket & socket, const Player & player)
 	{
 		socket << "========= Your Cards =========\n";
-		socket << "<buildings here>\n";
+		socket << "\r\n";
+
+		for (auto& card : player.getPlayerBuildingCards()) {
+			if (card.getIsBuilt()) {
+				if (card.description().empty()) {
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\n\r";
+				}
+				else {
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\n\r";
+				}
+			}
+		}
 	}
 
 	void Phase::print_gold(const Socket & socket, const Player & player)

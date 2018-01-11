@@ -26,6 +26,8 @@ namespace machiavelli
 
 			p.gold() = 2_g;
 		}
+
+		doTurn();
 	}
 
 	void Game::doTurn()
