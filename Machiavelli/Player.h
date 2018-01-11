@@ -29,6 +29,7 @@ namespace machiavelli {
 		void name(std::string name);
 
 		void addBuildingCardToDeck(const building_card& pCard);
+
 		void addCharacterCardToDeck(const character_card& pCard);
 		building_card drawFromBuildingDeck();
 		character_card drawFromCharacterDeck();

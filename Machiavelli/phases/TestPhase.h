@@ -11,6 +11,7 @@ namespace machiavelli {
 	private:
 		void handle_cool(const Socket& socket, Player& player);
 		void handle_hallo(const Socket& socket, Player& player);
+		void handle_turn(const Socket& socket, Player& player);
 
 	public:
 		TestPhase(const std::string & name, std::shared_ptr<State> state);

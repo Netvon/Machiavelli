@@ -26,48 +26,12 @@ namespace machiavelli
 			auto& p = player->get_player();
 
 			p.gold() = 2_g;
-			
-			for (int i = 0; i < 4; i++) {
-				auto drawnCard = building_deck.draw();
-				p.addBuildingCardToDeck(drawnCard);
-
-				//player->get_socket() << "You got " << drawnCard.name() << "!\n";
-			}
 		}
-
-		doTurn();
 	}
 
 	void Game::doTurn()
 	{
-		for (auto& player : players) {
-			auto& p = player->get_player();
-
-			player->get_socket() << "\n\r";
-
-			player->get_socket() << "Goud:" << p.gold() << "\n\r";
-
-			player->get_socket() << "Gebouwen:" << "\n\r";
-
-			for (auto& card : p.getPlayerBuildingCards()) {
-				if (card.getIsBuilt()) {
-					player->get_socket() << card.name() << "\n\r";
-				}
-			}
-
-			player->get_socket() << "\n\r";
-
-			player->get_socket() << "Handkaarten:" << "\n\r";
-			for (auto& card : p.getPlayerBuildingCards()) {
-				if (!card.getIsBuilt()) {
-					player->get_socket() << card.name() << "\n\r";
-				}
-			}
-
-			if (p == getKing()) {
-				
-			}
-		}
+		
 	}
 
 	bool Game::addPlayer(std::shared_ptr<ClientInfo> player)
@@ -111,6 +75,30 @@ namespace machiavelli
 	void Game::replace_deck(Deck<CharacterCard>& other)
 	{
 		character_deck.replace_deck(other);
+	}
+
+	std::vector<BuildingCard> Game::drawAmountOfBuildingCards(int amountOfCards)
+	{
+		// TODO: Als er geen kaarten zijn mag dit niet
+
+		std::vector<BuildingCard> drawnCards;
+
+		for (int i = 0; i < amountOfCards; i++) {
+			drawnCards.push_back(building_deck.draw());
+		}
+
+		return drawnCards;
+	}
+
+	void Game::giveAmountOfBuildingCardsToPlayer(Player & player, int amount)
+	{
+		// TODO: Als er geen kaarten zijn mag dit niet
+
+		auto drawnCards = drawAmountOfBuildingCards(amount);
+
+		for (auto& card : drawnCards) {
+			player.addBuildingCardToDeck(card);
+		}
 	}
 
 	std::shared_ptr<ClientInfo> Game::current_player() const
