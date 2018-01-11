@@ -27,6 +27,9 @@ namespace machiavelli
 		void replace_deck(Deck<BuildingCard>& other);
 		void replace_deck(Deck<CharacterCard>& other);
 
+		std::vector<BuildingCard> drawAmountOfBuildingCards(int amountOfCards);
+		void giveAmountOfBuildingCardsToPlayer(Player& player, int amount);
+
 		std::shared_ptr<ClientInfo> current_player() const;
 
 	private:
