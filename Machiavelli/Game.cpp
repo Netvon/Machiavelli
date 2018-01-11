@@ -84,6 +84,11 @@ namespace machiavelli
 
 		std::vector<BuildingCard> drawnCards;
 
+		if (building_deck.sizeOfStack() < amountOfCards) {
+			current_player()->get_socket() << "Er zijn niet genoeg building kaarten meer.";
+			return drawnCards;
+		}
+
 		for (int i = 0; i < amountOfCards; i++) {
 			drawnCards.push_back(building_deck.draw());
 		}
@@ -97,11 +102,41 @@ namespace machiavelli
 
 		std::vector<CharacterCard> drawnCards;
 
+		if (character_deck.sizeOfStack() < amountOfCards) {
+			current_player()->get_socket() << "Er zijn niet genoeg character kaarten meer.";
+			return drawnCards;
+		}
+
 		for (int i = 0; i < amountOfCards; i++) {
 			drawnCards.push_back(character_deck.draw());
 		}
 
 		return drawnCards;
+	}
+
+	CharacterCard Game::drawCharacterCard()
+	{
+		if (character_deck.stackIsEmpty()) {
+			current_player()->get_socket() << "Er zijn niet genoeg character kaarten meer.";
+			return CharacterCard{};
+		}
+
+		return character_deck.draw();
+	}
+
+	BuildingCard Game::drawBuildingCard()
+	{
+		if (building_deck.stackIsEmpty()) {
+			current_player()->get_socket() << "Er zijn niet genoeg building kaarten meer.";
+			return BuildingCard{};
+		}
+
+		return building_deck.draw();
+	}
+
+	void Game::addCardtoTableDeck(const CharacterCard & pCard)
+	{
+		table_deck.push_top_stack(pCard);
 	}
 
 	void Game::giveAmountOfBuildingCardsToPlayer(Player & player, int amount)
@@ -113,6 +148,16 @@ namespace machiavelli
 		for (auto& card : drawnCards) {
 			player.addBuildingCardToDeck(card);
 		}
+	}
+
+	void Game::shuffleCharacterCards()
+	{
+		character_deck.shuffleStack();
+	}
+
+	void Game::shuffleBuildingCards()
+	{
+		building_deck.shuffleStack();
 	}
 
 	std::shared_ptr<ClientInfo> Game::current_player() const

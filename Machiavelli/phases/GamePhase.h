@@ -11,6 +11,7 @@ namespace machiavelli
 	{
 	private:
 		void handle_character_cards(const Socket& socket, Player& player);
+		bool characterCardsDrawn = false;
 	public:
 		GamePhase(const std::string & name, std::shared_ptr<State> state);
 		~GamePhase();

@@ -31,7 +31,16 @@ namespace machiavelli
 
 		std::vector<BuildingCard> drawAmountOfBuildingCards(int amountOfCards);
 		std::vector<CharacterCard> drawAmountOfCharacterCards(int amountOfCards);
+
+		CharacterCard drawCharacterCard();
+		BuildingCard drawBuildingCard();
+
+		void addCardtoTableDeck(const CharacterCard& pCard);
+
 		void giveAmountOfBuildingCardsToPlayer(Player& player, int amount);
+
+		void shuffleCharacterCards();
+		void shuffleBuildingCards();
 
 		std::shared_ptr<ClientInfo> current_player() const;
 

@@ -50,6 +50,17 @@ namespace machiavelli
 			return false;
 		}
 
+		int sizeOfStack() 
+		{
+			int amountOfCards = 0;
+
+			for (auto& card : deck) {
+				amountOfCards++;
+			}
+
+			return amountOfCards;
+		}
+
 		void shuffleStack()
 		{
 
