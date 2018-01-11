@@ -120,6 +120,13 @@ namespace machiavelli
 		return players.at(_current_player);
 	}
 
+	void Game::broadcast(const std::string & message)
+	{
+		for (auto player : players) {
+			player->get_socket() << message;
+		}
+	}
+
 	void Game::setKing()
 	{
 		auto randomIndex = random(0llu, 1llu);

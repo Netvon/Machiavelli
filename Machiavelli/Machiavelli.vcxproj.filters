@@ -102,6 +102,12 @@
     <ClInclude Include="phases\LobbyPhase.h">
       <Filter>phases</Filter>
     </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Effects.h">
+      <Filter>cards</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
@@ -148,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="phases\LobbyPhase.cpp">
       <Filter>phases</Filter>
+    </ClCompile>
+    <ClCompile Include="Effects.cpp">
+      <Filter>cards</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

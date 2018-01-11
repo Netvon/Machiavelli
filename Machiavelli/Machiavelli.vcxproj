@@ -123,6 +123,7 @@
     <ClInclude Include="data\Assets.h" />
     <ClInclude Include="data\memleak.h" />
     <ClInclude Include="Deck.h" />
+    <ClInclude Include="Effects.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gold.h" />
     <ClInclude Include="phases\LobbyPhase.h" />
@@ -145,6 +146,7 @@
     <ClCompile Include="cards\CardCategory.cpp" />
     <ClCompile Include="cards\BuildingCard.cpp" />
     <ClCompile Include="cards\CharacterCard.cpp" />
+    <ClCompile Include="Effects.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gold.cpp" />
     <ClCompile Include="phases\LobbyPhase.cpp" />

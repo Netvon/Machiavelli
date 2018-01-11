@@ -9,7 +9,8 @@ namespace machiavelli
 {
 	class Phase;
 
-	class State : public std::enable_shared_from_this<State>
+	class State
+		: public std::enable_shared_from_this<State>
 	{
 	public:
 
@@ -34,6 +35,8 @@ namespace machiavelli
 		bool add_player(std::shared_ptr<ClientInfo> player);
 
 		bool phase_changed();
+
+		void broadcast(const std::string & message);
 
 	private:
 		std::vector<std::shared_ptr<Phase>> phases;

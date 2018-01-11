@@ -19,7 +19,16 @@ namespace machiavelli
 
 	void LobbyPhase::entered_phase(const Socket & socket, const Player & player)
 	{
+		amount_in_game++;
 
+		if (amount_in_game >= 2) {
+
+			//state()->broadcast("Okay, that's two players! Let's begin.\r\n");
+			state()->navigate_to("game");
+		}
+		else {
+			socket << "There's not enough players yet.\n\r";
+		}
 	}
 
 	void LobbyPhase::add_options()

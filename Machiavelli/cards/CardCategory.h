@@ -10,10 +10,11 @@ namespace machiavelli
 		static const CardCategory& green();
 		static const CardCategory& blue();
 		static const CardCategory& purple();
+		static const CardCategory& red();
 		static const CardCategory& with(const std::string& name);
 
-		bool operator==(const CardCategory& other);
-		bool operator!=(const CardCategory& other);
+		bool operator==(const CardCategory& other) const;
+		bool operator!=(const CardCategory& other) const;
 
 		CardCategory() = default;
 		CardCategory(const std::string& name);

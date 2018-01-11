@@ -1,10 +1,10 @@
 #include "BuildingCard.h"
 #include <iterator>
 
-namespace machiavelli 
+namespace machiavelli
 {
 	BuildingCard::BuildingCard(const std::string & name, const Gold & cost, CardEffect effect, CardAction action)
-		:_cost{ cost }, _name{ name }, _effect{ effect }, _action { action }
+		:_cost{ cost }, _name{ name }, _effect{ effect }, _action{ action }
 	{
 	}
 
@@ -50,12 +50,12 @@ namespace machiavelli
 
 	void BuildingCard::operator()(Game & game)
 	{
-		if(_action) _action(game);
+		if (_action) _action(game);
 	}
 
 	void BuildingCard::operator()(Player & player)
 	{
-		if(_effect) _effect(player);
+		if (_effect) _effect(player);
 	}
 
 	void BuildingCard::setIsBuilt(bool pIsBuilt)
@@ -71,7 +71,7 @@ namespace machiavelli
 	std::istream & operator>>(std::istream & is, BuildingCard & card)
 	{
 		std::istream::sentry s(is);
-		
+
 		if (s) {
 
 			std::string description_string;
@@ -96,12 +96,12 @@ namespace machiavelli
 					is.setstate(is.badbit);
 					return is;
 				}
-				
+
 				card._cost = cost;
 				card._description = description_string;
 				card._category = CardCategory(category_string);
 				card._name = name;
-				
+
 				is.setstate(is.goodbit);
 			}
 			else {

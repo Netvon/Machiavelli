@@ -17,5 +17,7 @@ namespace machiavelli
 		virtual void print(const Socket & socket, const Player & player) override;
 		virtual void entered_phase(const Socket & socket, const Player & player) override;
 		virtual void add_options() override;
+	private:
+		int amount_in_game{ 0 };
 	};
 }

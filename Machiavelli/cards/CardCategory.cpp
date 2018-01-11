@@ -32,7 +32,13 @@ namespace machiavelli
 		return instance;
 	}
 
-	bool CardCategory::operator==(const CardCategory & other)
+	const CardCategory & CardCategory::red()
+	{
+		static CardCategory instance{ "rood" };
+		return instance;
+	}
+
+	bool CardCategory::operator==(const CardCategory & other) const
 	{
 		if (other.empty())
 			return false;
@@ -40,7 +46,7 @@ namespace machiavelli
 		return this->_name == other._name;
 	}
 
-	bool CardCategory::operator!=(const CardCategory & other)
+	bool CardCategory::operator!=(const CardCategory & other) const
 	{
 		return !((*this) == other);
 	}
