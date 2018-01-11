@@ -33,6 +33,8 @@ namespace machiavelli
 
 		bool add_player(std::shared_ptr<ClientInfo> player);
 
+		bool phase_changed();
+
 	private:
 		std::vector<std::shared_ptr<Phase>> phases;
 		size_t current_location_index;
@@ -41,5 +43,7 @@ namespace machiavelli
 		Game _game;
 
 		bool no_state_set_yet{ true };
+
+		bool _phase_changed{ false };
 	};
 }

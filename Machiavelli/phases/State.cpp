@@ -17,6 +17,7 @@ namespace machiavelli
 				}
 
 				current_location_index = index;
+				_phase_changed = true;
 
 				return;
 			}
@@ -53,5 +54,12 @@ namespace machiavelli
 	bool State::add_player(std::shared_ptr<ClientInfo> player)
 	{
 		return _game.addPlayer(player);
+	}
+
+	bool State::phase_changed()
+	{
+		auto result = _phase_changed;
+		_phase_changed = false;
+		return result;
 	}
 }

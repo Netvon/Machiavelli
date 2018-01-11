@@ -15,6 +15,7 @@ namespace machiavelli
 
 	void GamePhase::print(const Socket & socket, const Player & player)
 	{
+		print_info(socket, player);
 	}
 
 	void GamePhase::entered_phase(const Socket & socket, const Player & player)
