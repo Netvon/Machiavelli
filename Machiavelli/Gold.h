@@ -13,8 +13,9 @@ namespace machiavelli
 
 		/*operator value() const;
 		operator unsigned int() const;
-		operator int() const;*/
-		operator bool() const;
+		*/
+		/*operator bool() const;*/
+		operator int() const;
 
 		Gold& operator=(const Gold& other);
 

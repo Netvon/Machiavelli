@@ -19,6 +19,14 @@ namespace machiavelli
 		{
 		}
 
+		typename std::deque<T>::const_iterator begin() const {
+			return deck.begin();
+		}
+
+		typename std::deque<T>::const_iterator end() const {
+			return deck.end();
+		}
+
 		bool stackIsEmpty() const
 		{
 			if (deck.empty()) {
@@ -73,6 +81,7 @@ namespace machiavelli
 		{
 			deck.push_back(card);
 		}
+
 		void push_bottom_stack(T&& card)
 		{
 			deck.push_back(card);

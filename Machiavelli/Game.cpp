@@ -33,15 +33,38 @@ namespace machiavelli
 				auto drawnCard = building_deck.draw();
 				p.addBuildingCardToDeck(drawnCard);
 
-				player->get_socket() << "You got " << drawnCard.name() << "!\n";
+				//player->get_socket() << "You got " << drawnCard.name() << "!\n";
 			}
 		}
+
+		doTurn();
 	}
 
 	void Game::doTurn()
 	{
 		for (auto& player : players) {
 			auto& p = player->get_player();
+
+			player->get_socket() << "\n\r";
+
+			player->get_socket() << "Goud:" << p.gold() << "\n\r";
+
+			player->get_socket() << "Gebouwen:" << "\n\r";
+
+			for (auto& card : p.getPlayerBuildingCards()) {
+				if (card.getIsBuilt()) {
+					player->get_socket() << card.name() << "\n\r";
+				}
+			}
+
+			player->get_socket() << "\n\r";
+
+			player->get_socket() << "Handkaarten:" << "\n\r";
+			for (auto& card : p.getPlayerBuildingCards()) {
+				if (!card.getIsBuilt()) {
+					player->get_socket() << card.name() << "\n\r";
+				}
+			}
 
 			if (p == getKing()) {
 				

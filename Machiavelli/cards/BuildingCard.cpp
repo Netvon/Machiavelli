@@ -53,6 +53,16 @@ namespace machiavelli
 		if(_effect) _effect(player);
 	}
 
+	void BuildingCard::setIsBuilt(bool pIsBuilt)
+	{
+		_isBuilt = pIsBuilt;
+	}
+
+	bool BuildingCard::getIsBuilt() const
+	{
+		return _isBuilt;
+	}
+
 	std::istream & operator>>(std::istream & is, BuildingCard & card)
 	{
 		std::istream::sentry s(is);
