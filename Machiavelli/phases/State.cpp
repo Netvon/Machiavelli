@@ -20,14 +20,14 @@ namespace machiavelli
 
 				return;
 			}
-			else {
-				index++;
-			}
+
+			index++;
 		}
 	}
 
 	std::shared_ptr<Phase> State::current_phase() const {
-		return phases.at(current_location_index);
+		auto shared = phases.at(current_location_index);
+		return shared;
 	}
 
 	Game & State::game()

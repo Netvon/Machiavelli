@@ -13,6 +13,8 @@ namespace data::assets {
 		try
 		{
 			stream >> into;
+			stream.close();
+
 			return true;
 		}
 		catch (const std::exception& ex)
@@ -20,6 +22,7 @@ namespace data::assets {
 			std::cerr << ex.what();
 		}
 
+		stream.close();
 		return false;
 	}
 }

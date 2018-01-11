@@ -3,6 +3,7 @@
 #include "..\Player.h"
 #include <string>
 #include <functional>
+#include "..\data\memleak.h"
 
 namespace machiavelli
 {

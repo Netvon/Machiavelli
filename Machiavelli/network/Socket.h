@@ -32,6 +32,7 @@
 #include <sstream>
 #include <string>
 #include "CircularBuffer.h"
+#include "..\data\memleak.h"
 
 void throw_unless_would_block();
 

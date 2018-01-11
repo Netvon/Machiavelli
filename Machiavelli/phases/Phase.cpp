@@ -10,10 +10,6 @@ namespace machiavelli
 		add_option("info", "show this info", std::bind(&Phase::print_info, this, _1, _2));
 	}
 
-	Phase::~Phase()
-	{
-	}
-
 	void Phase::add_option(const std::string& command, const std::string & name, Option::handler func, bool is_for_current_player)
 	{
 		options.push_back(Option(command, name, func, is_for_current_player));

@@ -1,4 +1,5 @@
 #pragma once
+#include "..\data\memleak.h"
 #include "Phase.h"
 #include <vector>
 #include <memory>
@@ -11,14 +12,12 @@ namespace machiavelli
 	class State : public std::enable_shared_from_this<State>
 	{
 	public:
-		std::shared_ptr<State> getptr() {
-			return shared_from_this();
-		}
 
 		template<typename TPhase, typename ...TArgs>
 		void add_phase(const std::string& with_name, TArgs&&... arguments) 
 		{
-			phases.push_back(std::make_shared<TPhase>(with_name, std::shared_ptr<State>(this), std::forward<TArgs>(arguments)...));
+			auto shared = std::make_shared<TPhase>(with_name, shared_from_this(), std::forward<TArgs>(arguments)...);
+			phases.push_back(shared);
 		}
 
 		void navigate_to(const std::string& phase_name);

@@ -7,6 +7,7 @@
 //  Copyright (c) 2014 Avans Hogeschool, 's-Hertogenbosch. All rights reserved.
 //
 
+#include "data\memleak.h"
 #include <thread>
 #include <iostream>
 #include <exception>
@@ -25,6 +26,7 @@
 #include <iterator>
 #include <fstream>
 #include "phases/TestPhase.h"
+#include "main.h"
 
 namespace machiavelli {
 	const int tcp_port{ 1080 };
@@ -35,7 +37,7 @@ static bool running = true;
 
 static Sync_queue<ClientCommand> queue;
 
-static machiavelli::State state;
+static std::shared_ptr<machiavelli::State> state = std::make_shared<machiavelli::State>();
 
 void consume_command() // runs in its own thread
 {
@@ -48,7 +50,7 @@ void consume_command() // runs in its own thread
 
 				try
 				{
-					state.handle_input(client, player, command.get_cmd());
+					state->handle_input(client, player, command.get_cmd());
 					client << "\r\n" << machiavelli::prompt;
 				}
 				catch (const std::exception& ex) {
@@ -109,7 +111,7 @@ void handle_client(Socket client) // this function runs in a separate thread
 		auto client_info = init_client_session(std::move(client));
 		auto &socket = client_info->get_socket();
 
-		if (!state.game().addPlayer(client_info)) {
+		if (!state->game().addPlayer(client_info)) {
 			socket << "Sorry, there are already two players connected. Please try again later.\r\n";
 			return;
 		}
@@ -154,14 +156,13 @@ void handle_client(Socket client) // this function runs in a separate thread
 	}
 }
 
-int main(int argc, const char * argv[])
+int load_decks(bool &retflag)
 {
-	state.add_phase<machiavelli::TestPhase>("test");
-
+	retflag = true;
 	machiavelli::Deck<machiavelli::BuildingCard> bdeck;
 	machiavelli::Deck<machiavelli::CharacterCard> cdeck;
 
-	if (!data::assets::try_load_asset_into("data/Bouwkaarten.csv", bdeck) 
+	if (!data::assets::try_load_asset_into("data/Bouwkaarten.csv", bdeck)
 		|| !data::assets::try_load_asset_into("data/karakterkaarten.csv", cdeck)) {
 
 		std::cerr << "Failed to load assets.";
@@ -170,8 +171,24 @@ int main(int argc, const char * argv[])
 		return 0;
 	}
 
-	state.game().replace_deck(bdeck);
-	state.game().replace_deck(cdeck);
+	state->game().replace_deck(bdeck);
+	state->game().replace_deck(cdeck);
+	retflag = false;
+	return {};
+}
+
+int main(int argc, const char * argv[])
+{
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	state->add_phase<machiavelli::TestPhase>("test");
+
+	bool retflag;
+	int retval = load_decks(retflag);
+	if (retflag) {
+		state.~shared_ptr();
+		return retval;
+	}
 
 	// start command consumer thread
 	std::vector<std::thread> all_threads;
@@ -202,6 +219,7 @@ int main(int argc, const char * argv[])
 		t.join();
 	}
 
+	state.~shared_ptr();
 	return 0;
 }
 
