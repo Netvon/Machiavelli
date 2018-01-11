@@ -34,7 +34,7 @@ namespace machiavelli {
 static bool running = true;
 
 static Sync_queue<ClientCommand> queue;
-static machiavelli::Game game;
+
 static machiavelli::State state;
 
 void consume_command() // runs in its own thread
@@ -109,7 +109,7 @@ void handle_client(Socket client) // this function runs in a separate thread
 		auto client_info = init_client_session(std::move(client));
 		auto &socket = client_info->get_socket();
 
-		if (!game.addPlayer(client_info)) {
+		if (!state.game().addPlayer(client_info)) {
 			socket << "Sorry, there are already two players connected. Please try again later.\r\n";
 			return;
 		}
