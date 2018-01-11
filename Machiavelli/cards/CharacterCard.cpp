@@ -1,4 +1,5 @@
 #include "CharacterCard.h"
+#include "..\Effects.h"
 
 namespace machiavelli {
 
@@ -47,6 +48,7 @@ namespace machiavelli {
 		if (s) {
 			std::string order_string;
 			std::string name;
+			CardEffect effect;
 
 			unsigned int order{ 0 };
 
@@ -56,6 +58,7 @@ namespace machiavelli {
 			if (!order_string.empty() && !name.empty()) {
 				try
 				{
+					effect = machiavelli::effects::CardEffectFactory(name);
 					order = std::stoi(order_string);
 				}
 				catch (const std::exception&)
@@ -66,6 +69,7 @@ namespace machiavelli {
 
 				card._name = name;
 				card.order = order;
+				card._effect = effect;
 
 				is.setstate(is.goodbit);
 			}

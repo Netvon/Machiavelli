@@ -80,13 +80,32 @@ namespace machiavelli {
 		_draw_per_turn = new_value;
 	}
 
+	int Player::build_per_turn() const
+	{
+		return _build_per_turn;
+	}
+
+	void Player::build_per_turn(int new_value)
+	{
+		_build_per_turn = new_value;
+	}
+
 	void Player::apply_card_effects()
 	{
 		for (auto& card : character_cards) {
 			auto& me = *this;
+			auto effect = card.effect();
 
-			card.effect()(me);
+			if (effect) {
+				effect(me);
+			}
 		}
+	}
+
+	void Player::reset_effects()
+	{
+		_draw_per_turn = 2;
+		_build_per_turn = 1;
 	}
 
 	std::ostream & operator<<(std::ostream & os, const Player & player)
