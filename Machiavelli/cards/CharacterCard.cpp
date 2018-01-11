@@ -30,6 +30,11 @@ namespace machiavelli {
 		return isVisible;
 	}
 
+	void CharacterCard::setIsVisible(bool pIsVisible)
+	{
+		isVisible = pIsVisible;
+	}
+
 	std::istream & operator>>(std::istream & is, CharacterCard & card)
 	{
 		std::istream::sentry s(is);

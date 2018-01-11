@@ -14,6 +14,7 @@ namespace machiavelli {
 
 		const std::string& name() const;
 		bool getIsVisible() const;
+		void setIsVisible();
 
 	private:
 		std::string _name{ "<no name>" };

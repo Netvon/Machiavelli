@@ -91,6 +91,11 @@ namespace machiavelli
 		return drawnCards;
 	}
 
+	std::vector<CharacterCard> Game::drawAmountOfCharacterCards(int amountOfCards)
+	{
+		return std::vector<CharacterCard>();
+	}
+
 	void Game::giveAmountOfBuildingCardsToPlayer(Player & player, int amount)
 	{
 		// TODO: Als er geen kaarten zijn mag dit niet
