@@ -1,4 +1,5 @@
 #pragma once
+#include "..\data\memleak.h"
 #include "Option.h"
 #include "State.h"
 #include <vector>
@@ -14,7 +15,10 @@ namespace machiavelli {
 	{
 	public:
 		Phase(const std::string& name, std::shared_ptr<State> state);
-		~Phase();
+		virtual ~Phase() {
+			options.clear();
+			_state.reset();
+		}
 
 		void add_option(const std::string& command, const std::string & name, Option::handler func, bool is_for_current_player = false);
 		const std::string& name() const;

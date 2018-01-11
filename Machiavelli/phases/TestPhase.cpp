@@ -11,7 +11,7 @@ namespace machiavelli
 
 	TestPhase::~TestPhase()
 	{
-
+		
 	}
 
 	void TestPhase::print(const Socket & socket, const Player& player)

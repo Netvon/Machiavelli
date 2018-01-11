@@ -20,6 +20,10 @@ namespace machiavelli
 		{
 		}
 
+		~Deck() {
+			auto h = 'h';
+		}
+
 		typename std::deque<T>::const_iterator begin() const {
 			return deck.begin();
 		}
