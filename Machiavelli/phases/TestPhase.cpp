@@ -62,6 +62,8 @@ namespace machiavelli
 		auto& game = state()->game();
 		auto& p = player;
 
+		game.setKing();
+
 		game.giveAmountOfBuildingCardsToPlayer(player, 4);
 
 		socket << "\n\r";
