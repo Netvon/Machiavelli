@@ -15,6 +15,11 @@ namespace machiavelli {
 		return player_name == pOther.player_name && _gold == pOther._gold;
 	}
 
+	bool Player::operator!=(const Player & pOther)
+	{
+		return player_name != pOther.player_name && _gold != pOther._gold;
+	}
+
 	Gold & Player::gold()
 	{
 		return _gold;

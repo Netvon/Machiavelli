@@ -85,22 +85,22 @@ namespace machiavelli
 	{
 		bool is_current_player = state()->current_player()->get_player() == player;
 
-		socket << "========= Info =========\nCurrent State: " << state()->current_phase()->name()  << " | Name: " << player.name() << " | Gold: " << player.gold() << "\n";
+		socket << "========= Info =========\r\nCurrent State: " << state()->current_phase()->name()  << " | Name: " << player.name() << " | Gold: " << player.gold() << "\r\n";
 
 		if (is_current_player)
-			socket << "\n|> it's your turn\n";
+			socket << "\r\n|> it's your turn\n";
 
-		socket << "----------\n";
-		socket << "Commands;\n";
+		socket << "----------\r\n";
+		socket << "Commands;\r\n";
 
 		for (auto& option : options) {
 			if (option.is_for_current_player() && !is_current_player)
 				continue;
 
-			socket << " - [" << option.command() << "]\n   Name: " << option.name() << "\n";
+			socket << " - [" << option.command() << "]\r\n   Name: " << option.name() << "\r\n";
 		}
 
-		socket << "----------\n";
+		socket << "----------\r\n";
 	}
 
 	void Phase::print_cards(const Socket & socket, const Player & player)

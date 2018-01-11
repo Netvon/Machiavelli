@@ -30,6 +30,7 @@ namespace machiavelli
 		void replace_deck(Deck<CharacterCard>& other);
 
 		std::vector<BuildingCard> drawAmountOfBuildingCards(int amountOfCards);
+		std::vector<CharacterCard> drawAmountOfCharacterCards(int amountOfCards);
 		void giveAmountOfBuildingCardsToPlayer(Player& player, int amount);
 
 		std::shared_ptr<ClientInfo> current_player() const;
@@ -41,6 +42,7 @@ namespace machiavelli
 
 		Deck<BuildingCard> building_deck;
 		Deck<CharacterCard> character_deck;
+		Deck<CharacterCard> table_deck;
 
 		size_t _current_player;
 

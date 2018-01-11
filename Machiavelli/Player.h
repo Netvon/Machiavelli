@@ -21,6 +21,7 @@ namespace machiavelli {
 		~Player() = default;
 
 		bool operator==(const Player& pOther);
+		bool operator!=(const Player& pOther);
 
 		Gold& gold();
 		const Gold& gold() const;
