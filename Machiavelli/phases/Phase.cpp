@@ -5,6 +5,9 @@ namespace machiavelli
 	Phase::Phase(const std::string & name, std::shared_ptr<State> state)
 		: _name(name), _state(state)
 	{
+		using namespace std::placeholders;
+
+		add_option("info", "info command", std::bind(&Phase::print_info, this, _1, _2));
 	}
 
 	Phase::~Phase()
@@ -49,5 +52,19 @@ namespace machiavelli
 
 	std::shared_ptr<State> Phase::state() const {
 		return _state;
+	}
+
+	void Phase::print_info(const Socket & socket, const Player & player)
+	{
+		socket << "========= Info =========\nCurrent State: " << state()->current_phase()->name()  << " | Name: " << player.name() << " | Gold: " << player.gold() << "\n";
+
+		socket << "----------\n";
+		socket << "Commands;\n";
+
+		for (auto& option : options) {
+			socket << " - " << option.command() << "\n   Name: " << option.name() << "\n";
+		}
+
+		socket << "----------\n";
 	}
 }

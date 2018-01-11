@@ -20,6 +20,7 @@ namespace machiavelli {
 
 		// Inherited via Phase
 		virtual void print(const Socket & socket, const Player& player) override;
+		virtual void entered_phase(const Socket & socket, const Player & player) override;
 	};
 }
 

@@ -19,7 +19,12 @@ namespace machiavelli
 
 	void TestPhase::print(const Socket & socket, const Player& player)
 	{
-		socket << "Now in: TestPhase " << player.name() << "\n";
+		socket << "Now in: TestPhase\nName:\t" << player.name() <<  "\tGold:\t" << player.gold() << "\n";
+	}
+
+	void TestPhase::entered_phase(const Socket & socket, const Player & player)
+	{
+
 	}
 
 	void TestPhase::handle_cool(const Socket & socket, Player & player)

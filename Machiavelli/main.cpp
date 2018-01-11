@@ -170,6 +170,9 @@ int main(int argc, const char * argv[])
 		return 0;
 	}
 
+	state.game().replace_deck(bdeck);
+	state.game().replace_deck(cdeck);
+
 	// start command consumer thread
 	std::vector<std::thread> all_threads;
 	all_threads.emplace_back(consume_command);
