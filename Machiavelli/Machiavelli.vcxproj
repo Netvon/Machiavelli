@@ -125,13 +125,13 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gold.h" />
-    <ClInclude Include="main.h" />
     <ClInclude Include="network\CircularBuffer.h" />
     <ClInclude Include="network\ClientCommand.h" />
     <ClInclude Include="network\ClientInfo.h" />
     <ClInclude Include="network\Socket.h" />
     <ClInclude Include="network\Sync_queue.h" />
     <ClInclude Include="network\throw.h" />
+    <ClInclude Include="phases\GamePhase.h" />
     <ClInclude Include="phases\Option.h" />
     <ClInclude Include="phases\Phase.h" />
     <ClInclude Include="Player.h" />
@@ -148,6 +148,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network\Socket.cpp" />
     <ClCompile Include="network\throw.cpp" />
+    <ClCompile Include="phases\GamePhase.cpp" />
     <ClCompile Include="phases\Phase.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="phases\State.cpp" />

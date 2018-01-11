@@ -26,6 +26,7 @@
 #include <iterator>
 #include <fstream>
 #include "phases/TestPhase.h"
+#include "phases/GamePhase.h"
 #include "main.h"
 
 namespace machiavelli {
@@ -129,6 +130,9 @@ void handle_client(Socket client) // this function runs in a separate thread
 					if (cmd == "quit") {
 						socket.write("Bye!\r\n");
 						break; // out of game loop, will end this thread and close connection
+					}
+					else if (cmd == "start") {
+						state->add_phase<machiavelli::GamePhase>("game");
 					}
 					else if (cmd == "quit_server") {
 						running = false;

@@ -22,7 +22,7 @@ namespace machiavelli
 	{
 		auto game = state()->game();
 
-		if (game.current_player == game.getKing()) {
+		if (game.current_player()->get_player() == game.getKing()) {
 			add_option("Pak 2 character kaarten", "character card command", std::bind(&GamePhase::handle_character_cards, this, _1, _2), true);
 		}
 	}
@@ -30,6 +30,9 @@ namespace machiavelli
 	void GamePhase::handle_character_cards(const Socket & socket, Player & player)
 	{
 		auto game = state()->game();
+		std::vector<CharacterCard> drawnCards = game.drawAmountOfCharacterCards(2);
+
+		socket << "Je hebt deze twee kaarten getrokken: " << drawnCards.at(0).name() << " en " << drawnCards.at(1).name();
 
 		add_option("0", "Leg een character kaart af", [=](const auto& a, auto& b) {
 

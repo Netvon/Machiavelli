@@ -93,7 +93,15 @@ namespace machiavelli
 
 	std::vector<CharacterCard> Game::drawAmountOfCharacterCards(int amountOfCards)
 	{
-		return std::vector<CharacterCard>();
+		// TODO: Als er geen kaarten zijn mag dit niet
+
+		std::vector<CharacterCard> drawnCards;
+
+		for (int i = 0; i < amountOfCards; i++) {
+			drawnCards.push_back(character_deck.draw());
+		}
+
+		return drawnCards;
 	}
 
 	void Game::giveAmountOfBuildingCardsToPlayer(Player & player, int amount)

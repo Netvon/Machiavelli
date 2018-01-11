@@ -96,8 +96,8 @@
     <ClInclude Include="phases\TestPhase.h">
       <Filter>phases</Filter>
     </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="phases\GamePhase.h">
+      <Filter>phases</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +138,9 @@
       <Filter>phases</Filter>
     </ClCompile>
     <ClCompile Include="phases\TestPhase.cpp">
+      <Filter>phases</Filter>
+    </ClCompile>
+    <ClCompile Include="phases\GamePhase.cpp">
       <Filter>phases</Filter>
     </ClCompile>
   </ItemGroup>
