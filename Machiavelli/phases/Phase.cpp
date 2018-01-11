@@ -37,12 +37,15 @@ namespace machiavelli
 
 		bool found_match = false;
 
-		for (auto& option : options) {
+		auto temp_clone = std::vector<Option>(options);
+
+		for (auto& option : temp_clone) {
 			if (option.command() == command) {
 				found_match = true;
 
 				option.function()(socket, player);
 				handle_option_selected(option, socket, player);
+				return;
 			}
 		}
 
@@ -61,6 +64,18 @@ namespace machiavelli
 		add_option("cards", "show your cards", std::bind(&Phase::print_cards, this, _1, _2));
 		add_option("building", "show your buildings", std::bind(&Phase::print_buildings, this, _1, _2));
 		add_option("gold", "show your gold", std::bind(&Phase::print_gold, this, _1, _2));
+	}
+
+	void Phase::reset_options(bool enable_defaults)
+	{
+		using namespace std::placeholders;
+		options.clear();
+
+		add_option("info", "show this info", std::bind(&Phase::print_info, this, _1, _2));
+
+		if (enable_defaults) {
+			this->enable_defaults();
+		}
 	}
 
 	void Phase::print_info(const Socket & socket, const Player & player)

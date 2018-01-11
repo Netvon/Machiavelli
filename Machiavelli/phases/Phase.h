@@ -29,9 +29,11 @@ namespace machiavelli {
 		void virtual entered_phase(const Socket & socket, const Player& player) = 0;
 
 		void enable_defaults();
-
-	private:
+		void reset_options(bool enable_defaults = true);
 		void print_info(const Socket & socket, const Player& player);
+	
+	private:
+		
 		void print_cards(const Socket& socket, const Player& player);
 		void print_buildings(const Socket& socket, const Player& player);
 		void print_gold(const Socket& socket, const Player& player);
