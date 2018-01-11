@@ -118,10 +118,23 @@ void handle_client(Socket client) // this function runs in a separate thread
 		}
 		
 		auto &player = client_info->get_player();
-		socket << "Welcome, " << player.name() << ", have fun playing our game!\r\n" << machiavelli::prompt;
+		socket << "Welcome, " << player.name() << ", have fun playing our game!\r\n";
+
+		state->current_phase()->entered_phase(socket, player);
+		state->current_phase()->print(socket, player);
+
+		socket << machiavelli::prompt;
 
 		while (running) { // game loop
 			try {
+
+				if (state->phase_changed()) {
+					state->current_phase()->entered_phase(socket, player);
+					state->current_phase()->print(socket, player);
+
+					socket << machiavelli::prompt;
+				}
+
 				// read first line of request
 				std::string cmd;
 				if (socket.readline([&cmd](std::string input) { cmd = input; })) {
