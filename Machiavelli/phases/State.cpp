@@ -11,6 +11,7 @@ namespace machiavelli
 
 				if (!no_state_set_yet) {
 					_last_phase = current_phase()->name();
+					_phase_changed = true;
 				}
 				else {
 					no_state_set_yet = false;
@@ -61,5 +62,10 @@ namespace machiavelli
 		auto result = _phase_changed;
 		_phase_changed = false;
 		return result;
+	}
+
+	void State::broadcast(const std::string & message)
+	{
+		_game.broadcast(message);
 	}
 }

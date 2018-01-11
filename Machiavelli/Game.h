@@ -45,6 +45,8 @@ namespace machiavelli
 		std::shared_ptr<ClientInfo> current_player() const;
 		void next_player();
 
+		void broadcast(const std::string & message);
+
 	private:
 		void tick();
 

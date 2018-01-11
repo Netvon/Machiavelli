@@ -6,8 +6,8 @@ namespace machiavelli {
 	{
 	}
 
-	CharacterCard::CharacterCard(const std::string & name, const unsigned int order)
-		:_name(name), order(order)
+	CharacterCard::CharacterCard(const std::string & name, const unsigned int order, CardEffect effect)
+		:_name(name), order(order), _effect(effect)
 	{
 	}
 
@@ -33,6 +33,11 @@ namespace machiavelli {
 	void CharacterCard::setIsVisible(bool pIsVisible)
 	{
 		isVisible = pIsVisible;
+	}
+
+	CardEffect CharacterCard::effect() const
+	{
+		return _effect;
 	}
 
 	std::istream & operator>>(std::istream & is, CharacterCard & card)

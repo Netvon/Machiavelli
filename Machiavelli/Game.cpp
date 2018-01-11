@@ -166,12 +166,19 @@ namespace machiavelli
 	}
 
 	void Game::next_player()
-	{
+{
 		if (_current_player == 0llu) {
 			_current_player = 1llu;
 		}
 		else {
 			_current_player = 0llu;
+		}
+	}
+
+	void Game::broadcast(const std::string & message)
+	{
+		for (auto player : players) {
+			player->get_socket() << message;
 		}
 	}
 

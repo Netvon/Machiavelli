@@ -10,12 +10,12 @@ namespace machiavelli {
 
 	}
 
-	bool Player::operator==(const Player & pOther)
+	bool Player::operator==(const Player & pOther) const
 	{
 		return player_name == pOther.player_name && _gold == pOther._gold;
 	}
 
-	bool Player::operator!=(const Player & pOther)
+	bool Player::operator!=(const Player & pOther) const
 	{
 		return player_name != pOther.player_name && _gold != pOther._gold;
 	}
@@ -67,6 +67,25 @@ namespace machiavelli {
 	Player::character_card_deck Player::getPlayerCharacterCards() const
 	{
 		return character_cards;
+	}
+
+	int Player::draw_per_turn() const
+	{
+		return _draw_per_turn;
+	}
+
+	void Player::draw_per_turn(int new_value)
+	{
+		_draw_per_turn = new_value;
+	}
+
+	void Player::apply_card_effects()
+	{
+		for (auto& card : character_cards) {
+			auto& me = *this;
+
+			card.effect()(me);
+		}
 	}
 
 	std::ostream & operator<<(std::ostream & os, const Player & player)

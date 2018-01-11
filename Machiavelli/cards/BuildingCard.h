@@ -42,5 +42,7 @@ namespace machiavelli
 	};
 
 	std::istream& operator>>(std::istream& os, BuildingCard& card);
+
+	
 }
 
