@@ -37,7 +37,17 @@ namespace machiavelli
 
 	void PlayPhase::handle_turn(const Socket & socket, Player & player)
 	{
-		
+		auto& game = state()->game();
+		auto characterPosition = state()->getCharacterPosition();
+
+		for (auto& player : game.getPlayers()) {
+			auto& p = player->get_player();
+			auto characterCards = p.getPlayerCharacterCards();
+
+			if (p.hasCharacterCardByOrder(characterPosition)) {
+				game.current_player() = player;
+			}
+		}
 	}
 
 	void PlayPhase::nextTurn(const Socket & socket, const Player & player)

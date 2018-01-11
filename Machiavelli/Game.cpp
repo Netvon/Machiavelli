@@ -57,6 +57,11 @@ namespace machiavelli
 		return clientInfo->get_player();
 	}
 
+	std::vector<std::shared_ptr<ClientInfo>> Game::getPlayers() const
+	{
+		return players;
+	}
+
 	Player & Game::getKing()
 	{
 		return getPlayerByIndex(kingIndex);

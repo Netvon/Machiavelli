@@ -70,6 +70,17 @@ namespace machiavelli {
 		return character_cards;
 	}
 
+	bool Player::hasCharacterCardByOrder(const unsigned int pOrder)
+	{
+		for (auto& card : character_cards) {
+			if (card.getOrder() == pOrder) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	int Player::draw_per_turn() const
 	{
 		return _draw_per_turn;

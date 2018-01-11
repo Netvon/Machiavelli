@@ -20,6 +20,7 @@ namespace machiavelli
 
 		bool addPlayer(std::shared_ptr<ClientInfo> player);
 		Player& getPlayerByIndex(size_t pIndex);
+		std::vector<std::shared_ptr<ClientInfo>> getPlayers() const;
 
 		void setKing();
 		void nextPlayerIsKing();

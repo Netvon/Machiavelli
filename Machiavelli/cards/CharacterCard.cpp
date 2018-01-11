@@ -36,6 +36,11 @@ namespace machiavelli {
 		isVisible = pIsVisible;
 	}
 
+	unsigned int CharacterCard::getOrder() const
+	{
+		return order;
+	}
+
 	CardEffect CharacterCard::effect() const
 	{
 		return _effect;
