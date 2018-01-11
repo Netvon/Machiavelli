@@ -30,6 +30,26 @@ namespace machiavelli
 	void TestPhase::handle_cool(const Socket & socket, Player & player)
 	{
 		socket << "Cool! " << player.name() << "\n";
+
+		add_option("1", "be cool command", [=](const auto& a, auto& b) {
+			a << "pressed 1";
+
+			reset_options();
+		});
+
+		add_option("2", "be cool command", [=](const auto& a, auto& b) {
+			a << "pressed 2";
+
+			reset_options();
+		});
+
+		add_option("3", "be cool command", [=](const auto& a, auto& b) {
+			a << "pressed 3";
+
+			reset_options();
+		});
+
+		print_info(socket, player);
 	}
 
 	void TestPhase::handle_hallo(const Socket & socket, Player & player)
