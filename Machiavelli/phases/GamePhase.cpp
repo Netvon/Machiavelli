@@ -7,6 +7,7 @@ namespace machiavelli
 		: Phase(name, state)
 	{
 		add_options();
+		enable_defaults();
 	}
 
 	GamePhase::~GamePhase()

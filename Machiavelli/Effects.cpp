@@ -42,6 +42,7 @@ namespace machiavelli::effects
 		return [](machiavelli::Player& player)
 		{
 			player.draw_per_turn(4);
+			player.build_per_turn(3);
 		};
 	}
 
@@ -55,6 +56,17 @@ namespace machiavelli::effects
 				}
 			}
 		};
+	}
+
+	CardEffect CardEffectFactory(const std::string & name)
+	{
+		if (name == "Koning") return KingCardEffect();
+		if (name == "Prediker") return PreacherCardEffect();
+		if (name == "Koopman") return MerchantCardEffect();
+		if (name == "Bouwmeester") return ArchitectCardEffect();
+		if (name == "Condottiere") return CondottiereCardEffect();
+
+		return CardEffect();
 	}
 
 }

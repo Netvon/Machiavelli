@@ -201,7 +201,7 @@ int main(int argc, const char * argv[])
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	state->add_phase<machiavelli::LobbyPhase>("lobby");
-	state->add_phase<machiavelli::GamePhase>("game");
+	//state->add_phase<machiavelli::GamePhase>("game");
 
 	bool retflag;
 	int retval = load_decks(retflag);
