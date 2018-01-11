@@ -28,9 +28,14 @@ namespace machiavelli {
 
 		void virtual entered_phase(const Socket & socket, const Player& player) = 0;
 
-		void print_info(const Socket & socket, const Player& player);
+		void enable_defaults();
 
 	private:
+		void print_info(const Socket & socket, const Player& player);
+		void print_cards(const Socket& socket, const Player& player);
+		void print_buildings(const Socket& socket, const Player& player);
+		void print_gold(const Socket& socket, const Player& player);
+
 		std::vector<Option> options;
 		std::string _name = "<no name>";
 		std::shared_ptr<State> _state;

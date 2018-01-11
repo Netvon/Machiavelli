@@ -7,7 +7,7 @@ namespace machiavelli
 	{
 		using namespace std::placeholders;
 
-		add_option("info", "info command", std::bind(&Phase::print_info, this, _1, _2));
+		add_option("info", "show this info", std::bind(&Phase::print_info, this, _1, _2));
 	}
 
 	Phase::~Phase()
@@ -47,11 +47,20 @@ namespace machiavelli
 		}
 
 		if(!found_match)
-			socket << "Unknown command: " << command << "\n";
+			socket << "Unknown command: " << command << "\nTry the 'info' command to see a list of all commands.\n";
 	}
 	
 	std::shared_ptr<State> Phase::state() const {
 		return _state;
+	}
+
+	void Phase::enable_defaults()
+	{
+		using namespace std::placeholders;
+
+		add_option("cards", "show your cards", std::bind(&Phase::print_cards, this, _1, _2));
+		add_option("building", "show your buildings", std::bind(&Phase::print_buildings, this, _1, _2));
+		add_option("gold", "show your gold", std::bind(&Phase::print_gold, this, _1, _2));
 	}
 
 	void Phase::print_info(const Socket & socket, const Player & player)
@@ -66,5 +75,23 @@ namespace machiavelli
 		}
 
 		socket << "----------\n";
+	}
+
+	void Phase::print_cards(const Socket & socket, const Player & player)
+	{
+		socket << "========= Your Cards =========\n";
+		socket << "<cards here>\n";
+	}
+
+	void Phase::print_buildings(const Socket & socket, const Player & player)
+	{
+		socket << "========= Your Cards =========\n";
+		socket << "<buildings here>\n";
+	}
+
+	void Phase::print_gold(const Socket & socket, const Player & player)
+	{
+		socket << "========= Gold =========\n";
+		socket << player.gold() << "\n";
 	}
 }
