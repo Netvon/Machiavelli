@@ -111,6 +111,9 @@
     <ClInclude Include="cards\CardActions.h">
       <Filter>cards</Filter>
     </ClInclude>
+    <ClInclude Include="phases\PlayPhase.h">
+      <Filter>phases</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">
@@ -163,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="cards\CardActions.cpp">
       <Filter>cards</Filter>
+    </ClCompile>
+    <ClCompile Include="phases\PlayPhase.cpp">
+      <Filter>phases</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

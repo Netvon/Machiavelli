@@ -22,18 +22,13 @@ namespace machiavelli
 	void GamePhase::entered_phase(const Socket & socket, const Player & player)
 	{
 		socket << "Welcome to the GamePhase!\r\n";
-		
+
+		nextTurn(socket, player);
 	}
 
 	void GamePhase::add_options()
 	{
-		auto& game = state()->game();
-
-		if (!characterCardsDrawn) {
-			if (game.current_player()->get_player() == game.getKing()) {
-				add_option("0", "Pak character kaarten", std::bind(&GamePhase::handle_character_cards, this, _1, _2), true);
-			}
-		}
+		
 	}
 
 	void GamePhase::handle_character_cards(const Socket & socket, Player & player)
@@ -60,13 +55,39 @@ namespace machiavelli
 
 			if (characterCard.name() != "<no name>") {
 				a << "Je hebt deze kaart getrokken: " << characterCard.name() << "\r\n";
+				if (characterCard.name() == "King") {
+					if (game.getKing() != b) {
+						game.nextPlayerIsKing();
+					}
+					a << "Je bent nu de koning!";
+				}
 				a << "Deze kaart krijg je in je hand. De stapel wordt nu doorgegeven." << "\r\n";
-				b.addCharacterCardToDeck(game.drawCharacterCard());
+				b.addCharacterCardToDeck(characterCard);
 			}
 
 			print_info(a, b);
+
+			game.next_player();
+			game.broadcast(game.current_player()->get_player().name() + " is nu aan de beurt!");
+			nextTurn(game.current_player()->get_socket(), game.current_player()->get_player());
+
 		}, true);
 
 		print_info(socket, player);
+	}
+
+	void GamePhase::nextTurn(const Socket & socket, const Player & player)
+	{
+		auto& game = state()->game();
+		auto& currentPlayer = game.current_player()->get_player();
+
+		if (!game.isCharacterDeckEmpty()) {
+			if (currentPlayer == game.getKing() || currentPlayer == player) {
+				add_option("0", "Pak character kaarten", std::bind(&GamePhase::handle_character_cards, this, _1, _2), true);
+			}
+		}
+		else {
+			state()->navigate_to("play");
+		}
 	}
 }

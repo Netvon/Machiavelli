@@ -16,6 +16,7 @@ namespace machiavelli {
 		const std::string& name() const;
 		bool getIsVisible() const;
 		void setIsVisible(bool pIsVisible);
+		unsigned int getOrder() const;
 
 		CardEffect effect() const;
 

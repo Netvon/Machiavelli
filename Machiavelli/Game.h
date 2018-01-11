@@ -22,8 +22,10 @@ namespace machiavelli
 		bool addPlayer(std::shared_ptr<ClientInfo> player);
 		Player& getPlayerByIndex(size_t pIndex);
 		Player& getPlayerByName(const std::string& name) const;
+		std::vector<std::shared_ptr<ClientInfo>> getPlayers() const;
 
 		void setKing();
+		void nextPlayerIsKing();
 		Player& getKing();
 
 		bool started() const;
@@ -43,6 +45,9 @@ namespace machiavelli
 
 		void shuffleCharacterCards();
 		void shuffleBuildingCards();
+
+		bool isCharacterDeckEmpty();
+		bool isBuildingDeckEmpty();
 
 		std::shared_ptr<ClientInfo> current_player() const;
 		void next_player();

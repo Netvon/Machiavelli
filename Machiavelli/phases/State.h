@@ -37,10 +37,14 @@ namespace machiavelli
 		bool phase_changed();
 
 		void broadcast(const std::string & message);
+		
+		unsigned int getCharacterPosition() const;
+		void changeCharacterOrder(const unsigned int position);
 
 	private:
 		std::vector<std::shared_ptr<Phase>> phases;
 		size_t current_location_index;
+		unsigned int _characterPosition = 0;
 		std::string _last_phase;
 
 		Game _game;

@@ -88,7 +88,7 @@ namespace machiavelli
 		socket << "========= Info =========\r\nCurrent State: " << state()->current_phase()->name()  << " | Name: " << player.name() << " | Gold: " << player.gold() << "\r\n";
 
 		if (is_current_player)
-			socket << "\r\n|> it's your turn\n";
+			socket << "\r\n|> it's your turn\r\n";
 
 		socket << "----------\r\n";
 		socket << "Commands;\r\n";

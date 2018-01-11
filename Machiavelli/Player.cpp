@@ -47,6 +47,7 @@ namespace machiavelli {
 
 	void Player::addCharacterCardToDeck(const character_card & pCard)
 	{
+		character_cards.push_top_stack(pCard);
 	}
 
 	Player::building_card Player::drawFromBuildingDeck()
@@ -67,6 +68,17 @@ namespace machiavelli {
 	Player::character_card_deck Player::getPlayerCharacterCards() const
 	{
 		return character_cards;
+	}
+
+	bool Player::hasCharacterCardByOrder(const unsigned int pOrder)
+	{
+		for (auto& card : character_cards) {
+			if (card.getOrder() == pOrder) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	int Player::draw_per_turn() const

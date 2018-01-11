@@ -68,4 +68,15 @@ namespace machiavelli
 	{
 		_game.broadcast(message);
 	}
+
+	unsigned int State::getCharacterPosition() const
+	{
+		return _characterPosition;
+	}
+
+	void State::changeCharacterOrder(const unsigned int position)
+	{
+		
+		_characterPosition = position;
+	}
 }

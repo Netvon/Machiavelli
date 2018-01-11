@@ -27,6 +27,7 @@
 #include <fstream>
 #include "phases/TestPhase.h"
 #include "phases/GamePhase.h"
+#include "phases/PlayPhase.h"
 #include "main.h"
 #include "phases/LobbyPhase.h"
 
@@ -146,6 +147,8 @@ void handle_client(Socket client) // this function runs in a separate thread
 						break; // out of game loop, will end this thread and close connection
 					}
 					else if (cmd == "start") {
+						state->add_phase<machiavelli::GamePhase>("game");
+						state->add_phase<machiavelli::PlayPhase>("play");
 						state->navigate_to("game");
 						continue;
 					}
@@ -201,7 +204,6 @@ int main(int argc, const char * argv[])
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	state->add_phase<machiavelli::LobbyPhase>("lobby");
-	//state->add_phase<machiavelli::GamePhase>("game");
 
 	bool retflag;
 	int retval = load_decks(retflag);
