@@ -20,8 +20,11 @@
 #include "Player.h"
 #include ".\network\ClientInfo.h"
 #include "Game.h"
+#include ".\phases\State.h"
+#include ".\data\Assets.h"
 #include <iterator>
 #include <fstream>
+#include "phases/TestPhase.h"
 
 namespace machiavelli {
 	const int tcp_port{ 1080 };
@@ -32,6 +35,7 @@ static bool running = true;
 
 static Sync_queue<ClientCommand> queue;
 static machiavelli::Game game;
+static machiavelli::State state;
 
 void consume_command() // runs in its own thread
 {
@@ -41,9 +45,11 @@ void consume_command() // runs in its own thread
 			if (auto clientInfo = command.get_client_info().lock()) {
 				auto &client = clientInfo->get_socket();
 				auto &player = clientInfo->get_player();
-				try {
-					// TODO handle command here
-					client << player.name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n" << machiavelli::prompt;
+
+				try
+				{
+					state.handle_input(client, player, command.get_cmd());
+					client << "\r\n" << machiavelli::prompt;
 				}
 				catch (const std::exception& ex) {
 					std::cerr << "*** exception in consumer thread for player " << player.name() << ": " << ex.what() << '\n';
@@ -57,6 +63,24 @@ void consume_command() // runs in its own thread
 						client.write("Sorry, something went wrong during handling of your request.\r\n");
 					}
 				}
+				
+
+				//try {
+				//	// TODO handle command here
+				//	client << player.name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n" << machiavelli::prompt;
+				//}
+				//catch (const std::exception& ex) {
+				//	std::cerr << "*** exception in consumer thread for player " << player.name() << ": " << ex.what() << '\n';
+				//	if (client.is_open()) {
+				//		client.write("Sorry, something went wrong during handling of your request.\r\n");
+				//	}
+				//}
+				//catch (...) {
+				//	std::cerr << "*** exception in consumer thread for player " << player.name() << '\n';
+				//	if (client.is_open()) {
+				//		client.write("Sorry, something went wrong during handling of your request.\r\n");
+				//	}
+				//}
 			}
 		}
 	}
@@ -132,18 +156,19 @@ void handle_client(Socket client) // this function runs in a separate thread
 
 int main(int argc, const char * argv[])
 {
-	std::ifstream csvb("data/Bouwkaarten.csv");
+	state.add_phase<machiavelli::TestPhase>("test");
+
 	machiavelli::Deck<machiavelli::BuildingCard> bdeck;
-
-	std::ifstream csvc("data/karakterkaarten.csv");
 	machiavelli::Deck<machiavelli::CharacterCard> cdeck;
-	//std::istringstream iss{ "Landgoed;3;geel;hallo\nLandgoed;5;geel;" };
 
-	csvb >> bdeck;
-	csvc >> cdeck;
+	if (!data::assets::try_load_asset_into("data/Bouwkaarten.csv", bdeck) 
+		|| !data::assets::try_load_asset_into("data/karakterkaarten.csv", cdeck)) {
 
-	game.replace_deck(bdeck);
-	game.replace_deck(cdeck);
+		std::cerr << "Failed to load assets.";
+		std::cin.get();
+
+		return 0;
+	}
 
 	// start command consumer thread
 	std::vector<std::thread> all_threads;

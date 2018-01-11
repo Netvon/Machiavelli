@@ -84,6 +84,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,7 +120,8 @@
     <ClInclude Include="cards\BuildingCard.h" />
     <ClInclude Include="cards\CharacterCard.h" />
     <ClInclude Include="CardEffect.h" />
-    <ClInclude Include="util\CsvValue.h" />
+    <ClInclude Include="data\Assets.h" />
+    <ClInclude Include="data\memleak.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gold.h" />
@@ -129,7 +131,11 @@
     <ClInclude Include="network\Socket.h" />
     <ClInclude Include="network\Sync_queue.h" />
     <ClInclude Include="network\throw.h" />
+    <ClInclude Include="phases\Option.h" />
+    <ClInclude Include="phases\Phase.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="phases\State.h" />
+    <ClInclude Include="phases\TestPhase.h" />
     <ClInclude Include="util\RandomGenerator.h" />
   </ItemGroup>
   <ItemGroup>
@@ -141,7 +147,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network\Socket.cpp" />
     <ClCompile Include="network\throw.cpp" />
+    <ClCompile Include="phases\Phase.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="phases\State.cpp" />
+    <ClCompile Include="phases\TestPhase.cpp" />
     <ClCompile Include="util\RandomGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>

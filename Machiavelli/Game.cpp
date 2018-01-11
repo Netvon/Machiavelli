@@ -2,10 +2,8 @@
 #include <algorithm>
 #include <random>
 #include "util\RandomGenerator.h"
-#include "util\CsvValue.h"
 
 using util::RandomGenerator;
-using util::CsvValue;
 
 namespace machiavelli
 {
@@ -90,6 +88,11 @@ namespace machiavelli
 	void Game::replace_deck(Deck<CharacterCard>& other)
 	{
 		character_deck.replace_deck(other);
+	}
+
+	std::shared_ptr<ClientInfo> Game::current_player() const
+	{
+		return players.at(_current_player);
 	}
 
 	void Game::setKing()

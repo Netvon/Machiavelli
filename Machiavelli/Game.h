@@ -27,6 +27,8 @@ namespace machiavelli
 		void replace_deck(Deck<BuildingCard>& other);
 		void replace_deck(Deck<CharacterCard>& other);
 
+		std::shared_ptr<ClientInfo> current_player() const;
+
 	private:
 		void tick();
 		void setKing();
@@ -35,6 +37,8 @@ namespace machiavelli
 
 		Deck<BuildingCard> building_deck;
 		Deck<CharacterCard> character_deck;
+
+		size_t _current_player;
 
 		bool _started = false;
 		int turn_count = 0;

@@ -25,6 +25,12 @@
     <Filter Include="data">
       <UniqueIdentifier>{62487603-42fa-4a03-9509-64cff8808c74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="phases">
+      <UniqueIdentifier>{598d10bc-21e5-489f-bc62-67ed7da24776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="input">
+      <UniqueIdentifier>{67461ae3-3666-466a-a479-51463b27d477}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -72,8 +78,23 @@
     <ClInclude Include="util\RandomGenerator.h">
       <Filter>util</Filter>
     </ClInclude>
-    <ClInclude Include="util\CsvValue.h">
+    <ClInclude Include="data\Assets.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="phases\Option.h">
+      <Filter>phases</Filter>
+    </ClInclude>
+    <ClInclude Include="phases\Phase.h">
+      <Filter>phases</Filter>
+    </ClInclude>
+    <ClInclude Include="phases\State.h">
+      <Filter>phases</Filter>
+    </ClInclude>
+    <ClInclude Include="data\memleak.h">
       <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="phases\TestPhase.h">
+      <Filter>phases</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +127,15 @@
     </ClCompile>
     <ClCompile Include="util\RandomGenerator.cpp">
       <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="phases\State.cpp">
+      <Filter>phases</Filter>
+    </ClCompile>
+    <ClCompile Include="phases\Phase.cpp">
+      <Filter>phases</Filter>
+    </ClCompile>
+    <ClCompile Include="phases\TestPhase.cpp">
+      <Filter>phases</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

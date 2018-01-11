@@ -1,6 +1,5 @@
 #include "BuildingCard.h"
 #include <iterator>
-#include "..\util\CsvValue.h"
 
 namespace machiavelli 
 {
