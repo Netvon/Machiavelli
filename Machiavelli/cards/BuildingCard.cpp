@@ -13,6 +13,7 @@ namespace machiavelli
 		_cost = other._cost;
 		_name = other._name;
 		_category = other._category;
+		_description = other._description;
 
 		return *this;
 	}
@@ -40,6 +41,11 @@ namespace machiavelli
 	const std::string & BuildingCard::description() const
 	{
 		return _description;
+	}
+
+	const CardCategory & BuildingCard::category() const
+	{
+		return _category;
 	}
 
 	void BuildingCard::operator()(Game & game)

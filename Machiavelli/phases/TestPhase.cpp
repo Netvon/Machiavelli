@@ -50,11 +50,18 @@ namespace machiavelli
 
 		socket << "Goud:" << p.gold() << "\n\r";
 
+		socket << "\n\r";
+
 		socket << "Gebouwen:" << "\n\r";
 
 		for (auto& card : p.getPlayerBuildingCards()) {
 			if (card.getIsBuilt()) {
-				socket << card.name() << "\n\r";
+				if (card.description().empty()) {
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\n\r";
+				}
+				else {
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\n\r";
+				}
 			}
 		}
 
@@ -63,7 +70,12 @@ namespace machiavelli
 		socket << "Handkaarten:" << "\n\r";
 		for (auto& card : p.getPlayerBuildingCards()) {
 			if (!card.getIsBuilt()) {
-				socket << card.name() << "\n\r";
+				if (card.description().empty()) {
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\n\r";
+				}
+				else {
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\n\r";
+				}
 			}
 		}
 

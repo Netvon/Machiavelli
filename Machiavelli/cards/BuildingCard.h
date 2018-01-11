@@ -21,6 +21,7 @@ namespace machiavelli
 		const Gold& cost() const;
 		const std::string& name() const;
 		const std::string& description() const;
+		const CardCategory& category() const;
 
 		void operator () (Game& game);
 		void operator () (Player& player);
@@ -31,7 +32,7 @@ namespace machiavelli
 	private:
 		Gold _cost{ 1_g };
 		std::string _name{ "<no name>" };
-		std::string _description{ "" };
+		std::string _description;
 		CardCategory _category{ CardCategory::none() };
 		CardEffect _effect;
 		CardAction _action;
