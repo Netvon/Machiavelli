@@ -7,9 +7,14 @@ namespace machiavelli
 		this->_amount = amount;
 	}
 
-	Gold::operator bool() const
+	/*Gold::operator bool() const
 	{
 		return _amount > 0;
+	}*/
+
+	Gold::operator int() const
+	{
+		return static_cast<int>(_amount);
 	}
 
 	Gold & Gold::operator=(const Gold & other)

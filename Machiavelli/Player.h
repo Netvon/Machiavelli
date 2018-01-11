@@ -32,6 +32,8 @@ namespace machiavelli {
 		void addCharacterCardToDeck(const character_card& pCard);
 		building_card drawFromBuildingDeck();
 		character_card drawFromCharacterDeck();
+		building_card_deck getPlayerBuildingCards() const;
+		character_card_deck getPlayerCharacterCards() const;
 
 	private:
 		Gold _gold{ 0_g };

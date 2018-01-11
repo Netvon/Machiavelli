@@ -54,6 +54,16 @@ namespace machiavelli {
 		return character_cards.draw();
 	}
 
+	Player::building_card_deck Player::getPlayerBuildingCards() const
+	{
+		return building_cards;
+	}
+
+	Player::character_card_deck Player::getPlayerCharacterCards() const
+	{
+		return character_cards;
+	}
+
 	std::ostream & operator<<(std::ostream & os, const Player & player)
 	{
 		std::ostream::sentry s(os);
