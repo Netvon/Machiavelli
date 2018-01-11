@@ -47,6 +47,7 @@ namespace machiavelli {
 
 	void Player::addCharacterCardToDeck(const character_card & pCard)
 	{
+		character_cards.push_top_stack(pCard);
 	}
 
 	Player::building_card Player::drawFromBuildingDeck()

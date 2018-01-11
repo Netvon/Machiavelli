@@ -160,6 +160,16 @@ namespace machiavelli
 		building_deck.shuffleStack();
 	}
 
+	bool Game::isCharacterDeckEmpty()
+	{
+		return character_deck.stackIsEmpty();
+	}
+
+	bool Game::isBuildingDeckEmpty()
+	{
+		return building_deck.stackIsEmpty();
+	}
+
 	std::shared_ptr<ClientInfo> Game::current_player() const
 	{
 		return players.at(_current_player);

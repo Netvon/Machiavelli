@@ -42,6 +42,9 @@ namespace machiavelli
 		void shuffleCharacterCards();
 		void shuffleBuildingCards();
 
+		bool isCharacterDeckEmpty();
+		bool isBuildingDeckEmpty();
+
 		std::shared_ptr<ClientInfo> current_player() const;
 		void next_player();
 

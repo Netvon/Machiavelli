@@ -137,6 +137,7 @@
     <ClInclude Include="phases\GamePhase.h" />
     <ClInclude Include="phases\Option.h" />
     <ClInclude Include="phases\Phase.h" />
+    <ClInclude Include="phases\PlayPhase.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="phases\State.h" />
     <ClInclude Include="phases\TestPhase.h" />
@@ -155,6 +156,7 @@
     <ClCompile Include="network\throw.cpp" />
     <ClCompile Include="phases\GamePhase.cpp" />
     <ClCompile Include="phases\Phase.cpp" />
+    <ClCompile Include="phases\PlayPhase.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="phases\State.cpp" />
     <ClCompile Include="phases\TestPhase.cpp" />
