@@ -13,6 +13,10 @@ namespace machiavelli
 	{
 	}
 
+	void GamePhase::print(const Socket & socket, const Player & player)
+	{
+	}
+
 	void GamePhase::entered_phase(const Socket & socket, const Player & player)
 	{
 		socket << "Welcome to the GamePhase!\r\n";
