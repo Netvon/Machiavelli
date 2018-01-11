@@ -20,6 +20,8 @@ namespace machiavelli
 
 		bool addPlayer(std::shared_ptr<ClientInfo> player);
 		Player& getPlayerByIndex(size_t pIndex);
+
+		void setKing();
 		Player& getKing();
 
 		bool started() const;
@@ -34,7 +36,6 @@ namespace machiavelli
 
 	private:
 		void tick();
-		void setKing();
 
 		std::vector<std::shared_ptr<ClientInfo>> players;
 

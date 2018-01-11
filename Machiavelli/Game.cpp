@@ -20,7 +20,6 @@ namespace machiavelli
 		_started = true;
 
 		building_deck.shuffleStack();
-		setKing();
 
 		for (auto& player : players) {
 			auto& p = player->get_player();
