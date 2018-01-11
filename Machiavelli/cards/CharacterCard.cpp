@@ -41,6 +41,16 @@ namespace machiavelli {
 		return _effect;
 	}
 
+	bool CharacterCard::is_murdered() const
+	{
+		return _murdered;
+	}
+
+	void CharacterCard::is_murdered(bool new_value)
+	{
+		_murdered = new_value;
+	}
+
 	std::istream & operator>>(std::istream & is, CharacterCard & card)
 	{
 		std::istream::sentry s(is);

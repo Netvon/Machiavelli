@@ -89,6 +89,16 @@ namespace machiavelli {
 		_build_per_turn = new_value;
 	}
 
+	void Player::set_protected_against(const std::string & character)
+	{
+		protected_against.insert(character);
+	}
+
+	bool Player::is_protected_against(const std::string & character)
+	{
+		return protected_against.find(character) != protected_against.end();
+	}
+
 	void Player::apply_card_effects()
 	{
 		for (auto& card : character_cards) {
@@ -105,6 +115,31 @@ namespace machiavelli {
 	{
 		_draw_per_turn = 2;
 		_build_per_turn = 1;
+
+		protected_against.clear();
+
+		for (auto& card : character_cards) {
+			card.is_murdered(false);
+		}
+	}
+
+	void Player::kill_character(const std::string & name)
+	{
+		for (auto& card : character_cards) {
+			if (card.name() == name) {
+				card.is_murdered(true);
+			}
+		}
+	}
+
+	void Player::swap_building_cards(Player & player)
+	{
+		building_cards.swapStack(player.building_cards);
+	}
+
+	size_t Player::building_card_amount() const
+	{
+		return building_cards.size();
 	}
 
 	std::ostream & operator<<(std::ostream & os, const Player & player)

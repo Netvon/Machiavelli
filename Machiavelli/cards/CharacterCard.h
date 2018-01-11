@@ -19,11 +19,16 @@ namespace machiavelli {
 
 		CardEffect effect() const;
 
+		bool is_murdered() const;
+		void is_murdered(bool new_value);
+
 	private:
 		std::string _name{ "<no name>" };
 		CardEffect _effect;
 		unsigned int order = 0;
 		bool isVisible = true;
+
+		bool _murdered = false;
 
 		friend std::istream& operator>>(std::istream& is, CharacterCard& card);
 	};
