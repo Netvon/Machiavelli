@@ -55,6 +55,12 @@ namespace machiavelli
 
 			if (characterCard.name() != "<no name>") {
 				a << "Je hebt deze kaart getrokken: " << characterCard.name() << "\r\n";
+				if (characterCard.name() == "King") {
+					if (game.getKing() != b) {
+						game.nextPlayerIsKing();
+					}
+					a << "Je bent nu de koning!";
+				}
 				a << "Deze kaart krijg je in je hand. De stapel wordt nu doorgegeven." << "\r\n";
 				b.addCharacterCardToDeck(characterCard);
 			}

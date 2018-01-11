@@ -198,4 +198,14 @@ namespace machiavelli
 
 		kingIndex = randomIndex;
 	}
+
+	void Game::nextPlayerIsKing()
+	{
+		if (kingIndex == 0llu) {
+			kingIndex == 1llu;
+		}
+		else {
+			kingIndex = 0llu;
+		}
+	}
 }

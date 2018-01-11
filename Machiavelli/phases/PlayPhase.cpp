@@ -27,7 +27,12 @@ namespace machiavelli
 
 	void PlayPhase::add_options()
 	{
+		auto& game = state()->game();
+		auto& currentPlayer = game.current_player()->get_player();
 
+		if (currentPlayer == game.getKing()) {
+			add_option("0", "Roep volgende karakter op", std::bind(&PlayPhase::handle_turn, this, _1, _2), true);
+		}
 	}
 
 	void PlayPhase::handle_turn(const Socket & socket, Player & player)

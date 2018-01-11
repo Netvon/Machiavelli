@@ -22,6 +22,7 @@ namespace machiavelli
 		Player& getPlayerByIndex(size_t pIndex);
 
 		void setKing();
+		void nextPlayerIsKing();
 		Player& getKing();
 
 		bool started() const;
