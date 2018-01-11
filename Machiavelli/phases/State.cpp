@@ -17,6 +17,7 @@ namespace machiavelli
 				}
 
 				current_location_index = index;
+
 				return;
 			}
 			else {

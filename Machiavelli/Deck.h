@@ -11,6 +11,7 @@ namespace machiavelli
 	class Deck
 	{
 	public:
+
 		Deck()
 		{
 		}
