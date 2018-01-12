@@ -1,4 +1,5 @@
 #include "PlayPhase.h"
+#include "TurnPhase.h"
 using namespace std::placeholders;
 
 namespace machiavelli
@@ -48,6 +49,7 @@ namespace machiavelli
 				game.current_player() = player;
 				game.broadcast(p.name() + "is nu aan de beurt!");
 				reset_options(false);
+				state()->add_phase<TurnPhase>("turn");
 				state()->navigate_to("turn");
 			}
 			else {

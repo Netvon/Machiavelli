@@ -78,13 +78,15 @@ namespace machiavelli
 	{
 		auto& game = state()->game();
 		
-		auto card1 = game.drawBuildingCard();
-		auto card2 = game.drawBuildingCard();
+		BuildingCard card1 = game.drawBuildingCard();
+		BuildingCard card2 = game.drawBuildingCard();
 
 		if (!discardedBuildingCard) {
 			socket << "Je hebt " << card1.name() << " en " << card2.name() << " gekregen. Welke leg je af?";
 
-			add_option("0", card1.name(), [=](const auto& a, auto& b) {
+			reset_options(true);
+
+			add_option("0", card1.name(), [&](const auto& a, auto& b) {
 				auto& game = state()->game();
 
 				reset_options(true);
@@ -97,7 +99,7 @@ namespace machiavelli
 
 			}, true);
 
-			add_option("1", card2.name(), [=](const auto& a, auto& b) {
+			add_option("1", card2.name(), [&](const auto& a, auto& b) {
 				auto& game = state()->game();
 
 				reset_options(true);
@@ -109,6 +111,8 @@ namespace machiavelli
 				discardedBuildingCard = true;
 
 			}, true);
+
+			print_info(socket, player);
 		}
 	}
 

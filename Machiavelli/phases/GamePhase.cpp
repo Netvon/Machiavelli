@@ -1,5 +1,5 @@
 #include "GamePhase.h"
-#include "TurnPhase.h"
+#include "PlayPhase.h"
 using namespace std::placeholders;
 
 namespace machiavelli
@@ -90,7 +90,7 @@ namespace machiavelli
 			}
 		}
 		else {
-			state()->add_phase<TurnPhase>("play");
+			state()->add_phase<PlayPhase>("play");
 			state()->navigate_to("play");
 		}
 	}
