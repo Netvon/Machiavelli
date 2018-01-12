@@ -186,6 +186,9 @@ namespace machiavelli {
 
 	void Player::destroy_building(const std::string & name)
 	{
+		if (name == "Kerker")
+			return;
+
 		for (auto & card : building_cards) {
 			if(card.name() == name)
 				card.setIsBuilt(false);
