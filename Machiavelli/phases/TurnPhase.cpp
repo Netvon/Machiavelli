@@ -37,7 +37,7 @@ namespace machiavelli
 			if(effect)
 				effect(currentPlayer);
 
-			add_option("0", "Gebruik het karaktereigenschap van de " + current_card.name(), [&](const Socket& s, Player& p) {
+			add_option("0", "Gebruik het karaktereigenschap van de " + current_card.name(), [&, current_card](const Socket& s, Player& p) {
 
 				reset_options(true);
 

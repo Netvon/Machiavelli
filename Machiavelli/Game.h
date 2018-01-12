@@ -50,6 +50,7 @@ namespace machiavelli
 		bool isBuildingDeckEmpty();
 
 		std::shared_ptr<ClientInfo> current_player() const;
+		void current_player(const std::string& name);
 		void next_player();
 
 		void broadcast(const std::string & message);

@@ -46,7 +46,9 @@ namespace machiavelli
 			auto characterCards = p.getPlayerCharacterCards();
 
 			if (p.hasCharacterCardByOrder(characterPosition)) {
-				game.current_player() = player;
+				auto old = game.current_player();
+				game.current_player(p.name());
+				auto new_ = game.current_player();
 				game.broadcast(p.name() + "is nu aan de beurt!");
 				reset_options(false);
 				state()->add_phase<TurnPhase>("turn");
