@@ -11,6 +11,7 @@ namespace machiavelli {
 		CharacterCard(const std::string& name, const unsigned int order, CardEffect effect);
 		~CharacterCard();
 
+		CharacterCard & operator=(const CharacterCard & other);
 		bool operator==(const CharacterCard& pOther);
 
 		const std::string& name() const;
@@ -19,6 +20,8 @@ namespace machiavelli {
 		unsigned int getOrder() const;
 
 		CardEffect effect() const;
+
+		void operator() (Player& player);
 
 		bool is_murdered() const;
 		void is_murdered(bool new_value);

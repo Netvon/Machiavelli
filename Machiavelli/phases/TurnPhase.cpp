@@ -1,4 +1,5 @@
 #include "TurnPhase.h"
+#include "../cards/CardActions.h"
 using namespace std::placeholders;
 
 namespace machiavelli
@@ -28,8 +29,25 @@ namespace machiavelli
 		auto& currentPlayer = game.current_player()->get_player();
 
 		if (game.current_player()->get_player() == player) {
-			socket << "Je bent nu de: " << player.findCardByOrder(currentPosition).name() << "\r\n";
-			add_option("0", "Gebruik het karaktereigenschap van de " + player.findCardByOrder(currentPosition).name(), std::bind(&TurnPhase::handle_character_turn, this, _1, _2), true);
+			auto& current_card = player.findCardByOrder(currentPosition);
+
+			socket << "Je bent nu de: " << current_card.name() << "\r\n";
+
+			auto effect = current_card.effect();
+			if(effect)
+				effect(currentPlayer);
+
+			add_option("0", "Gebruik het karaktereigenschap van de " + current_card.name(), [&](const Socket& s, Player& p) {
+
+				reset_options(true);
+
+				machiavelli::actions::add_actions_for(current_card, state()->current_phase());
+
+				print_info(s, p);
+
+			});
+
+
 			if (!gotGold) {
 				add_option("1", "Pak 2 goudstukken", std::bind(&TurnPhase::handle_get_gold, this, _1, _2), true);
 			}
@@ -42,11 +60,6 @@ namespace machiavelli
 	}
 
 	void TurnPhase::add_options()
-	{
-		
-	}
-
-	void TurnPhase::handle_character_turn(const Socket & socket, const Player & player)
 	{
 		
 	}

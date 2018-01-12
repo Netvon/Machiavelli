@@ -1,4 +1,5 @@
 #include "GamePhase.h"
+#include "TurnPhase.h"
 using namespace std::placeholders;
 
 namespace machiavelli
@@ -24,6 +25,8 @@ namespace machiavelli
 		socket << "Welcome to the GamePhase!\r\n";
 
 		nextTurn(socket, player);
+
+		print_info(socket, player);
 	}
 
 	void GamePhase::add_options()
@@ -55,7 +58,7 @@ namespace machiavelli
 
 			if (characterCard.name() != "<no name>") {
 				a << "Je hebt deze kaart getrokken: " << characterCard.name() << "\r\n";
-				if (characterCard.name() == "King") {
+				if (characterCard.name() == "Koning") {
 					if (game.getKing() != b) {
 						game.nextPlayerIsKing();
 					}
@@ -87,6 +90,7 @@ namespace machiavelli
 			}
 		}
 		else {
+			state()->add_phase<TurnPhase>("play");
 			state()->navigate_to("play");
 		}
 	}

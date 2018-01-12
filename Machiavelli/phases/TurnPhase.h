@@ -10,7 +10,6 @@ namespace machiavelli
 	class TurnPhase : public Phase
 	{
 	private:
-		void handle_character_turn(const Socket& socket, const Player& player);
 		void handle_get_gold(const Socket& socket, const Player& player);
 		void handle_take_buildingcards(const Socket& socket, const Player& player);
 

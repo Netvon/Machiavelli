@@ -162,14 +162,11 @@ namespace machiavelli::actions
 		}, true);
 	}
 
-	void add_actions_for(const Player & player, std::shared_ptr<Phase> context)
+	void add_actions_for(const Player::character_card & card, std::shared_ptr<Phase> context)
 	{
-		for (auto& card : player.getPlayerCharacterCards()) {
-
-			if (card.name() == "Moordenaar") add_murdered_option("murderer", context);
-			if (card.name() == "Dief") add_thief_option("thief", context);
-			if (card.name() == "Magiër") add_mage_option("mage", context);
-
-		}
+		if (card.name() == "Moordenaar") add_murdered_option("murderer", context);
+		if (card.name() == "Dief") add_thief_option("thief", context);
+		if (card.name() == "Magiër") add_mage_option("mage", context);
+		if (card.name() == "Condottiere") add_condottiere_option("condottiere", context);
 	}
 }

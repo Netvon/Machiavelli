@@ -13,6 +13,6 @@ namespace machiavelli::actions
 
 	void add_build_options(std::shared_ptr<Phase> context);
 
-	void add_actions_for(const Player& player, std::shared_ptr<Phase> context);
+	void add_actions_for(const Player::character_card & card, std::shared_ptr<Phase> context);
 }
 

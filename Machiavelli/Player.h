@@ -43,7 +43,7 @@ namespace machiavelli {
 		character_card_deck getPlayerCharacterCards() const;
 
 		bool hasCharacterCardByOrder(const unsigned int pOrder);
-		character_card findCardByOrder(const unsigned int pOrder) const;
+		const character_card findCardByOrder(const unsigned int pOrder) const;
 
 		int draw_per_turn() const;
 		void draw_per_turn(int new_value);

@@ -91,22 +91,15 @@ namespace machiavelli {
 		return false;
 	}
 
-	Player::character_card Player::findCardByOrder(const unsigned int pOrder) const
+	const Player::character_card Player::findCardByOrder(const unsigned int pOrder) const
 	{
-		character_card foundCard;
-
-		if (pOrder < 1 || pOrder > 8) {
-			return foundCard;
-		}
-
-		for (auto& card : character_cards) {
+		for (const auto& card : character_cards) {
 			if (card.getOrder() == pOrder) {
-				foundCard = card;
-				break;
+				return card;
 			}
 		}
 
-		return foundCard;
+		return character_card();
 	}
 
 	int Player::draw_per_turn() const

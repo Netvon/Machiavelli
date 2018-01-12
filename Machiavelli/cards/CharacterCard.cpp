@@ -16,6 +16,15 @@ namespace machiavelli {
 	{
 	}
 
+	CharacterCard & CharacterCard::operator=(const CharacterCard & other)
+	{
+		_name = other._name;
+		order = other.order;
+		_effect = other._effect;
+
+		return *this;
+	}
+
 	bool CharacterCard::operator==(const CharacterCard & pOther)
 	{
 		return _name == pOther._name && order == pOther.order;
@@ -44,6 +53,11 @@ namespace machiavelli {
 	CardEffect CharacterCard::effect() const
 	{
 		return _effect;
+	}
+
+	void CharacterCard::operator()(Player & player)
+	{
+		_effect(player);
 	}
 
 	bool CharacterCard::is_murdered() const
