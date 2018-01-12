@@ -62,7 +62,7 @@ namespace machiavelli
 					if (game.getKing() != b) {
 						game.nextPlayerIsKing();
 					}
-					a << "Je bent nu de koning!";
+					a << "Je bent nu de koning!\r\n";
 				}
 				a << "Deze kaart krijg je in je hand. De stapel wordt nu doorgegeven." << "\r\n";
 				b.addCharacterCardToDeck(characterCard);
@@ -71,7 +71,7 @@ namespace machiavelli
 			print_info(a, b);
 
 			game.next_player();
-			game.broadcast(game.current_player()->get_player().name() + " is nu aan de beurt!");
+			game.broadcast(game.current_player()->get_player().name() + " is nu aan de beurt!\r\n");
 			nextTurn(game.current_player()->get_socket(), game.current_player()->get_player());
 
 		}, true);

@@ -47,10 +47,11 @@ namespace machiavelli
 
 			if (p.hasCharacterCardByOrder(characterPosition)) {
 				game.current_player() = player;
-				game.broadcast(p.name() + "is nu aan de beurt!");
+				game.broadcast(p.name() + "is nu aan de beurt!\r\n");
 				reset_options(false);
 				state()->add_phase<TurnPhase>("turn");
 				state()->navigate_to("turn");
+				break;
 			}
 			else {
 				state()->changeCharacterOrder(characterPosition++);

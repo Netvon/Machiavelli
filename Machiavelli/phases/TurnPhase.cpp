@@ -82,7 +82,7 @@ namespace machiavelli
 		BuildingCard card2 = game.drawBuildingCard();
 
 		if (!discardedBuildingCard) {
-			socket << "Je hebt " << card1.name() << " en " << card2.name() << " gekregen. Welke leg je af?";
+			socket << "Je hebt " << card1.name() << " en " << card2.name() << " gekregen. Welke leg je af?\r\n";
 
 			reset_options(true);
 
@@ -93,7 +93,7 @@ namespace machiavelli
 
 				if (!discardedBuildingCard) {
 					game.discard_card(card1);
-					player.addBuildingCardToDeck(card2);
+					b.addBuildingCardToDeck(card2);
 				}
 				discardedBuildingCard = true;
 
@@ -106,7 +106,7 @@ namespace machiavelli
 
 				if (!discardedBuildingCard) {
 					game.discard_card(card2);
-					player.addBuildingCardToDeck(card1);
+					b.addBuildingCardToDeck(card1);
 				}
 				discardedBuildingCard = true;
 
