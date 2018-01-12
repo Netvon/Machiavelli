@@ -98,7 +98,7 @@ namespace machiavelli {
 
 	const Player::character_card Player::findCardByOrder(const unsigned int pOrder) const
 	{
-		for (const auto& card : character_cards) {
+		for (auto& card : character_cards) {
 			if (card.getOrder() == pOrder) {
 				return card;
 			}

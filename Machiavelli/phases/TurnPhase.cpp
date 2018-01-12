@@ -23,13 +23,12 @@ namespace machiavelli
 	void TurnPhase::entered_phase(const Socket & socket, const Player & player)
 	{
 		socket << "Welcome to the TurnPhase!\r\n";
-
-		auto currentPosition = state()->getCharacterPosition();
 		auto& game = state()->game();
 		auto& currentPlayer = game.current_player()->get_player();
 
-		if (game.current_player()->get_player() == player) {
-			auto& current_card = player.findCardByOrder(currentPosition);
+		if (currentPlayer == player) {
+			auto currentPosition = state()->getCharacterPosition();
+			auto& current_card = currentPlayer.findCardByOrder(currentPosition);
 
 			socket << "Je bent nu de: " << current_card.name() << "\r\n";
 
