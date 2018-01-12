@@ -182,6 +182,34 @@ namespace machiavelli {
 		return building_cards.size();
 	}
 
+	void Player::built_building(const building_card & pCard)
+	{
+		for (auto & card : building_cards) {
+
+			if(card == pCard)
+				card.setIsBuilt(true);
+		}
+	}
+
+	void Player::destroy_building(const std::string & name)
+	{
+		for (auto & card : building_cards) {
+			if(card.name() == name)
+				card.setIsBuilt(false);
+		}
+	}
+
+	std::vector<Player::building_card> Player::built_buildings()
+	{
+		std::vector<Player::building_card> temp;
+		for (auto & card : building_cards) {
+			if (card.getIsBuilt()) {
+				temp.push_back(card);
+			}
+		}
+		return temp;
+	}
+
 	std::ostream & operator<<(std::ostream & os, const Player & player)
 	{
 		std::ostream::sentry s(os);

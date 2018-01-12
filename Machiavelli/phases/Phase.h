@@ -20,6 +20,7 @@ namespace machiavelli {
 			_state.reset();
 		}
 
+		void remove_option(const std::string& command);
 		void add_option(const std::string& command, const std::string & name, Option::handler func, bool is_for_current_player = false);
 		const std::string& name() const;
 

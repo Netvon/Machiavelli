@@ -124,19 +124,11 @@ void handle_client(Socket client) // this function runs in a separate thread
 		socket << "Welcome, " << player.name() << ", have fun playing our game!\r\n";
 
 		state->current_phase()->entered_phase(socket, player);
-		state->current_phase()->print(socket, player);
 
 		socket << machiavelli::prompt;
 
 		while (running) { // game loop
 			try {
-
-				if (state->phase_changed()) {
-					state->current_phase()->entered_phase(socket, player);
-					state->current_phase()->print(socket, player);
-
-					socket << machiavelli::prompt;
-				}
 
 				// read first line of request
 				std::string cmd;
@@ -206,6 +198,7 @@ int main(int argc, const char * argv[])
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	state->add_phase<machiavelli::LobbyPhase>("lobby");
+	state->navigate_to("lobby");
 
 	bool retflag;
 	int retval = load_decks(retflag);

@@ -5,7 +5,7 @@ namespace machiavelli::effects
 	CardEffect KingCardEffect() {
 		return [](machiavelli::Player& player)
 		{
-			for (auto& card : player.getPlayerBuildingCards()) {
+			for (auto& card : player.built_buildings()) {
 				if (card.category() == CardCategory::yellow()) {
 					player.gold() += 1_g;
 				}
@@ -17,7 +17,7 @@ namespace machiavelli::effects
 	CardEffect PreacherCardEffect() {
 		return [](machiavelli::Player& player)
 		{
-			for (auto& card : player.getPlayerBuildingCards()) {
+			for (auto& card : player.built_buildings()) {
 				if (card.category() == CardCategory::blue()) {
 					player.gold() += 1_g;
 				}
@@ -30,7 +30,7 @@ namespace machiavelli::effects
 		{
 			player.gold() += 1_g;
 
-			for (auto& card : player.getPlayerBuildingCards()) {
+			for (auto& card : player.built_buildings()) {
 				if (card.category() == CardCategory::green()) {
 					player.gold() += 1_g;
 				}
@@ -50,7 +50,7 @@ namespace machiavelli::effects
 	{
 		return [](machiavelli::Player& player)
 		{
-			for (auto& card : player.getPlayerBuildingCards()) {
+			for (auto& card : player.built_buildings()) {
 				if (card.category() == CardCategory::red()) {
 					player.gold() += 1_g;
 				}

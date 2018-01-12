@@ -4,32 +4,35 @@ namespace machiavelli
 {
 	void State::navigate_to(const std::string & phase_name)
 	{
-		size_t index = 0;
 		for (auto phase : phases) {
 
 			if (phase->name() == phase_name) {
 
 				if (!no_state_set_yet) {
 					_last_phase = current_phase()->name();
-					_phase_changed = true;
 				}
 				else {
 					no_state_set_yet = false;
 				}
+				current_phase_name = phase_name;
 
-				current_location_index = index;
-				_phase_changed = true;
+				for (auto player : _game.getPlayers()) {
+					current_phase()->entered_phase(player->get_socket(), player->get_player());
+				}
 
 				return;
 			}
-
-			index++;
 		}
 	}
 
 	std::shared_ptr<Phase> State::current_phase() const {
-		auto shared = phases.at(current_location_index);
-		return shared;
+		for (auto phase : phases) {
+			if (phase->name() == current_phase_name) {
+				return phase;
+			}
+		}
+
+		return nullptr;
 	}
 
 	Game & State::game()

@@ -43,7 +43,7 @@ namespace machiavelli
 
 	private:
 		std::vector<std::shared_ptr<Phase>> phases;
-		size_t current_location_index;
+		std::string current_phase_name;
 		unsigned int _characterPosition = 1;
 		std::string _last_phase;
 

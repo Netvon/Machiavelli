@@ -76,6 +76,36 @@ namespace machiavelli::actions
 		}, true);
 	}
 
+	void add_condottiere_option(const std::string & key, std::shared_ptr<Phase> context)
+	{
+		context->add_option(key, "Destroy a building", [&](const Socket& s, Player& p) {
+
+			context->reset_options(true);
+
+			auto& game = context->state()->game();
+			auto& other_player = game.get_other_player(p);
+
+			int index = 0;
+
+			for (const auto& building : other_player.built_buildings()) {
+
+				context->add_option(std::to_string(index), building.name(), [&](const Socket& s2, Player& p2)
+				{
+					context->reset_options(true);
+
+					p2.gold() -= building.cost() - 1_g;
+					p2.destroy_building(building.name());
+
+					p2.discardBuildingCardFromDeck(building);
+
+
+				}, true);
+
+			}
+
+		}, true);
+	}
+
 	void add_take_option(const std::shared_ptr<machiavelli::Phase> &context, const size_t &i)
 	{
 		context->add_option(std::to_string(i), "Take " + std::to_string(i) + " new cards", [&](const Socket& s2, Player& p2) {
@@ -105,7 +135,29 @@ namespace machiavelli::actions
 	{
 		context->add_option("build", "Build a card", [&](const Socket& s2, Player& p2) {
 
-			/*p2.getPlayerBuildingCards()*/
+			context->reset_options(true);
+
+			int can_build = p2.build_per_turn();
+			int index = 0;
+
+			for (const auto& bc : p2.getPlayerBuildingCards()) {
+				if (!bc.getIsBuilt()) {
+
+					context->add_option(std::to_string(index), bc.name(), [&](const Socket& s, Player& p)
+					{
+						p.built_building(bc);
+						can_build--;
+						
+						if (can_build > 0)
+							context->remove_option(std::to_string(index));
+						else
+							context->reset_options(true);
+
+					}, true);
+
+					index++;
+				}
+			}
 
 		}, true);
 	}

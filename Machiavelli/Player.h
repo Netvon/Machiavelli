@@ -61,7 +61,10 @@ namespace machiavelli {
 
 		void swap_building_cards(Player& player);
 
+		std::vector<building_card> built_buildings();
+		void built_building(const building_card & pCard);
 		size_t building_card_amount() const;
+		void destroy_building(const std::string& name);
 
 	private:
 		Gold _gold{ 0_g };
