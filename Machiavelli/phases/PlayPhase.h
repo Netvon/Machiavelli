@@ -10,9 +10,8 @@ namespace machiavelli
 	class PlayPhase : public Phase
 	{
 	private:
-		void handle_turn(const Socket& socket, Player& player);
+		void handle_turn(const Socket& socket, const Player& player);
 		void nextTurn(const Socket& socket, const Player& player);
-		bool characterCardsDrawn = false;
 	public:
 		PlayPhase(const std::string & name, std::shared_ptr<State> state);
 		~PlayPhase();

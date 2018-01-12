@@ -30,13 +30,19 @@ namespace machiavelli {
 		void name(std::string name);
 
 		void addBuildingCardToDeck(const building_card& pCard);
-
 		void addCharacterCardToDeck(const character_card& pCard);
+
+		void discardBuildingCardFromDeck(const building_card& pCard);
+		void discardCharacterCardFromDeck(const character_card& pCard);
+
 		building_card drawFromBuildingDeck();
 		character_card drawFromCharacterDeck();
+
 		building_card_deck getPlayerBuildingCards() const;
 		character_card_deck getPlayerCharacterCards() const;
+
 		bool hasCharacterCardByOrder(const unsigned int pOrder);
+		character_card findCardByOrder(const unsigned int pOrder) const;
 
 		int draw_per_turn() const;
 		void draw_per_turn(int new_value);

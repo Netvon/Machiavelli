@@ -207,7 +207,7 @@ namespace machiavelli
 	void Game::nextPlayerIsKing()
 	{
 		if (kingIndex == 0llu) {
-			kingIndex == 1llu;
+			kingIndex = 1llu;
 		}
 		else {
 			kingIndex = 0llu;

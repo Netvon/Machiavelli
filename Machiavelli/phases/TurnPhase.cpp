@@ -1,0 +1,107 @@
+#include "TurnPhase.h"
+using namespace std::placeholders;
+
+namespace machiavelli
+{
+	TurnPhase::TurnPhase(const std::string & name, std::shared_ptr<State> state)
+		: Phase(name, state)
+	{
+		add_options();
+		enable_defaults();
+	}
+
+	TurnPhase::~TurnPhase()
+	{
+	}
+
+	void TurnPhase::print(const Socket & socket, const Player & player)
+	{
+		print_info(socket, player);
+	}
+
+	void TurnPhase::entered_phase(const Socket & socket, const Player & player)
+	{
+		socket << "Welcome to the TurnPhase!\r\n";
+
+		auto currentPosition = state()->getCharacterPosition();
+		auto& game = state()->game();
+		auto& currentPlayer = game.current_player()->get_player();
+
+		if (game.current_player()->get_player() == player) {
+			socket << "Je bent nu de: " << player.findCardByOrder(currentPosition).name() << "\r\n";
+			add_option("0", "Gebruik het karaktereigenschap van de " + player.findCardByOrder(currentPosition).name(), std::bind(&TurnPhase::handle_character_turn, this, _1, _2), true);
+			if (!gotGold) {
+				add_option("1", "Pak 2 goudstukken", std::bind(&TurnPhase::handle_get_gold, this, _1, _2), true);
+			}
+			if (!takenBuildingCards) {
+				add_option("2", "Pak 2 bouwkaarten en leg er 1 af", std::bind(&TurnPhase::handle_take_buildingcards, this, _1, _2), true);
+			}
+		}
+
+		nextTurn(socket, player);
+	}
+
+	void TurnPhase::add_options()
+	{
+		
+	}
+
+	void TurnPhase::handle_character_turn(const Socket & socket, const Player & player)
+	{
+		
+	}
+
+	void TurnPhase::handle_get_gold(const Socket & socket, const Player & player)
+	{
+		auto& game = state()->game();
+
+		if (!gotGold) {
+			game.current_player()->get_player().gold() += 2_g;
+			gotGold = true;
+		}
+	}
+
+	void TurnPhase::handle_take_buildingcards(const Socket & socket, const Player & player)
+	{
+		auto& game = state()->game();
+		
+		auto card1 = game.drawBuildingCard();
+		auto card2 = game.drawBuildingCard();
+
+		/*player.addBuildingCardToDeck(card1);
+		player.addBuildingCardToDeck(card2);
+
+		if (!discardedBuildingCard) {
+			socket << "Je hebt " << card1.name() << " en " << card2.name() << " gekregen. Welke leg je af?";
+
+			add_option("0", card1.name(), [=](const auto& a, auto& b) {
+				auto& game = state()->game();
+
+				reset_options(true);
+
+				if (!discardedBuildingCard) {
+					player.discardBuildingCardFromDeck(card1);
+				}
+				discardedBuildingCard = true;
+
+			}, true);
+
+			add_option("1", card2.name(), [=](const auto& a, auto& b) {
+				auto& game = state()->game();
+
+				reset_options(true);
+
+				if (!discardedBuildingCard) {
+					player.discardBuildingCardFromDeck(card2);
+				}
+				discardedBuildingCard = true;
+
+			}, true);
+		}*/
+	}
+
+	void TurnPhase::nextTurn(const Socket & socket, const Player & player)
+	{
+		
+	}
+}

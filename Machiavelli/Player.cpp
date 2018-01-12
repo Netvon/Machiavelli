@@ -50,6 +50,16 @@ namespace machiavelli {
 		character_cards.push_top_stack(pCard);
 	}
 
+	void Player::discardBuildingCardFromDeck(const building_card & pCard)
+	{
+		building_cards.discard(pCard);
+	}
+
+	void Player::discardCharacterCardFromDeck(const character_card & pCard)
+	{
+		character_cards.discard(pCard);
+	}
+
 	Player::building_card Player::drawFromBuildingDeck()
 	{
 		return building_cards.draw();
@@ -79,6 +89,24 @@ namespace machiavelli {
 		}
 
 		return false;
+	}
+
+	Player::character_card Player::findCardByOrder(const unsigned int pOrder) const
+	{
+		character_card foundCard;
+
+		if (pOrder < 1 || pOrder > 8) {
+			return foundCard;
+		}
+
+		for (auto& card : character_cards) {
+			if (card.getOrder() == pOrder) {
+				foundCard = card;
+				break;
+			}
+		}
+
+		return foundCard;
 	}
 
 	int Player::draw_per_turn() const

@@ -35,7 +35,7 @@ namespace machiavelli
 		}
 	}
 
-	void PlayPhase::handle_turn(const Socket & socket, Player & player)
+	void PlayPhase::handle_turn(const Socket & socket, const Player & player)
 	{
 		auto& game = state()->game();
 		auto characterPosition = state()->getCharacterPosition();
@@ -46,6 +46,12 @@ namespace machiavelli
 
 			if (p.hasCharacterCardByOrder(characterPosition)) {
 				game.current_player() = player;
+				game.broadcast(p.name() + "is nu aan de beurt!");
+				reset_options(false);
+				state()->navigate_to("turn");
+			}
+			else {
+				state()->changeCharacterOrder(characterPosition++);
 			}
 		}
 	}
