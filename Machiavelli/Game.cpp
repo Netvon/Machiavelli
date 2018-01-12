@@ -191,6 +191,19 @@ namespace machiavelli
 		return players.at(_current_player);
 	}
 
+	void Game::current_player(const std::string & name)
+	{
+		size_t index = 0llu;
+		for (auto player : players) {
+			if (player->get_player().name() == name) {
+				_current_player = index;
+				return;
+			} 
+
+			index++;
+		}
+	}
+
 	void Game::next_player()
 {
 		if (_current_player == 0llu) {
