@@ -54,7 +54,12 @@ namespace machiavelli
 				break;
 			}
 			else {
-				state()->changeCharacterOrder(characterPosition++);
+				if (characterPosition < 8) {
+					state()->changeCharacterOrder(characterPosition++);
+				}
+				else {
+					state()->changeCharacterOrder(1);
+				}
 			}
 		}
 	}
