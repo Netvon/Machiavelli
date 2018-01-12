@@ -11,5 +11,7 @@ namespace machiavelli::actions
 	void add_take_option(const std::shared_ptr<machiavelli::Phase> &context, const size_t &i);
 
 	void add_build_options(std::shared_ptr<Phase> context);
+
+	void add_actions_for(const Player& player, std::shared_ptr<Phase> context);
 }
 
