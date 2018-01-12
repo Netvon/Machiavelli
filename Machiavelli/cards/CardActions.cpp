@@ -5,7 +5,7 @@ namespace machiavelli::actions
 {
 	void add_murdered_option(const std::string & key, std::shared_ptr<Phase> context)
 	{
-		context->add_option(key, "Murder a Character", [&](const Socket& s, Player& p) 
+		context->add_option(key, "Murder a Character", [&, context](const Socket& s, Player& p) 
 		{
 			context->reset_options(true);
 
@@ -16,7 +16,7 @@ namespace machiavelli::actions
 			int index = 1;
 
 			for (auto& kv : cards) {
-				context->add_option(std::to_string(index), kv.second.name(), [&](const Socket& s2, Player& p2)
+				context->add_option(std::to_string(index), kv.second.name(), [&, context, kv](const Socket& s2, Player& p2)
 				{
 					auto & player = game.getPlayerByName(kv.first);
 					player.kill_character(kv.second.name());
@@ -34,7 +34,7 @@ namespace machiavelli::actions
 
 	void add_thief_option(const std::string & key, std::shared_ptr<Phase> context)
 	{
-		context->add_option(key, "Steal gold from the other player", [&](const Socket& s, Player& p)
+		context->add_option(key, "Steal gold from the other player", [&, context](const Socket& s, Player& p)
 		{
 			context->reset_options(true);
 
@@ -51,7 +51,7 @@ namespace machiavelli::actions
 
 	void add_mage_option(const std::string & key, std::shared_ptr<Phase> context)
 	{
-		context->add_option(key + "a", "Switch building cards with other player", [&](const Socket& s, Player& p)
+		context->add_option(key + "a", "Switch building cards with other player", [&, context](const Socket& s, Player& p)
 		{
 			context->reset_options(true);
 
@@ -63,7 +63,7 @@ namespace machiavelli::actions
 			context->print_info(s, p);
 		}, true );
 
-		context->add_option(key + "b", "Take new cards", [=](const Socket& s, Player& p)
+		context->add_option(key + "b", "Take new cards", [&, context](const Socket& s, Player& p)
 		{
 			context->reset_options(true);
 
@@ -78,7 +78,7 @@ namespace machiavelli::actions
 
 	void add_condottiere_option(const std::string & key, std::shared_ptr<Phase> context)
 	{
-		context->add_option(key, "Destroy a building", [&](const Socket& s, Player& p) {
+		context->add_option(key, "Destroy a building", [&, context](const Socket& s, Player& p) {
 
 			context->reset_options(true);
 
@@ -89,7 +89,7 @@ namespace machiavelli::actions
 
 			for (const auto& building : other_player.built_buildings()) {
 
-				context->add_option(std::to_string(index), building.name(), [&](const Socket& s2, Player& p2)
+				context->add_option(std::to_string(index), building.name(), [&, context](const Socket& s2, Player& p2)
 				{
 					context->reset_options(true);
 
@@ -108,7 +108,7 @@ namespace machiavelli::actions
 
 	void add_take_option(const std::shared_ptr<machiavelli::Phase> &context, const size_t &i)
 	{
-		context->add_option(std::to_string(i), "Take " + std::to_string(i) + " new cards", [&](const Socket& s2, Player& p2) {
+		context->add_option(std::to_string(i), "Take " + std::to_string(i) + " new cards", [&, context](const Socket& s2, Player& p2) {
 
 			auto& game = context->state()->game();
 
@@ -133,7 +133,7 @@ namespace machiavelli::actions
 
 	void add_build_options(std::shared_ptr<Phase> context)
 	{
-		context->add_option("build", "Build a card", [&](const Socket& s2, Player& p2) {
+		context->add_option("build", "Build a card", [&, context](const Socket& s2, Player& p2) {
 
 			context->reset_options(true);
 
@@ -143,7 +143,7 @@ namespace machiavelli::actions
 			for (const auto& bc : p2.getPlayerBuildingCards()) {
 				if (!bc.getIsBuilt()) {
 
-					context->add_option(std::to_string(index), bc.name(), [&](const Socket& s, Player& p)
+					context->add_option(std::to_string(index), bc.name(), [&, context, bc](const Socket& s, Player& p)
 					{
 						p.built_building(bc);
 						can_build--;
