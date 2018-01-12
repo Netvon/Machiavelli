@@ -45,7 +45,7 @@ namespace machiavelli
 
 				print_info(s, p);
 
-			});
+			}, true);
 
 
 			if (!gotGold) {
