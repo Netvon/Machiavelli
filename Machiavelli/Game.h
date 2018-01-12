@@ -58,6 +58,7 @@ namespace machiavelli
 		Player& get_other_player(Player& me) const;
 
 		void discard_card(BuildingCard && card);
+		void discard_card(const BuildingCard & card);
 
 	private:
 		void tick();

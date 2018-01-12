@@ -125,6 +125,10 @@ namespace machiavelli
 			discardPile.push_front(card);
 		}
 
+		void push_discard_top(const T& card) {
+			discardPile.push_front(card);
+		}
+
 		void merge_stacks(bool shuffle_afterwards = true)
 		{
 			if (!discardPileEmpty) {

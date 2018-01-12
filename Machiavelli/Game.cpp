@@ -244,6 +244,11 @@ namespace machiavelli
 		building_deck.push_discard_top(std::move(card));
 	}
 
+	void Game::discard_card(const BuildingCard & card)
+	{
+		building_deck.push_discard_top(std::move(card));
+	}
+
 	void Game::setKing()
 	{
 		auto randomIndex = random(0llu, 1llu);

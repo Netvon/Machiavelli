@@ -74,15 +74,12 @@ namespace machiavelli
 		}
 	}
 
-	void TurnPhase::handle_take_buildingcards(const Socket & socket, const Player & player)
+	void TurnPhase::handle_take_buildingcards(const Socket & socket, Player & player)
 	{
 		auto& game = state()->game();
 		
 		auto card1 = game.drawBuildingCard();
 		auto card2 = game.drawBuildingCard();
-
-		/*player.addBuildingCardToDeck(card1);
-		player.addBuildingCardToDeck(card2);
 
 		if (!discardedBuildingCard) {
 			socket << "Je hebt " << card1.name() << " en " << card2.name() << " gekregen. Welke leg je af?";
@@ -93,7 +90,8 @@ namespace machiavelli
 				reset_options(true);
 
 				if (!discardedBuildingCard) {
-					player.discardBuildingCardFromDeck(card1);
+					game.discard_card(card1);
+					player.addBuildingCardToDeck(card2);
 				}
 				discardedBuildingCard = true;
 
@@ -105,12 +103,13 @@ namespace machiavelli
 				reset_options(true);
 
 				if (!discardedBuildingCard) {
-					player.discardBuildingCardFromDeck(card2);
+					game.discard_card(card2);
+					player.addBuildingCardToDeck(card1);
 				}
 				discardedBuildingCard = true;
 
 			}, true);
-		}*/
+		}
 	}
 
 	void TurnPhase::nextTurn(const Socket & socket, const Player & player)
