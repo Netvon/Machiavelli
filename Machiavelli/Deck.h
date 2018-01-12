@@ -32,6 +32,14 @@ namespace machiavelli
 			return deck.end();
 		}
 
+		typename std::deque<T>::iterator begin() {
+			return deck.begin();
+		}
+
+		typename std::deque<T>::iterator end() {
+			return deck.end();
+		}
+
 		bool stackIsEmpty() const
 		{
 			if (deck.empty()) {
@@ -113,6 +121,10 @@ namespace machiavelli
 			deck.push_front(card);
 		}
 
+		void push_discard_top(T&& card) {
+			discardPile.push_front(card);
+		}
+
 		void merge_stacks(bool shuffle_afterwards = true)
 		{
 			if (!discardPileEmpty) {
@@ -126,6 +138,10 @@ namespace machiavelli
 			if (shuffle_afterwards) {
 				shuffleStack();
 			}
+		}
+
+		size_t size() const {
+			return deck.size();
 		}
 
 		void replace_deck(Deck<T>& other) {

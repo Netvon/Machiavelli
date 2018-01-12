@@ -57,6 +57,17 @@ namespace machiavelli
 		return clientInfo->get_player();
 	}
 
+	Player & Game::getPlayerByName(const std::string & name) const
+	{
+		for (auto player : players) {
+			auto& p = player->get_player();
+
+			if (p.name() == name) {
+				return p;
+			}
+		}
+	}
+
 	std::vector<std::shared_ptr<ClientInfo>> Game::getPlayers() const
 	{
 		return players;
@@ -195,6 +206,42 @@ namespace machiavelli
 		for (auto player : players) {
 			player->get_socket() << message;
 		}
+	}
+
+	std::map<std::string, CharacterCard> Game::drawn_character_card(const Player& exclude, const std::string& exclude_card) const
+	{
+		std::map<std::string, CharacterCard> temp;
+
+		for (auto player : players) {
+			auto& p = player->get_player();
+
+			if (p == exclude)
+				continue;
+
+			for (auto &card : p.getPlayerCharacterCards()) {
+				if (card.name() == exclude_card)
+					continue;
+
+				temp.insert_or_assign(p.name(), card);
+			}
+		}
+
+		return temp;
+	}
+
+	Player & Game::get_other_player(Player & me) const
+	{
+		for (auto player : players) {
+			auto& p = player->get_player();
+
+			if (p != me)
+				return p;
+		}
+	}
+
+	void Game::discard_card(BuildingCard && card)
+	{
+		building_deck.push_discard_top(std::move(card));
 	}
 
 	void Game::setKing()

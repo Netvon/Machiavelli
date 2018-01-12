@@ -116,6 +116,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="cards\CardActions.h" />
     <ClInclude Include="cards\CardCategory.h" />
     <ClInclude Include="cards\BuildingCard.h" />
     <ClInclude Include="cards\CharacterCard.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="util\RandomGenerator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cards\CardActions.cpp" />
     <ClCompile Include="cards\CardCategory.cpp" />
     <ClCompile Include="cards\BuildingCard.cpp" />
     <ClCompile Include="cards\CharacterCard.cpp" />

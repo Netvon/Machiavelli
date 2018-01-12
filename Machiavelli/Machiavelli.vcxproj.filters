@@ -108,6 +108,9 @@
     <ClInclude Include="Effects.h">
       <Filter>cards</Filter>
     </ClInclude>
+    <ClInclude Include="cards\CardActions.h">
+      <Filter>cards</Filter>
+    </ClInclude>
     <ClInclude Include="phases\PlayPhase.h">
       <Filter>phases</Filter>
     </ClInclude>
@@ -162,6 +165,9 @@
       <Filter>phases</Filter>
     </ClCompile>
     <ClCompile Include="Effects.cpp">
+      <Filter>cards</Filter>
+    </ClCompile>
+    <ClCompile Include="cards\CardActions.cpp">
       <Filter>cards</Filter>
     </ClCompile>
     <ClCompile Include="phases\PlayPhase.cpp">

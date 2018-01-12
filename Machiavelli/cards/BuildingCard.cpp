@@ -48,7 +48,7 @@ namespace machiavelli
 		return _category;
 	}
 
-	void BuildingCard::operator()(Game & game)
+	/*void BuildingCard::operator()(Game & game)
 	{
 		if (_action) _action(game);
 	}
@@ -56,7 +56,7 @@ namespace machiavelli
 	void BuildingCard::operator()(Player & player)
 	{
 		if (_effect) _effect(player);
-	}
+	}*/
 
 	void BuildingCard::setIsBuilt(bool pIsBuilt)
 	{

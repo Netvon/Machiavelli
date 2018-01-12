@@ -6,6 +6,7 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <unordered_set>
 
 namespace machiavelli {
 	class Player
@@ -50,8 +51,17 @@ namespace machiavelli {
 		int build_per_turn() const;
 		void build_per_turn(int new_value);
 
+		void set_protected_against(const std::string& character);
+		bool is_protected_against(const std::string& character);
+
 		void apply_card_effects();
 		void reset_effects();
+
+		void kill_character(const std::string& name);
+
+		void swap_building_cards(Player& player);
+
+		size_t building_card_amount() const;
 
 	private:
 		Gold _gold{ 0_g };
@@ -62,6 +72,8 @@ namespace machiavelli {
 
 		int _draw_per_turn = 2;
 		int _build_per_turn = 1;
+
+		std::unordered_set<std::string> protected_against;
 	};
 
 	std::ostream& operator<<(std::ostream& os, const Player& gold);

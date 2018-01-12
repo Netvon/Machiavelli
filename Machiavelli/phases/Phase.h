@@ -35,9 +35,10 @@ namespace machiavelli {
 		void enable_defaults();
 		void reset_options(bool enable_defaults = true);
 		void print_info(const Socket & socket, const Player& player);
+
+		
 	
 	private:
-
 		virtual void add_options() = 0;
 		
 		void print_cards(const Socket& socket, const Player& player);

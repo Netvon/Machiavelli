@@ -6,6 +6,7 @@
 #include "cards\CharacterCard.h"
 #include "cards\BuildingCard.h"
 #include "Deck.h"
+#include <map>
 
 namespace machiavelli
 {
@@ -20,6 +21,7 @@ namespace machiavelli
 
 		bool addPlayer(std::shared_ptr<ClientInfo> player);
 		Player& getPlayerByIndex(size_t pIndex);
+		Player& getPlayerByName(const std::string& name) const;
 		std::vector<std::shared_ptr<ClientInfo>> getPlayers() const;
 
 		void setKing();
@@ -51,6 +53,11 @@ namespace machiavelli
 		void next_player();
 
 		void broadcast(const std::string & message);
+
+		std::map<std::string, CharacterCard> drawn_character_card(const Player& exclude, const std::string& exclude_card) const;
+		Player& get_other_player(Player& me) const;
+
+		void discard_card(BuildingCard && card);
 
 	private:
 		void tick();
