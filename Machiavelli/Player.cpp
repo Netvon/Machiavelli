@@ -192,6 +192,35 @@ namespace machiavelli {
 		}
 	}
 
+	void Player::finished_first(bool new_value)
+	{
+		_finished_first = new_value;
+	}
+
+	int Player::score() const
+	{
+		int temp = 0;
+		std::set<CardCategory> has_categories;
+
+		for (auto & card : building_cards) {
+			if (card.getIsBuilt()) {
+				temp += card.cost();
+
+				has_categories.insert(card.category());
+			}
+		}
+
+		if (has_categories.size() >= CardCategory::total_amount()) {
+			temp += 3;
+		}
+
+		if (_finished_first) {
+			temp += 4;
+		}
+
+		return temp;
+	}
+
 	std::vector<Player::building_card> Player::built_buildings()
 	{
 		std::vector<Player::building_card> temp;

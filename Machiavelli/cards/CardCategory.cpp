@@ -38,6 +38,11 @@ namespace machiavelli
 		return instance;
 	}
 
+	const int CardCategory::total_amount()
+	{
+		return 5;
+	}
+
 	bool CardCategory::operator==(const CardCategory & other) const
 	{
 		if (other.empty())
@@ -49,6 +54,11 @@ namespace machiavelli
 	bool CardCategory::operator!=(const CardCategory & other) const
 	{
 		return !((*this) == other);
+	}
+
+	bool CardCategory::operator<(const CardCategory & other) const
+	{
+		return _name < other._name;
 	}
 
 	CardCategory::CardCategory(const std::string & name)

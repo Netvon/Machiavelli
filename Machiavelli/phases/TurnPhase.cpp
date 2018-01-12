@@ -64,12 +64,12 @@ namespace machiavelli
 		
 	}
 
-	void TurnPhase::handle_get_gold(const Socket & socket, const Player & player)
+	void TurnPhase::handle_get_gold(const Socket & socket, Player & player)
 	{
 		auto& game = state()->game();
 
 		if (!gotGold) {
-			game.current_player()->get_player().gold() += 2_g;
+			player.gold() += 2_g;
 			gotGold = true;
 		}
 	}

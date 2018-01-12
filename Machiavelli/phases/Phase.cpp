@@ -129,7 +129,7 @@ namespace machiavelli
 
 	void Phase::print_buildings(const Socket & socket, const Player & player)
 	{
-		socket << "========= Your Cards =========\n";
+		socket << "========= Your Buildings =========\n";
 		socket << "\r\n";
 
 		for (auto& card : player.getPlayerBuildingCards()) {

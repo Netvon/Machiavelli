@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <unordered_set>
+#include <set>
 
 namespace machiavelli {
 	class Player
@@ -66,7 +67,10 @@ namespace machiavelli {
 		size_t building_card_amount() const;
 		void destroy_building(const std::string& name);
 
+		void finished_first(bool new_value);
+		int score() const;
 	private:
+
 		Gold _gold{ 0_g };
 		std::string player_name{ "<no name>" };
 
@@ -75,6 +79,8 @@ namespace machiavelli {
 
 		int _draw_per_turn = 2;
 		int _build_per_turn = 1;
+
+		bool _finished_first = false;
 
 		std::unordered_set<std::string> protected_against;
 	};
