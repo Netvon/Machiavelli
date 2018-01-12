@@ -90,7 +90,7 @@ namespace machiavelli::actions
 				game.discard_card(std::move(p2.drawFromBuildingDeck()));
 			}
 
-			auto new_cards = game.drawAmountOfBuildingCards(i);
+			auto new_cards = game.drawAmountOfBuildingCards(static_cast<int>(i));
 
 			for (auto& card : new_cards) {
 				p2.addBuildingCardToDeck(card);
@@ -98,8 +98,15 @@ namespace machiavelli::actions
 
 			context->reset_options(true);
 
-			p2.drawFromBuildingDeck();
+		}, true);
+	}
 
-		});
+	void add_build_options(std::shared_ptr<Phase> context)
+	{
+		context->add_option("build", "Build a card", [&](const Socket& s2, Player& p2) {
+
+			/*p2.getPlayerBuildingCards()*/
+
+		}, true);
 	}
 }
