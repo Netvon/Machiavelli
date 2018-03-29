@@ -52,16 +52,15 @@ namespace machiavelli
 
 				state()->add_phase<TurnPhase>("turn");
 				state()->navigate_to("turn");
-				break;
+				return;
 			}
-			else {
-				if (characterPosition < 8) {
-					state()->changeCharacterOrder(characterPosition++);
-				}
-				else {
-					state()->changeCharacterOrder(1);
-				}
-			}
+		}
+
+		if (characterPosition < 8) {
+			state()->changeCharacterOrder(characterPosition + 1);
+		}
+		else {
+			state()->changeCharacterOrder(1);
 		}
 	}
 

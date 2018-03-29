@@ -28,8 +28,9 @@ namespace machiavelli
 		auto& game = state()->game();
 		auto& currentPlayer = game.current_player()->get_player();
 
-		if (game.current_player()->get_player() == player) {
+		if (currentPlayer == player) {
 			auto& current_card = player.findCardByOrder(currentPosition);
+			bool empty = current_card.empty();
 
 			socket << "Je bent nu de: " << current_card.name() << "\r\n";
 
