@@ -23,8 +23,6 @@ namespace machiavelli
 	void TurnPhase::entered_phase(const Socket & socket, const Player & player)
 	{
 		socket << "Welcome to the TurnPhase!\r\n";
-
-		auto currentPosition = state()->getCharacterPosition();
 		auto& game = state()->game();
 		auto& currentPlayer = game.current_player()->get_player();
 

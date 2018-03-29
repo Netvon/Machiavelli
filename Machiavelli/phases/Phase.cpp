@@ -118,7 +118,7 @@ namespace machiavelli
 		for (auto& card : player.getPlayerBuildingCards()) {
 			if (!card.getIsBuilt()) {
 				if (card.description().empty()) {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\n\r";
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\r\n";
 				}
 				else {
 					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\n\r";
@@ -135,7 +135,7 @@ namespace machiavelli
 		for (auto& card : player.getPlayerBuildingCards()) {
 			if (card.getIsBuilt()) {
 				if (card.description().empty()) {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\n\r";
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\r\n";
 				}
 				else {
 					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\n\r";
