@@ -86,7 +86,7 @@ namespace machiavelli
 
 			reset_options(true);
 
-			add_option("0", card1.name(), [&](const auto& a, auto& b) {
+			add_option("0", card1.name(), [this, &game, card1, card2](const auto& a, auto& b) {
 				auto& game = state()->game();
 
 				reset_options(true);
@@ -99,7 +99,7 @@ namespace machiavelli
 
 			}, true);
 
-			add_option("1", card2.name(), [&](const auto& a, auto& b) {
+			add_option("1", card2.name(), [this, &game, card1, card2](const auto& a, auto& b) {
 				auto& game = state()->game();
 
 				reset_options(true);
