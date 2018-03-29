@@ -5,6 +5,7 @@
 #include "Deck.h"
 #include <memory>
 #include <vector>
+#include "util\RandomGenerator.h"
 #include <string>
 #include <unordered_set>
 #include <set>
@@ -71,6 +72,7 @@ namespace machiavelli {
 		void finished_first(bool new_value);
 		int score() const;
 	private:
+		int id{ util::random(0, 1000) };
 
 		Gold _gold{ 0_g };
 		std::string player_name{ "<no name>" };

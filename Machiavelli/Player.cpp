@@ -12,12 +12,12 @@ namespace machiavelli {
 
 	bool Player::operator==(const Player & pOther) const
 	{
-		return player_name == pOther.player_name && _gold == pOther._gold;
+		return id == pOther.id;
 	}
 
 	bool Player::operator!=(const Player & pOther) const
 	{
-		return player_name != pOther.player_name && _gold != pOther._gold;
+		return id != pOther.id;
 	}
 
 	Gold & Player::gold()
