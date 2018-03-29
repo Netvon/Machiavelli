@@ -56,12 +56,12 @@ namespace machiavelli
 			}
 		}
 
-		if (characterPosition < 8) {
-			state()->changeCharacterOrder(characterPosition + 1);
-		}
+		//if (characterPosition < 8) {
+		state()->changeCharacterOrder(characterPosition + 1);
+		/*}
 		else {
 			state()->changeCharacterOrder(1);
-		}
+		}*/
 	}
 
 	void PlayPhase::nextTurn(const Socket & socket, const Player & player)

@@ -43,9 +43,11 @@ namespace machiavelli::actions
 			auto& game = context->state()->game();
 			auto& other_player = game.get_other_player(p);
 
-			auto gold = other_player.gold();
-			p.gold() += gold;
-			other_player.gold() -= gold;
+			if (other_player.gold() > 0) {
+				auto gold = other_player.gold();
+				p.gold() += gold;
+				other_player.gold() -= gold;
+			}
 
 			context->print_info(s, p);
 		}, true);

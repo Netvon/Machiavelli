@@ -4,6 +4,22 @@ using namespace std::placeholders;
 
 namespace machiavelli
 {
+	void TurnPhase::check_next_turn()
+	{
+		if (usedCharacterAction && (gotGold || takenBuildingCards)) {
+			usedCharacterAction = false;
+			gotGold = false;
+			takenBuildingCards = false;
+			usingCharacterAction = false;
+			takingBuildingCardsNow = false;
+
+			// naar volgende turn (via PlayPhase?)
+
+			state()->changeCharacterOrder(state()->getCharacterPosition() + 1);
+			state()->navigate_to("play");
+		}
+	}
+
 	TurnPhase::TurnPhase(const std::string & name, std::shared_ptr<State> state)
 		: Phase(name, state)
 	{
@@ -60,6 +76,8 @@ namespace machiavelli
 					machiavelli::actions::add_actions_for(current_card, state()->current_phase(), [this]() {
 						usingCharacterAction = false;
 						reset_options(true);
+
+						check_next_turn();
 					});
 
 					print_info(s, p);
@@ -91,6 +109,8 @@ namespace machiavelli
 		else {
 			socket << "Je hebt al goud gepakt!";
 		}
+
+		check_next_turn();
 	}
 
 	void TurnPhase::handle_take_buildingcards(const Socket & socket, Player & player)
@@ -117,6 +137,8 @@ namespace machiavelli
 				if (!discardedBuildingCard) {
 					game.discard_card(card1);
 					b.addBuildingCardToDeck(card2);
+
+					check_next_turn();
 				}
 
 				discardedBuildingCard = true;
@@ -135,6 +157,8 @@ namespace machiavelli
 				if (!discardedBuildingCard) {
 					game.discard_card(card2);
 					b.addBuildingCardToDeck(card1);
+
+					check_next_turn();
 				}
 
 				discardedBuildingCard = true;

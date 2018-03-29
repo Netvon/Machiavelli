@@ -79,7 +79,9 @@ namespace machiavelli
 
 	void State::changeCharacterOrder(const unsigned int position)
 	{
-		
-		_characterPosition = position;
+		if (position > 7)
+			_characterPosition = 1;
+		else
+			_characterPosition = position;
 	}
 }
