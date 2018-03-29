@@ -18,6 +18,7 @@ namespace machiavelli
 		bool gotGold = false;
 		bool builtBuilding = false;
 		bool takenBuildingCards = false;
+		bool usedCharacterAction = false;
 		bool discardedBuildingCard = false;
 	public:
 		TurnPhase(const std::string & name, std::shared_ptr<State> state);

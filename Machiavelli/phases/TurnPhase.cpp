@@ -37,20 +37,22 @@ namespace machiavelli
 			if(effect)
 				effect(currentPlayer);
 
-			add_option("0", "Gebruik het karaktereigenschap van de " + current_card.name(), [&, current_card](const Socket& s, Player& p) {
+			if (!usedCharacterAction) {
+				add_option("0", "Gebruik het karaktereigenschap van de " + current_card.name(), [&, current_card](const Socket& s, Player& p) {
 
-				reset_options(true);
+					reset_options(true);
 
-				machiavelli::actions::add_actions_for(current_card, state()->current_phase());
+					machiavelli::actions::add_actions_for(current_card, state()->current_phase());
 
-				print_info(s, p);
+					print_info(s, p);
 
-			}, true);
-
+				}, true);
+			}
 
 			if (!gotGold) {
 				add_option("1", "Pak 2 goudstukken", std::bind(&TurnPhase::handle_get_gold, this, _1, _2), true);
 			}
+
 			if (!takenBuildingCards) {
 				add_option("2", "Pak 2 bouwkaarten en leg er 1 af", std::bind(&TurnPhase::handle_take_buildingcards, this, _1, _2), true);
 			}

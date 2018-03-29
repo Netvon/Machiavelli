@@ -172,6 +172,10 @@ namespace machiavelli {
 
 	void Player::swap_building_cards(Player & player)
 	{
+		if (player.building_cards.stackIsEmpty()) {
+			return;
+		}
+
 		building_cards.swapStack(player.building_cards);
 	}
 
