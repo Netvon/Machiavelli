@@ -62,6 +62,8 @@ namespace machiavelli
 		else {
 			state()->changeCharacterOrder(1);
 		}*/
+
+		print_info(socket, player);
 	}
 
 	void PlayPhase::nextTurn(const Socket & socket, const Player & player)

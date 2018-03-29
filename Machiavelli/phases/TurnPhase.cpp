@@ -43,7 +43,7 @@ namespace machiavelli
 		auto& game = state()->game();
 		auto& currentPlayer = game.current_player()->get_player();*/
 
-		
+		//reset_options(true);
 
 		//nextTurn(socket, player);
 	}

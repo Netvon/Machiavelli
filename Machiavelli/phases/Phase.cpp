@@ -121,7 +121,7 @@ namespace machiavelli
 	void Phase::print_cards(const Socket & socket, const Player & player)
 	{
 		socket << "========= Your Cards =========\n";
-		socket << "r\n";
+		socket << "\r\n";
 
 		for (auto& card : player.getPlayerBuildingCards()) {
 			if (!card.getIsBuilt()) {
@@ -129,9 +129,18 @@ namespace machiavelli
 					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\r\n";
 				}
 				else {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\n\r";
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\r\n";
 				}
 			}
+		}
+
+		for (auto& card : player.getPlayerCharacterCards()) {
+			socket << "#" << card.getOrder() << ". " << card.name();
+			if (card.is_murdered()) {
+				socket << " [dead this turn]";
+			}
+
+			socket << "\r\n";
 		}
 	}
 
@@ -146,7 +155,7 @@ namespace machiavelli
 					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\r\n";
 				}
 				else {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\n\r";
+					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\r\n";
 				}
 			}
 		}
