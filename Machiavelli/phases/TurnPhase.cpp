@@ -23,26 +23,44 @@ namespace machiavelli
 	void TurnPhase::entered_phase(const Socket & socket, const Player & player)
 	{
 		socket << "Welcome to the TurnPhase!\r\n";
-		auto currentPosition = state()->getCharacterPosition();
+		/*auto currentPosition = state()->getCharacterPosition();
 		auto& game = state()->game();
-		auto& currentPlayer = game.current_player()->get_player();
+		auto& currentPlayer = game.current_player()->get_player();*/
 
-		if (currentPlayer == player) {
-			auto& current_card = player.findCardByOrder(currentPosition);
-			bool empty = current_card.empty();
+		
+
+		//nextTurn(socket, player);
+	}
+
+	void TurnPhase::add_options()
+	{
+		if (!takingBuildingCardsNow && !usingCharacterAction) {
+			auto currentPosition = state()->getCharacterPosition();
+			auto& game = state()->game();
+			auto& currentPlayer = game.current_player()->get_player();
+
+			auto& socket = state()->current_player()->get_socket();
+
+			auto& current_card = currentPlayer.findCardByOrder(currentPosition);
 
 			socket << "Je bent nu de: " << current_card.name() << "\r\n";
 
 			auto effect = current_card.effect();
-			if(effect)
+			if (effect)
 				effect(currentPlayer);
 
 			if (!usedCharacterAction) {
 				add_option("0", "Gebruik het karaktereigenschap van de " + current_card.name(), [&, current_card](const Socket& s, Player& p) {
 
+					usingCharacterAction = true;
+					usedCharacterAction = true;
+
 					reset_options(true);
 
-					machiavelli::actions::add_actions_for(current_card, state()->current_phase());
+					machiavelli::actions::add_actions_for(current_card, state()->current_phase(), [this]() {
+						usingCharacterAction = false;
+						reset_options(true);
+					});
 
 					print_info(s, p);
 
@@ -57,13 +75,6 @@ namespace machiavelli
 				add_option("2", "Pak 2 bouwkaarten en leg er 1 af", std::bind(&TurnPhase::handle_take_buildingcards, this, _1, _2), true);
 			}
 		}
-
-		nextTurn(socket, player);
-	}
-
-	void TurnPhase::add_options()
-	{
-		
 	}
 
 	void TurnPhase::handle_get_gold(const Socket & socket, Player & player)
@@ -72,12 +83,16 @@ namespace machiavelli
 
 		if (!gotGold) {
 			player.gold() += 2_g;
-			gotGold = true;
+			gotGold = true;;
+			takenBuildingCards = true;
+
+			reset_options(true);
 		}
 	}
 
 	void TurnPhase::handle_take_buildingcards(const Socket & socket, Player & player)
 	{
+		takingBuildingCardsNow = true;
 		auto& game = state()->game();
 		
 		BuildingCard card1 = game.drawBuildingCard();
@@ -91,25 +106,34 @@ namespace machiavelli
 			add_option("0", card1.name(), [this, &game, card1, card2](const auto& a, auto& b) {
 				auto& game = state()->game();
 
+				takenBuildingCards = true;
+				takingBuildingCardsNow = false;
+				gotGold = true;
 				reset_options(true);
 
 				if (!discardedBuildingCard) {
 					game.discard_card(card1);
 					b.addBuildingCardToDeck(card2);
 				}
+
 				discardedBuildingCard = true;
+				
 
 			}, true);
 
 			add_option("1", card2.name(), [this, &game, card1, card2](const auto& a, auto& b) {
 				auto& game = state()->game();
 
+				takenBuildingCards = true;
+				takingBuildingCardsNow = false;
+				gotGold = true;
 				reset_options(true);
 
 				if (!discardedBuildingCard) {
 					game.discard_card(card2);
 					b.addBuildingCardToDeck(card1);
 				}
+
 				discardedBuildingCard = true;
 
 			}, true);

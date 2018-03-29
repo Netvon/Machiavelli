@@ -20,6 +20,10 @@ namespace machiavelli
 		bool takenBuildingCards = false;
 		bool usedCharacterAction = false;
 		bool discardedBuildingCard = false;
+
+
+		bool takingBuildingCardsNow = false;
+		bool usingCharacterAction = false;
 	public:
 		TurnPhase(const std::string & name, std::shared_ptr<State> state);
 		~TurnPhase();
