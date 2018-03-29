@@ -88,6 +88,9 @@ namespace machiavelli
 
 			reset_options(true);
 		}
+		else {
+			socket << "Je hebt al goud gepakt!";
+		}
 	}
 
 	void TurnPhase::handle_take_buildingcards(const Socket & socket, Player & player)
