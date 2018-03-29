@@ -4,6 +4,9 @@
 #include "State.h"
 #include <vector>
 #include <memory>
+#include <iomanip>
+#include <iostream>
+#include <algorithm>
 
 #include "../Player.h"
 #include "../network/Socket.h"

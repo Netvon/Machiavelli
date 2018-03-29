@@ -100,12 +100,20 @@ namespace machiavelli
 		socket << "----------\r\n";
 		socket << "Commands;\r\n";
 
+		auto result = std::max_element(options.begin(), options.end(), [](const Option& a, const Option& b) {
+			return a.command().size() < b.command().size();
+		});
+
+		std::ostringstream commands;
+
 		for (auto& option : options) {
 			if (option.is_for_current_player() && !is_current_player)
 				continue;
 
-			socket << " - [" << option.command() << "]\r\n   Name: " << option.name() << "\r\n";
+			commands << " [ " << std::setw(result->command().size()) << option.command() << " ] " << option.name() << "\r\n";
 		}
+
+		socket << commands.str();
 
 		socket << "----------\r\n";
 	}

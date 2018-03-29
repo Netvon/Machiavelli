@@ -20,7 +20,7 @@ namespace machiavelli
 			return _name;
 		}
 
-		const std::string command() const {
+		const std::string& command() const {
 			return _command;
 		}
 
