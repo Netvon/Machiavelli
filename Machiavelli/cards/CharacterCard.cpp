@@ -70,6 +70,11 @@ namespace machiavelli {
 		_murdered = new_value;
 	}
 
+	bool CharacterCard::empty() const
+	{
+		return _name == "<no name>";
+	}
+
 	std::istream & operator>>(std::istream & is, CharacterCard & card)
 	{
 		std::istream::sentry s(is);

@@ -26,6 +26,8 @@ namespace machiavelli {
 		bool is_murdered() const;
 		void is_murdered(bool new_value);
 
+		bool empty() const;
+
 	private:
 		std::string _name{ "<no name>" };
 		CardEffect _effect;
