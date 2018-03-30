@@ -25,6 +25,8 @@ namespace machiavelli
 		bool takingBuildingCardsNow = false;
 		bool usingCharacterAction = false;
 
+		bool newTurn = false;
+
 		void check_next_turn();
 	public:
 		TurnPhase(const std::string & name, std::shared_ptr<State> state);

@@ -24,16 +24,18 @@ namespace machiavelli
 		socket << "Welcome to the PlayPhase!\r\n";
 
 		//nextTurn(socket, player);
+
+		reset_options(true);
 	}
 
 	void PlayPhase::add_options()
 	{
-		auto& game = state()->game();
-		auto& currentPlayer = game.current_player()->get_player();
+		//auto& game = state()->game();
+		//auto& currentPlayer = game.current_player()->get_player();
 
-		if (currentPlayer == game.getKing()) {
+		//if (currentPlayer == game.getKing()) {
 			add_option("0", "Roep volgende karakter op", std::bind(&PlayPhase::handle_turn, this, _1, _2), true);
-		}
+		//}
 	}
 
 	void PlayPhase::handle_turn(const Socket & socket, const Player & player)

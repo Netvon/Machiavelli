@@ -7,11 +7,14 @@ namespace machiavelli
 	void TurnPhase::check_next_turn()
 	{
 		if (usedCharacterAction && (gotGold || takenBuildingCards)) {
-			usedCharacterAction = false;
 			gotGold = false;
+			builtBuilding = false;
 			takenBuildingCards = false;
-			usingCharacterAction = false;
+			usedCharacterAction = false;
+			discardedBuildingCard = false;
 			takingBuildingCardsNow = false;
+			usingCharacterAction = false;
+			newTurn = true;
 
 			// naar volgende turn (via PlayPhase?)
 
@@ -46,6 +49,11 @@ namespace machiavelli
 		//reset_options(true);
 
 		//nextTurn(socket, player);
+
+		if (newTurn) {
+			reset_options(true);
+			newTurn = false;
+		}
 	}
 
 	void TurnPhase::add_options()

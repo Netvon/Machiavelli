@@ -88,7 +88,7 @@ namespace machiavelli {
 	bool Player::hasCharacterCardByOrder(const unsigned int pOrder)
 	{
 		for (auto& card : character_cards) {
-			if (card.getOrder() == pOrder) {
+			if (card.getOrder() == pOrder && !card.is_murdered()) {
 				return true;
 			}
 		}
