@@ -138,27 +138,41 @@ namespace machiavelli::actions
 		}, true);
 	}
 
-	void add_build_options(std::shared_ptr<Phase> context)
+	void add_build_options(std::shared_ptr<Phase> context, std::function<void(void)> do_on_enter_menu, std::function<void(void)> do_after_complete)
 	{
-		context->add_option("build", "Build a card", [&, context](const Socket& s2, Player& p2) {
+		context->add_option("build", "Build a building", [&, context, do_after_complete, do_on_enter_menu](const Socket& s2, Player& p2) {
 
+			do_on_enter_menu();
 			context->reset_options(true);
 
 			int can_build = p2.build_per_turn();
 			int index = 0;
 
 			for (const auto& bc : p2.getPlayerBuildingCards()) {
-				if (!bc.getIsBuilt()) {
+				if (!bc.getIsBuilt() && p2.gold() >= bc.cost()) {
 
-					context->add_option(std::to_string(index), bc.name(), [&, context, bc](const Socket& s, Player& p)
+					context->add_option(std::to_string(index), bc.name(), [&, context, bc, do_after_complete](const Socket& s, Player& p)
 					{
-						p.built_building(bc);
-						can_build--;
+						if (p.gold() >= bc.cost()) {
+							p.built_building(bc);
+							can_build--;
+						}
+
+						bool any_left_to_built = false;
+
+						for (const auto& card : p2.getPlayerBuildingCards()) {
+							if (!bc.getIsBuilt() && p2.gold() >= bc.cost()) {
+								any_left_to_built = true;
+								break;
+							}
+						}
 						
-						if (can_build > 0)
+						if (can_build > 0 && p.gold() > 0 && any_left_to_built)
 							context->remove_option(std::to_string(index));
-						else
+						else {
+							do_after_complete();
 							context->reset_options(true);
+						}
 
 					}, true);
 

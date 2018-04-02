@@ -24,6 +24,7 @@ namespace machiavelli
 
 		bool takingBuildingCardsNow = false;
 		bool usingCharacterAction = false;
+		bool buildingBuilding = false;
 
 		bool newTurn = false;
 

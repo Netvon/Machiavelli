@@ -188,8 +188,10 @@ namespace machiavelli {
 	{
 		for (auto & card : building_cards) {
 
-			if(card == pCard)
+			if (card == pCard) {
 				card.setIsBuilt(true);
+				_gold -= card.cost();
+			}
 		}
 	}
 

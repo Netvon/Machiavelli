@@ -6,6 +6,17 @@ namespace machiavelli
 {
 	void TurnPhase::check_next_turn()
 	{
+		int game_ended_if_zero = state()->game().getPlayers().size();
+
+		for (auto player : state()->game().getPlayers()) {
+			if (player->get_player().built_buildings().size() >= 8)
+				game_ended_if_zero--;
+		}
+
+		if (game_ended_if_zero == 0) {
+			// win conditie, hier naar eindscherm gaan
+		}
+
 		if (usedCharacterAction && (gotGold || takenBuildingCards)) {
 			gotGold = false;
 			builtBuilding = false;
@@ -58,7 +69,7 @@ namespace machiavelli
 
 	void TurnPhase::add_options()
 	{
-		if (!takingBuildingCardsNow && !usingCharacterAction) {
+		if (!takingBuildingCardsNow && !usingCharacterAction && !buildingBuilding) {
 			auto currentPosition = state()->getCharacterPosition();
 			auto& game = state()->game();
 			auto& currentPlayer = game.current_player()->get_player();
@@ -99,6 +110,18 @@ namespace machiavelli
 
 			if (!takenBuildingCards) {
 				add_option("2", "Pak 2 bouwkaarten en leg er 1 af", std::bind(&TurnPhase::handle_take_buildingcards, this, _1, _2), true);
+			}
+
+			if (!builtBuilding) {
+				machiavelli::actions::add_build_options(state()->current_phase(), [this]() {
+					buildingBuilding = true;
+				}, [this]() {
+					builtBuilding = true;
+					buildingBuilding = false;
+					reset_options(true);
+
+					check_next_turn();
+				});
 			}
 		}
 	}
