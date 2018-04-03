@@ -71,6 +71,7 @@ namespace machiavelli {
 
 		void finished_first(bool new_value);
 		int score() const;
+		void addScore(int value);
 	private:
 		int id{ util::random(0, 1000) };
 

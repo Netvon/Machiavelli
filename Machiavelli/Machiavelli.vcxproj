@@ -127,6 +127,7 @@
     <ClInclude Include="Effects.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gold.h" />
+    <ClInclude Include="phases\EndPhase.h" />
     <ClInclude Include="phases\LobbyPhase.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="network\CircularBuffer.h" />
@@ -153,6 +154,7 @@
     <ClCompile Include="Effects.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gold.cpp" />
+    <ClCompile Include="phases\EndPhase.cpp" />
     <ClCompile Include="phases\LobbyPhase.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network\Socket.cpp" />

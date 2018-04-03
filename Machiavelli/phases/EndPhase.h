@@ -7,16 +7,16 @@
 
 namespace machiavelli
 {
-	class PlayPhase : public Phase
+	class EndPhase : public Phase
 	{
 	private:
 		void handle_turn(const Socket& socket, const Player& player);
 		void nextTurn(const Socket& socket, const Player& player);
 	public:
-		PlayPhase(const std::string & name, std::shared_ptr<State> state);
-		~PlayPhase();
+		EndPhase(const std::string & name, std::shared_ptr<State> state);
+		~EndPhase();
 
-		void checkWin();
+		void countPoints();
 
 		// Inherited via Phase
 		virtual void print(const Socket & socket, const Player& player) override;

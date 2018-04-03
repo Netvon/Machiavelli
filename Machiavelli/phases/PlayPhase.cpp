@@ -1,5 +1,7 @@
 #include "PlayPhase.h"
 #include "TurnPhase.h"
+#include "EndPhase.h"
+
 using namespace std::placeholders;
 
 namespace machiavelli
@@ -12,6 +14,21 @@ namespace machiavelli
 
 	PlayPhase::~PlayPhase()
 	{
+	}
+
+	void PlayPhase::checkWin()
+	{
+		auto& game = state()->game();
+
+		for (auto& player : game.getPlayers()) {
+			auto& p = player->get_player();
+
+			if (p.built_buildings().size() == 8) {
+				game.broadcast(p.name() + " heeft 8 gebouwen gebouwd! De punten worden nu geteld.");
+				state()->add_phase<EndPhase>("end");
+				state()->navigate_to("end");
+			}
+		}
 	}
 
 	void PlayPhase::print(const Socket & socket, const Player & player)
@@ -67,6 +84,8 @@ namespace machiavelli
 
 		print_info(socket, player);
 	}
+
+
 
 	void PlayPhase::nextTurn(const Socket & socket, const Player & player)
 	{

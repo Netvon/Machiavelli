@@ -29,6 +29,7 @@
 #include "phases/GamePhase.h"
 #include "phases/PlayPhase.h"
 #include "phases/TurnPhase.h"
+#include "phases/EndPhase.h"
 #include "main.h"
 #include "phases/LobbyPhase.h"
 
@@ -143,6 +144,7 @@ void handle_client(Socket client) // this function runs in a separate thread
 						state->add_phase<machiavelli::GamePhase>("game");
 						state->add_phase<machiavelli::PlayPhase>("play");
 						state->add_phase<machiavelli::TurnPhase>("turn");
+						state->add_phase<machiavelli::EndPhase>("end");
 						state->navigate_to("game");
 						continue;
 					}
