@@ -70,12 +70,11 @@ namespace machiavelli::actions
 
 		context->add_option(key + "b", "Take new cards", [&, context, do_after_complete](const Socket& s, Player& p)
 		{
-			do_after_complete();
 			context->reset_options(true);
 
 			for (size_t i = 1llu; i < p.building_card_amount(); i++)
 			{
-				add_take_option(context, i);
+				add_take_option(context, i, do_after_complete);
 			}
 
 			context->print_info(s, p);
@@ -120,9 +119,11 @@ namespace machiavelli::actions
 		}, true);
 	}
 
-	void add_take_option(const std::shared_ptr<machiavelli::Phase> &context, const size_t &i)
+	void add_take_option(const std::shared_ptr<machiavelli::Phase> &context, const size_t &i, std::function<void(void)> do_after_complete)
 	{
 		context->add_option(std::to_string(i), "Take " + std::to_string(i) + " new cards", [&, context](const Socket& s2, Player& p2) {
+
+			do_after_complete();
 
 			auto& game = context->state()->game();
 
