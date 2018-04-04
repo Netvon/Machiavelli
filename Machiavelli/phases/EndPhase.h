@@ -16,7 +16,7 @@ namespace machiavelli
 		EndPhase(const std::string & name, std::shared_ptr<State> state);
 		~EndPhase();
 
-		void countPoints();
+		void countPoints(const Socket & socket, const Player & player);
 
 		// Inherited via Phase
 		virtual void print(const Socket & socket, const Player& player) override;

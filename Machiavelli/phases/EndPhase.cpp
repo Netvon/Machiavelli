@@ -18,11 +18,11 @@ namespace machiavelli
 
 	void EndPhase::entered_phase(const Socket & socket, const Player & player)
 	{
-		print_info(socket, player);
-
+		//print_info(socket, player);
+		countPoints(socket, player);
 	}
 
-	void EndPhase::countPoints()
+	void EndPhase::countPoints(const Socket & socket, const Player & player)
 	{
 		auto& game = state()->game();
 
@@ -35,13 +35,13 @@ namespace machiavelli
 		scores << "- " << game.getPlayers().at(0)->get_player().name() << ": " << player1Score << "\r\n";
 		scores << "- " << game.getPlayers().at(1)->get_player().name() << ": " << player2Score << "\r\n";
 
-		game.broadcast(scores.str());
+		socket << scores.str();
 
 		if (player1Score > player2Score) {
-			game.broadcast(game.getPlayers().at(0)->get_player().name() + " is the winner!");
+			socket << game.getPlayers().at(0)->get_player().name() + " is the winner!\r\n";
 		}
 		else {
-			game.broadcast(game.getPlayers().at(1)->get_player().name() + " is the winner!");
+			socket << game.getPlayers().at(1)->get_player().name() + " is the winner!\r\n";
 		}
 	}
 

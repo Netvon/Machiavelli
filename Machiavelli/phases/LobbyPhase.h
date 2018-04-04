@@ -19,5 +19,10 @@ namespace machiavelli
 		virtual void add_options() override;
 	private:
 		int amount_in_game{ 0 };
+		bool cheat_mode{ false };
+		bool test_win{ false };
+		bool give_cards{ false };
+
+		void set_cheat_data();
 	};
 }

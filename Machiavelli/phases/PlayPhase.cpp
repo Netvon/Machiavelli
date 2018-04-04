@@ -24,7 +24,7 @@ namespace machiavelli
 			auto& p = player->get_player();
 
 			if (p.built_buildings().size() >= 8) {
-				game.broadcast(p.name() + " heeft 8 gebouwen gebouwd! De punten worden nu geteld.");
+				game.broadcast(p.name() + " heeft 8 gebouwen gebouwd! De punten worden nu geteld.\r\n");
 
 				state()->add_phase<EndPhase>("end");
 				state()->navigate_to("end");
