@@ -39,6 +39,7 @@ namespace machiavelli
 			cheat_mode = false;
 			test_win = false;
 			give_cards = false;
+			test_effect = false;
 		}
 		else {
 			socket << "There's not enough players yet.\n\r";
@@ -59,6 +60,12 @@ namespace machiavelli
 		add_option("cheatwin", "activate cheat-mode to test win", [&](const auto& a, auto& b) {
 			cheat_mode = true;
 			test_win = true;
+		});
+
+		add_option("cheateffect", "activate cheat-mode and give buildings", [&](const auto& a, auto& b) {
+			cheat_mode = true;
+			test_effect = true;
+			give_cards = true;
 		});
 	}
 
@@ -84,7 +91,7 @@ namespace machiavelli
 			p2.addBuildingCardToDeck(game.drawBuildingCard());
 		}
 
-		if (test_win) {
+		if (test_win || test_effect) {
 			for (auto& card : p1.getPlayerBuildingCards()) {
 				p1.built_building(card);
 			}

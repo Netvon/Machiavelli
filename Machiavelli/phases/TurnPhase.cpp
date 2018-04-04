@@ -6,8 +6,6 @@ namespace machiavelli
 {
 	void TurnPhase::check_next_turn()
 	{
-		
-
 		if (usedCharacterAction && (gotGold || takenBuildingCards)) {
 			gotGold = false;
 			builtBuilding = false;
@@ -19,6 +17,10 @@ namespace machiavelli
 			newTurn = true;
 
 			// naar volgende turn (via PlayPhase?)
+
+			for (auto player : state()->game().getPlayers()) {
+				player->get_player().reset_effects();
+			}
 
 			state()->changeCharacterOrder(state()->getCharacterPosition() + 1);
 			state()->navigate_to("play");
@@ -51,6 +53,10 @@ namespace machiavelli
 		//reset_options(true);
 
 		//nextTurn(socket, player);
+
+		for (auto player : state()->game().getPlayers()) {
+			player->get_player().apply_card_effects();
+		}
 
 		if (newTurn) {
 			reset_options(true);

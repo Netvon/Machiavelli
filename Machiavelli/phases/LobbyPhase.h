@@ -22,6 +22,7 @@ namespace machiavelli
 		bool cheat_mode{ false };
 		bool test_win{ false };
 		bool give_cards{ false };
+		bool test_effect{ false };
 
 		void set_cheat_data();
 	};
