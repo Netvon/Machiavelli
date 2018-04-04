@@ -84,6 +84,7 @@ namespace machiavelli::actions
 
 	void add_condottiere_option(const std::string & key, std::shared_ptr<Phase> context, std::function<void(void)> do_after_complete)
 	{
+
 		context->add_option(key, "Destroy a building", [&, context, do_after_complete](const Socket& s, Player& p) {
 
 			context->reset_options(true);
@@ -91,19 +92,25 @@ namespace machiavelli::actions
 			auto& game = context->state()->game();
 			auto& other_player = game.get_other_player(p);
 
+			if (other_player.built_buildings().size() >= 8) {
+				do_after_complete();
+				context->reset_options(true);
+				return;
+			}
+
 			int index = 0;
 
 			for (const auto& building : other_player.built_buildings()) {
 
-				context->add_option(std::to_string(index), building.name(), [&, context, do_after_complete](const Socket& s2, Player& p2)
+				context->add_option(std::to_string(index), building.name(), [&building, context, &other_player, do_after_complete](const Socket& s2, Player& p2)
 				{
 					do_after_complete();
 					context->reset_options(true);
 
 					p2.gold() -= building.cost() - 1_g;
-					p2.destroy_building(building.name());
 
-					p2.discardBuildingCardFromDeck(building);
+					other_player.destroy_building(building.name());
+					other_player.discardBuildingCardFromDeck(building);
 
 
 				}, true);
@@ -136,6 +143,17 @@ namespace machiavelli::actions
 			context->reset_options(true);
 
 		}, true);
+	}
+
+	void add_masterbuilder_option(const std::string & key, std::shared_ptr<Phase> context, std::function<void(void)> do_after_complete)
+	{
+		context->add_option(key, "Take 2 building cards", [&, context, do_after_complete](const Socket& s2, Player& p2) {
+			auto& game = context->state()->game();
+			p2.addBuildingCardToDeck(game.drawBuildingCard());
+
+			do_after_complete();
+			context->reset_options(true);
+		});
 	}
 
 	void add_build_options(std::shared_ptr<Phase> context, std::function<void(void)> do_on_enter_menu, std::function<void(void)> do_after_complete)
@@ -189,5 +207,6 @@ namespace machiavelli::actions
 		if (card.name() == "Dief") add_thief_option("thief", context, do_after_complete);
 		if (card.name() == "Magiër") add_mage_option("mage", context, do_after_complete);
 		if (card.name() == "Condottiere") add_condottiere_option("condottiere", context, do_after_complete);
+		if (card.name() == "Bouwmeester") add_masterbuilder_option("masterbuilder", context, do_after_complete);
 	}
 }
