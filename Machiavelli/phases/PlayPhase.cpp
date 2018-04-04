@@ -23,8 +23,9 @@ namespace machiavelli
 		for (auto& player : game.getPlayers()) {
 			auto& p = player->get_player();
 
-			if (p.built_buildings().size() == 8) {
+			if (p.built_buildings().size() >= 8) {
 				game.broadcast(p.name() + " heeft 8 gebouwen gebouwd! De punten worden nu geteld.");
+
 				state()->add_phase<EndPhase>("end");
 				state()->navigate_to("end");
 			}
@@ -38,6 +39,8 @@ namespace machiavelli
 
 	void PlayPhase::entered_phase(const Socket & socket, const Player & player)
 	{
+		checkWin();
+
 		socket << "Welcome to the PlayPhase!\r\n";
 
 		//nextTurn(socket, player);
@@ -60,6 +63,8 @@ namespace machiavelli
 		auto& game = state()->game();
 		auto characterPosition = state()->getCharacterPosition();
 
+		game.broadcast("Calling " + CharacterCard::get_name_by_order(characterPosition) + " to action.\r\n");
+
 		for (auto& player : game.getPlayers()) {
 			auto& p = player->get_player();
 			auto characterCards = p.getPlayerCharacterCards();
@@ -74,6 +79,8 @@ namespace machiavelli
 				return;
 			}
 		}
+
+		game.broadcast("Nobody has the " + CharacterCard::get_name_by_order(characterPosition) + " card.\r\n");
 
 		//if (characterPosition < 8) {
 		state()->changeCharacterOrder(characterPosition + 1);

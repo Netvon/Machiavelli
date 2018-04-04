@@ -3,6 +3,8 @@
 
 namespace machiavelli {
 
+	std::map<unsigned int, std::string> CharacterCard::names_by_order;
+
 	CharacterCard::CharacterCard()
 	{
 	}
@@ -75,6 +77,11 @@ namespace machiavelli {
 		return _name == "<no name>";
 	}
 
+	std::string CharacterCard::get_name_by_order(unsigned int order)
+	{
+		return CharacterCard::names_by_order.at(order);
+	}
+
 	std::istream & operator>>(std::istream & is, CharacterCard & card)
 	{
 		std::istream::sentry s(is);
@@ -104,6 +111,8 @@ namespace machiavelli {
 				card._name = name;
 				card.order = order;
 				card._effect = effect;
+
+				CharacterCard::names_by_order.insert_or_assign(order, name);
 
 				is.setstate(is.goodbit);
 			}

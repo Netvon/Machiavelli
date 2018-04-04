@@ -29,6 +29,14 @@ namespace machiavelli
 		auto player1Score = game.getPlayers().at(0)->get_player().score();
 		auto player2Score = game.getPlayers().at(1)->get_player().score();
 
+		std::ostringstream scores;
+
+		scores << "Scores;\r\n";
+		scores << "- " << game.getPlayers().at(0)->get_player().name() << ": " << player1Score << "\r\n";
+		scores << "- " << game.getPlayers().at(1)->get_player().name() << ": " << player2Score << "\r\n";
+
+		game.broadcast(scores.str());
+
 		if (player1Score > player2Score) {
 			game.broadcast(game.getPlayers().at(0)->get_player().name() + " is the winner!");
 		}

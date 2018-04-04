@@ -6,16 +6,7 @@ namespace machiavelli
 {
 	void TurnPhase::check_next_turn()
 	{
-		int game_ended_if_zero = state()->game().getPlayers().size();
-
-		for (auto player : state()->game().getPlayers()) {
-			if (player->get_player().built_buildings().size() >= 8)
-				game_ended_if_zero--;
-		}
-
-		if (game_ended_if_zero == 0) {
-			// win conditie, hier naar eindscherm gaan
-		}
+		
 
 		if (usedCharacterAction && (gotGold || takenBuildingCards)) {
 			gotGold = false;

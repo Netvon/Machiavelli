@@ -2,6 +2,7 @@
 
 #include <string>
 #include "../CardEffect.h"
+#include <map>
 
 namespace machiavelli {
 	class CharacterCard
@@ -28,6 +29,8 @@ namespace machiavelli {
 
 		bool empty() const;
 
+		static std::string get_name_by_order(unsigned int order);
+
 	private:
 		std::string _name{ "<no name>" };
 		CardEffect _effect;
@@ -37,6 +40,8 @@ namespace machiavelli {
 		bool _murdered = false;
 
 		friend std::istream& operator>>(std::istream& is, CharacterCard& card);
+
+		static std::map<unsigned int, std::string> names_by_order;
 	};
 
 	std::istream& operator>>(std::istream& is, CharacterCard& card);
