@@ -109,7 +109,7 @@ namespace machiavelli
 				add_option("2", "Pak 2 bouwkaarten en leg er 1 af", std::bind(&TurnPhase::handle_take_buildingcards, this, _1, _2), true);
 			}
 
-			if (!builtBuilding || !currentPlayer.getPlayerBuildingCards().stackIsEmpty()) {
+			if (!builtBuilding && !currentPlayer.getPlayerBuildingCards().stackIsEmpty()) {
 				machiavelli::actions::add_build_options(state()->current_phase(), [this]() {
 					buildingBuilding = true;
 				}, [this]() {
