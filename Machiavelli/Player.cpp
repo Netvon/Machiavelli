@@ -220,6 +220,10 @@ namespace machiavelli {
 			if (card.getIsBuilt()) {
 				temp += card.cost();
 
+				if (card.name() == "Drakenpoort" || card.name() == "Universiteit") {
+					temp += 2_g;
+				}
+
 				has_categories.insert(card.category());
 			}
 		}
