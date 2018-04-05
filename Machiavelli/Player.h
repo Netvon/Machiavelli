@@ -30,7 +30,7 @@ namespace machiavelli {
 		const Gold& gold() const;
 
 		const std::string& name() const;
-		void name(std::string name);
+		void name(const std::string& name);
 
 		void addBuildingCardToDeck(const building_card& pCard);
 		void addBuildingCardToDeck(building_card&& pCard);
@@ -71,7 +71,6 @@ namespace machiavelli {
 
 		void finished_first(bool new_value);
 		int score() const;
-		void addScore(int value);
 	private:
 		int id{ util::random(0, 1000) };
 

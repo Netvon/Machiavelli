@@ -57,7 +57,7 @@ namespace machiavelli
 			return false;
 		}
 
-		int sizeOfStack() 
+		int sizeOfStack() const
 		{
 			int amountOfCards = 0;
 
@@ -70,7 +70,6 @@ namespace machiavelli
 
 		void shuffleStack()
 		{
-
 			std::shuffle(deck.begin(), deck.end(), util::RandomGenerator::instance().random_generator());
 		}
 

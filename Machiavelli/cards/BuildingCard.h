@@ -23,8 +23,8 @@ namespace machiavelli
 		const std::string& description() const;
 		const CardCategory& category() const;
 
-		void operator () (Game& game);
-		void operator () (Player& player);
+		/*void operator () (Game& game);
+		void operator () (Player& player);*/
 
 		void setIsBuilt(bool pIsBuilt);
 		bool getIsBuilt() const;

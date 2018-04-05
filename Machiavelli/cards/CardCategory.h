@@ -11,7 +11,7 @@ namespace machiavelli
 		static const CardCategory& blue();
 		static const CardCategory& purple();
 		static const CardCategory& red();
-		static const CardCategory& with(const std::string& name);
+		//static const CardCategory& with(const std::string& name);
 		static const int total_amount();
 
 		bool operator==(const CardCategory& other) const;

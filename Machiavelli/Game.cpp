@@ -176,12 +176,12 @@ namespace machiavelli
 		building_deck.shuffleStack();
 	}
 
-	bool Game::isCharacterDeckEmpty()
+	bool Game::isCharacterDeckEmpty() const
 	{
 		return character_deck.stackIsEmpty();
 	}
 
-	bool Game::isBuildingDeckEmpty()
+	bool Game::isBuildingDeckEmpty() const
 	{
 		return building_deck.stackIsEmpty();
 	}

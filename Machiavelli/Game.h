@@ -46,8 +46,8 @@ namespace machiavelli
 		void shuffleCharacterCards();
 		void shuffleBuildingCards();
 
-		bool isCharacterDeckEmpty();
-		bool isBuildingDeckEmpty();
+		bool isCharacterDeckEmpty() const;
+		bool isBuildingDeckEmpty() const;
 
 		std::shared_ptr<ClientInfo> current_player() const;
 		void current_player(const std::string& name);
@@ -62,8 +62,6 @@ namespace machiavelli
 		void discard_card(const BuildingCard & card);
 
 	private:
-		void tick();
-
 		std::vector<std::shared_ptr<ClientInfo>> players;
 
 		Deck<BuildingCard> building_deck;

@@ -34,5 +34,4 @@ namespace machiavelli
 
 	Gold operator "" _g(unsigned long long int amount);
 	std::ostream& operator<<(std::ostream& os, const Gold& gold);
-	std::istream& operator>>(std::istream& is, Gold& gold);
 }

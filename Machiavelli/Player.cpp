@@ -35,7 +35,7 @@ namespace machiavelli {
 		return player_name;
 	}
 
-	void Player::name(std::string name)
+	void Player::name(const std::string& name)
 	{
 		player_name = name;
 	}
