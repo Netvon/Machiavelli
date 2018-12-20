@@ -88,7 +88,6 @@ namespace machiavelli::actions
 
 	void add_condottiere_option(const std::string & key, std::shared_ptr<Phase> context, std::function<void(void)> do_after_complete)
 	{
-
 		context->add_option(key, "Destroy a building", [&, context, do_after_complete](const Socket& s, Player& p) {
 
 			context->reset_options(true);
@@ -103,9 +102,11 @@ namespace machiavelli::actions
 			}
 
 			int index = 0;
+			int options_added = 0;
 
 			for (const auto& building : other_player.built_buildings()) {
 
+				options_added++;
 				context->add_option(std::to_string(index), building.name(), [&building, context, &other_player, do_after_complete](const Socket& s2, Player& p2)
 				{
 					do_after_complete();
@@ -116,9 +117,17 @@ namespace machiavelli::actions
 					other_player.destroy_building(building.name());
 					other_player.discardBuildingCardFromDeck(building);
 
+					context->state()->broadcast(p2.name() + " destroyed the other player's '" + building.name() + "' building.");
+
 
 				}, true);
+			}
 
+			if (options_added == 0) {
+				s << "The other player doesn't have any built Buildings.\n";
+
+				do_after_complete();
+				context->reset_options(true);
 			}
 
 		}, true);
