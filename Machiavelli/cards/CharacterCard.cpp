@@ -88,6 +88,11 @@ namespace machiavelli {
 		return loaded.at(name);
 	}
 
+	std::size_t CharacterCard::loaded_amount()
+	{
+		return loaded.size();
+	}
+
 	std::istream & operator>>(std::istream & is, CharacterCard & card)
 	{
 		std::istream::sentry s(is);

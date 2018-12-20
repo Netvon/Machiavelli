@@ -31,6 +31,7 @@ namespace machiavelli {
 
 		static std::string get_name_by_order(unsigned int order);
 		static CharacterCard get_by_name(std::string name);
+		static std::size_t loaded_amount();
 
 	private:
 		std::string _name{ "<no name>" };

@@ -79,7 +79,7 @@ namespace machiavelli
 
 	void State::changeCharacterOrder(const unsigned int position)
 	{
-		if (position > 7)
+		if (position > static_cast<unsigned int>(CharacterCard::loaded_amount()))
 			_characterPosition = 1;
 		else
 			_characterPosition = position;

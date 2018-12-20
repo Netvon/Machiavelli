@@ -56,6 +56,7 @@ namespace machiavelli
 			cheat_mode = true;
 			give_cards = true;
 			test_action = true;
+			test_effect = true;
 		});
 
 		add_option("cheatwin", "activate cheat-mode to test win", [&](const auto& a, auto& b) {
