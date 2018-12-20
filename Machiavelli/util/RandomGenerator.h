@@ -7,14 +7,19 @@ namespace util
 	{
 	private:
 
-		RandomGenerator() {};
+		RandomGenerator() = default;
+		
 		std::random_device rd;
 		std::mt19937 generator{ rd() };
 	public:
 		static RandomGenerator& instance();
 
-		RandomGenerator(RandomGenerator const&) = delete;
-		void operator=(RandomGenerator const&) = delete;
+		virtual ~RandomGenerator() = default;
+
+		RandomGenerator(RandomGenerator&&) = delete;
+		RandomGenerator(const RandomGenerator&) = delete;
+		RandomGenerator& operator=(const RandomGenerator&) = delete;
+		RandomGenerator& operator=(RandomGenerator&&) = delete;
 
 		int operator()(int min, int max);
 		size_t operator()(size_t min, size_t max);

@@ -11,11 +11,6 @@ namespace machiavelli
 		//enable_defaults();
 	}
 
-	LobbyPhase::~LobbyPhase()
-	{
-
-	}
-
 	void LobbyPhase::print(const Socket & socket, const Player & player)
 	{
 	}
@@ -57,6 +52,12 @@ namespace machiavelli
 			give_cards = true;
 		});
 
+		add_option("cheataction", "activate cheat-mode and give buildingcards to test actions", [&](const auto& a, auto& b) {
+			cheat_mode = true;
+			give_cards = true;
+			test_action = true;
+		});
+
 		add_option("cheatwin", "activate cheat-mode to test win", [&](const auto& a, auto& b) {
 			cheat_mode = true;
 			test_win = true;
@@ -73,8 +74,11 @@ namespace machiavelli
 	{
 		auto& game = state()->game();
 
-		auto& p1 = game.getPlayerByIndex(0);
-		auto& p2 = game.getPlayerByIndex(1);
+		auto& p1 = game.getPlayerByIndex(0)->get_player();
+		auto& p2 = game.getPlayerByIndex(1)->get_player();
+
+		game.shuffleCharacterCards();
+		game.shuffleBuildingCards();
 
 		p1.gold() += 999;
 		p2.gold() += 999;
@@ -97,11 +101,22 @@ namespace machiavelli
 			}
 		}
 
-		p1.addCharacterCardToDeck(game.drawCharacterCard());
-		p1.addCharacterCardToDeck(game.drawCharacterCard());
+		if (test_action) {
 
-		p2.addCharacterCardToDeck(game.drawCharacterCard());
-		p2.addCharacterCardToDeck(game.drawCharacterCard());
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Moordenaar"));
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Dief"));
+
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Magiër"));
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Condottiere"));
+
+		}
+		else {
+			p1.addCharacterCardToDeck(game.drawCharacterCard());
+			p1.addCharacterCardToDeck(game.drawCharacterCard());
+
+			p2.addCharacterCardToDeck(game.drawCharacterCard());
+			p2.addCharacterCardToDeck(game.drawCharacterCard());
+		}
 
 
 		state()->add_phase<machiavelli::PlayPhase>("play");

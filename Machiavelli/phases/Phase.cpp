@@ -19,7 +19,7 @@ namespace machiavelli
 
 	void Phase::add_option(const std::string& command, const std::string & name, Option::handler func, bool is_for_current_player)
 	{
-		options.push_back(Option(command, name, func, is_for_current_player));
+		options.emplace_back(Option(command, name, func, is_for_current_player));
 	}
 
 	const std::string & Phase::name() const
@@ -45,8 +45,9 @@ namespace machiavelli
 		auto temp_clone = std::vector<Option>(options);
 
 		for (auto& option : temp_clone) {
-			if (option.is_for_current_player() && !is_current_player)
+			if (option.is_for_current_player() && !is_current_player) {
 				continue;
+			}
 
 			if (option.command() == command ) {
 				found_match = true;
@@ -57,8 +58,9 @@ namespace machiavelli
 			}
 		}
 
-		if(!found_match)
+		if (!found_match) {
 			socket << "Unknown command: " << command << "\nTry the 'info' command to see a list of all commands.\n";
+		}
 	}
 
 	std::shared_ptr<State> Phase::state() const {
@@ -94,8 +96,9 @@ namespace machiavelli
 
 		socket << "========= Info =========\r\nCurrent State: " << state()->current_phase()->name()  << " | Name: " << player.name() << " | Gold: " << player.gold() << "\r\n";
 
-		if (is_current_player)
+		if (is_current_player) {
 			socket << "\r\n|> it's your turn\r\n";
+		}
 
 		socket << "----------\r\n";
 		socket << "Commands;\r\n";
@@ -107,8 +110,9 @@ namespace machiavelli
 		std::ostringstream commands;
 
 		for (auto& option : options) {
-			if (option.is_for_current_player() && !is_current_player)
+			if (option.is_for_current_player() && !is_current_player) {
 				continue;
+			}
 
 			commands << " [ " << std::setw(result->command().size()) << option.command() << " ] " << option.name() << "\r\n";
 		}
@@ -116,6 +120,11 @@ namespace machiavelli
 		socket << commands.str();
 
 		socket << "----------\r\n";
+	}
+
+	void Phase::print_message(const Socket & socket, const Player & player, const std::string & message)
+	{
+
 	}
 
 	void Phase::print_cards(const Socket & socket, const Player & player)

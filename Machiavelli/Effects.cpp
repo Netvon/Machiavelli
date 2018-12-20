@@ -60,11 +60,11 @@ namespace machiavelli::effects
 
 	CardEffect CardEffectFactory(const std::string & name)
 	{
-		if (name == "Koning") return KingCardEffect();
-		if (name == "Prediker") return PreacherCardEffect();
-		if (name == "Koopman") return MerchantCardEffect();
-		if (name == "Bouwmeester") return ArchitectCardEffect();
-		if (name == "Condottiere") return CondottiereCardEffect();
+		if (name == "Koning") { return KingCardEffect(); }
+		if (name == "Prediker") { return PreacherCardEffect(); }
+		if (name == "Koopman") { return MerchantCardEffect(); }
+		if (name == "Bouwmeester") { return ArchitectCardEffect(); }
+		if (name == "Condottiere") { return CondottiereCardEffect(); }
 
 		return CardEffect();
 	}

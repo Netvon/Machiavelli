@@ -4,6 +4,7 @@
 namespace machiavelli {
 
 	std::map<unsigned int, std::string> CharacterCard::names_by_order;
+	std::map<std::string, CharacterCard> CharacterCard::loaded;
 
 	CharacterCard::CharacterCard()
 	{
@@ -82,6 +83,11 @@ namespace machiavelli {
 		return CharacterCard::names_by_order.at(order);
 	}
 
+	CharacterCard CharacterCard::get_by_name(std::string name)
+	{
+		return loaded.at(name);
+	}
+
 	std::istream & operator>>(std::istream & is, CharacterCard & card)
 	{
 		std::istream::sentry s(is);
@@ -113,6 +119,7 @@ namespace machiavelli {
 				card._effect = effect;
 
 				CharacterCard::names_by_order.insert_or_assign(order, name);
+				CharacterCard::loaded.insert_or_assign(name, card);
 
 				is.setstate(is.goodbit);
 			}

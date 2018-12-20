@@ -5,11 +5,14 @@ namespace machiavelli
 	class Gold
 	{
 	public:
-		typedef unsigned long long int value;
+		using value = unsigned long long int;
 
-		Gold() = default;
 		Gold(value amount);
-		~Gold() = default;
+		Gold() = default;
+		virtual ~Gold() = default;
+
+		Gold(const Gold& other);
+		Gold(Gold&& val);
 
 		/*operator value() const;
 		operator unsigned int() const;
@@ -18,6 +21,8 @@ namespace machiavelli
 		operator int() const;
 
 		Gold& operator=(const Gold& other);
+		Gold& operator=(Gold&& val);
+		Gold& operator=(value&& val);
 
 		Gold& operator++();
 		Gold& operator--();
@@ -29,7 +34,7 @@ namespace machiavelli
 		void amount(value new_amount);
 
 	private:
-		value _amount = 0;
+		value _amount{ 0 };
 	};
 
 	Gold operator "" _g(unsigned long long int amount);

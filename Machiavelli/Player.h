@@ -14,10 +14,10 @@ namespace machiavelli {
 	class Player
 	{
 	public:
-		typedef BuildingCard building_card;
-		typedef CharacterCard character_card;
-		typedef Deck<building_card> building_card_deck;
-		typedef Deck<character_card> character_card_deck;
+		using building_card = BuildingCard;
+		using character_card = CharacterCard;
+		using building_card_deck = Deck<building_card>;
+		using character_card_deck = Deck<character_card>;
 
 		Player();
 		Player(const std::string& name);
@@ -45,8 +45,8 @@ namespace machiavelli {
 		building_card_deck getPlayerBuildingCards() const;
 		character_card_deck getPlayerCharacterCards() const;
 
-		bool hasCharacterCardByOrder(const unsigned int pOrder);
-		const character_card findCardByOrder(const unsigned int pOrder) const;
+		bool hasCharacterCardByOrder(unsigned int pOrder);
+		const character_card findCardByOrder(unsigned int pOrder) const;
 
 		int draw_per_turn() const;
 		void draw_per_turn(int new_value);

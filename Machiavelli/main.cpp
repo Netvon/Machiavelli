@@ -1,4 +1,4 @@
-//
+﻿//
 //  main.cpp
 //  socketexample
 //
@@ -190,6 +190,8 @@ int load_decks(bool &retflag)
 		return 0;
 	}
 
+	std::cerr << "Loaded Deck assets \n";
+
 	state->game().replace_deck(bdeck);
 	state->game().replace_deck(cdeck);
 	retflag = false;
@@ -218,7 +220,9 @@ int main(int argc, const char * argv[])
 	ServerSocket server{ machiavelli::tcp_port };
 
 	try {
-		std::cerr << "server listening" << '\n';
+		std::cerr << "server listening on localhost:" << machiavelli::tcp_port << '\n';
+		std::cerr << "To connect: telnet localhost " << machiavelli::tcp_port << '\n';
+
 		while (running) {
 			// wait for connection from client; will create new socket
 			server.accept([&all_threads](Socket client) {

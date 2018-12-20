@@ -12,10 +12,6 @@ namespace machiavelli
 		add_options();
 	}
 
-	PlayPhase::~PlayPhase()
-	{
-	}
-
 	void PlayPhase::checkWin()
 	{
 		auto& game = state()->game();

@@ -8,10 +8,6 @@ namespace machiavelli
 		add_options();
 	}
 
-	EndPhase::~EndPhase()
-	{
-	}
-
 	void EndPhase::add_options()
 	{
 	}

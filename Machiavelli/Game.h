@@ -13,20 +13,20 @@ namespace machiavelli
 	class Game
 	{
 	public:
-		Game();
-		~Game();
+		Game() = default;
+		~Game() = default;
 
 		void start();
 		void doTurn();
 
 		bool addPlayer(std::shared_ptr<ClientInfo> player);
-		Player& getPlayerByIndex(size_t pIndex);
-		Player& getPlayerByName(const std::string& name) const;
+		std::shared_ptr<ClientInfo> getPlayerByIndex(size_t pIndex);
+		std::shared_ptr<ClientInfo> getPlayerByName(const std::string& name) const;
 		std::vector<std::shared_ptr<ClientInfo>> getPlayers() const;
 
 		void setKing();
 		void nextPlayerIsKing();
-		Player& getKing();
+		std::shared_ptr<ClientInfo> getKing();
 
 		bool started() const;
 
@@ -55,7 +55,7 @@ namespace machiavelli
 
 		void broadcast(const std::string & message);
 
-		std::map<std::string, CharacterCard> drawn_character_card(const Player& exclude, const std::string& exclude_card) const;
+		std::map<std::string, CharacterCard> drawn_character_cards(const Player& exclude, const std::string& exclude_card) const;
 		Player& get_other_player(Player& me) const;
 
 		void discard_card(BuildingCard && card);

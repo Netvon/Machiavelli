@@ -12,16 +12,13 @@ namespace machiavelli
 	{
 	public:
 
-		Deck()
-		{
-		}
+		Deck() = default;
 
 		Deck(std::initializer_list<T> cards) : deck(cards)
 		{
 		}
 
-		~Deck() {
-		}
+		~Deck() = default;
 
 		typename std::deque<T>::const_iterator begin() const {
 			return deck.begin();
@@ -41,11 +38,7 @@ namespace machiavelli
 
 		bool stackIsEmpty() const
 		{
-			if (deck.empty()) {
-				return true;
-			}
-
-			return false;
+			return deck.empty();
 		}
 
 		bool discardPileEmpty() const
@@ -80,6 +73,10 @@ namespace machiavelli
 
 		T draw()
 		{
+			if (deck.empty()) {
+				return T();
+			}
+
 			// TODO: make exceptionsafe :)
 			auto drawnCard = deck.front();
 			deck.erase(std::remove(deck.begin(), deck.end(), drawnCard));
@@ -166,8 +163,9 @@ namespace machiavelli
 
 				is >> temp;
 
-				if(is.good())
+				if (is.good()) {
 					deck.push_bottom_stack(std::move(temp));
+				}
 			}
 		}
 

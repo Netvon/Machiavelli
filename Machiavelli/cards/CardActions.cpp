@@ -11,24 +11,29 @@ namespace machiavelli::actions
 
 			auto& game = context->state()->game();
 
-			auto cards = game.drawn_character_card(p, "Moordenaar");
+			auto cards = game.drawn_character_cards(p, "Moordenaar");
 
 			int index = 1;
 
 			for (auto& kv : cards) {
-				context->add_option(std::to_string(index), kv.second.name(), [&, context, kv, do_after_complete](const Socket& s2, Player& p2)
+				context->add_option(std::to_string(index), "Kill " + kv.second.name(), [&, context, kv, do_after_complete](const Socket& s2, Player& p2)
 				{
-					auto & player = game.getPlayerByName(kv.first);
+					auto & player = game.getPlayerByName(kv.first)->get_player();
 					player.kill_character(kv.second.name());
+
+					s << "You killed '" << kv.second.name() <<"'\n";
 
 					do_after_complete();
 					context->reset_options(true);
+
+					context->print_info(s2, p2);
 
 				}, true);
 
 				index++;
 			}
 
+			
 			context->print_info(s, p);
 		}, true);
 	}
@@ -121,7 +126,7 @@ namespace machiavelli::actions
 
 	void add_take_option(const std::shared_ptr<machiavelli::Phase> &context, const size_t &i, std::function<void(void)> do_after_complete)
 	{
-		context->add_option(std::to_string(i), "Take " + std::to_string(i) + " new cards", [&, context](const Socket& s2, Player& p2) {
+		context->add_option(std::to_string(i), "Take " + std::to_string(i) + " new cards", [&, context, do_after_complete](const Socket& s2, Player& p2) {
 
 			do_after_complete();
 
@@ -186,9 +191,9 @@ namespace machiavelli::actions
 							}
 						}
 						
-						if (can_build > 0 && p.gold() > 0 && any_left_to_built)
+						if (can_build > 0 && p.gold() > 0 && any_left_to_built) {
 							context->remove_option(std::to_string(index));
-						else {
+						} else {
 							do_after_complete();
 							context->reset_options(true);
 						}
@@ -204,10 +209,10 @@ namespace machiavelli::actions
 
 	void add_actions_for(const Player::character_card & card, std::shared_ptr<Phase> context, std::function<void(void)> do_after_complete)
 	{
-		if (card.name() == "Moordenaar") add_murdered_option("murderer", context, do_after_complete);
-		if (card.name() == "Dief") add_thief_option("thief", context, do_after_complete);
-		if (card.name() == "Magiër") add_mage_option("mage", context, do_after_complete);
-		if (card.name() == "Condottiere") add_condottiere_option("condottiere", context, do_after_complete);
-		if (card.name() == "Bouwmeester") add_masterbuilder_option("masterbuilder", context, do_after_complete);
+		if (card.name() == "Moordenaar") { add_murdered_option("murderer", context, do_after_complete); }
+		if (card.name() == "Dief") { add_thief_option("thief", context, do_after_complete); }
+		if (card.name() == "Magiër") { add_mage_option("mage", context, do_after_complete); }
+		if (card.name() == "Condottiere") { add_condottiere_option("condottiere", context, do_after_complete); }
+		if (card.name() == "Bouwmeester") { add_masterbuilder_option("masterbuilder", context, do_after_complete); }
 	}
 }

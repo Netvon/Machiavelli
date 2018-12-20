@@ -10,7 +10,9 @@ namespace machiavelli
 	class BuildingCard
 	{
 	public:
-		BuildingCard() {};
+		BuildingCard() = default;
+		~BuildingCard() = default;
+
 		BuildingCard(const std::string& name, const Gold& cost, CardEffect effect, CardAction action);
 		
 		BuildingCard& operator=(const BuildingCard& other);

@@ -7,6 +7,17 @@ namespace machiavelli
 		this->_amount = amount;
 	}
 
+	Gold::Gold(const Gold & other)
+		: _amount{ other._amount }
+	{
+	}
+
+	Gold::Gold(Gold && val)
+		: _amount{std::move(val._amount)}
+	{
+
+	}
+
 	/*Gold::operator bool() const
 	{
 		return _amount > 0;
@@ -20,6 +31,18 @@ namespace machiavelli
 	Gold & Gold::operator=(const Gold & other)
 	{
 		_amount = other._amount;
+		return *this;
+	}
+
+	Gold & Gold::operator=(Gold && val)
+	{
+		_amount = std::move(val._amount);
+		return *this;
+	}
+
+	Gold & Gold::operator=(value && val)
+	{
+		_amount = std::move(val);
 		return *this;
 	}
 

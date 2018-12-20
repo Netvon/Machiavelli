@@ -9,11 +9,6 @@ namespace machiavelli
 		add_options();
 	}
 
-	TestPhase::~TestPhase()
-	{
-		
-	}
-
 	void TestPhase::print(const Socket & socket, const Player& player)
 	{
 		socket << "Now in: TestPhase\nName:\t" << player.name() <<  "\tGold:\t" << player.gold() << "\n";
@@ -105,7 +100,7 @@ namespace machiavelli
 			}
 		}
 
-		if (p == game.getKing()) {
+		if (p == game.getKing()->get_player()) {
 
 		}
 	}

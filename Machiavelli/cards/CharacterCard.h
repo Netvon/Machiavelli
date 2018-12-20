@@ -30,6 +30,7 @@ namespace machiavelli {
 		bool empty() const;
 
 		static std::string get_name_by_order(unsigned int order);
+		static CharacterCard get_by_name(std::string name);
 
 	private:
 		std::string _name{ "<no name>" };
@@ -42,6 +43,8 @@ namespace machiavelli {
 		friend std::istream& operator>>(std::istream& is, CharacterCard& card);
 
 		static std::map<unsigned int, std::string> names_by_order;
+		static std::map<std::string, CharacterCard> loaded;
+		
 	};
 
 	std::istream& operator>>(std::istream& is, CharacterCard& card);

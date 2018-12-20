@@ -3,6 +3,7 @@
 #include "..\Player.h"
 #include <string>
 #include <functional>
+#include <utility>
 #include "..\data\memleak.h"
 
 namespace machiavelli
@@ -10,11 +11,11 @@ namespace machiavelli
 	class Option {
 	public:
 
-		typedef std::function<void(const Socket&, Player&)> handler;
+		using handler = std::function<void(const Socket&, Player&)>;
 
-		Option() {};
-		Option(const std::string& command, const std::string& name, handler function, bool is_for_current_player = false)
-			: _command(command), _name(name), _func(function), _for_current_player(is_for_current_player) {};
+		Option() = default;
+		Option(std::string command, std::string name, handler function, bool is_for_current_player = false)
+			: _command(std::move(command)), _name(std::move(name)), _func(std::move(function)), _for_current_player(is_for_current_player) {};
 
 		const std::string& name() const {
 			return _name;
@@ -33,7 +34,7 @@ namespace machiavelli
 		}
 
 	private:
-		std::string _command = 0;
+		std::string _command = "<no command>";
 		std::string _name = "<no name>";
 		handler _func;
 		bool _for_current_player = false;

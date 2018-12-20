@@ -39,7 +39,7 @@ namespace machiavelli
 		void broadcast(const std::string & message);
 		
 		unsigned int getCharacterPosition() const;
-		void changeCharacterOrder(const unsigned int position);
+		void changeCharacterOrder(unsigned int position);
 
 	private:
 		std::vector<std::shared_ptr<Phase>> phases;

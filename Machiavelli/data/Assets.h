@@ -7,8 +7,9 @@ namespace data::assets {
 	{
 		std::ifstream stream(path);
 
-		if (!stream.is_open())
+		if (!stream.is_open()) {
 			return false;
+		}
 
 		try
 		{

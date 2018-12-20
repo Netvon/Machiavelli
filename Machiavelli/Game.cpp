@@ -7,13 +7,6 @@ using util::RandomGenerator;
 
 namespace machiavelli
 {
-	Game::Game()
-	{
-	}
-
-	Game::~Game()
-	{
-	}
 
 	void Game::start()
 	{
@@ -50,22 +43,27 @@ namespace machiavelli
 		return true;
 	}
 
-	Player & Game::getPlayerByIndex(size_t pIndex)
+	std::shared_ptr<ClientInfo> Game::getPlayerByIndex(size_t pIndex)
 	{
-		auto clientInfo = players.at(pIndex);
+		if (pIndex > players.size()) {
+			return nullptr;
+		}
 
-		return clientInfo->get_player();
+		auto clientInfo = players.at(pIndex);
+		return clientInfo;
 	}
 
-	Player & Game::getPlayerByName(const std::string & name) const
+	std::shared_ptr<ClientInfo> Game::getPlayerByName(const std::string & name) const
 	{
 		for (auto player : players) {
 			auto& p = player->get_player();
 
 			if (p.name() == name) {
-				return p;
+				return player;
 			}
 		}
+
+		return nullptr;
 	}
 
 	std::vector<std::shared_ptr<ClientInfo>> Game::getPlayers() const
@@ -73,7 +71,7 @@ namespace machiavelli
 		return players;
 	}
 
-	Player & Game::getKing()
+	std::shared_ptr<ClientInfo> Game::getKing()
 	{
 		return getPlayerByIndex(kingIndex);
 	}
@@ -221,19 +219,21 @@ namespace machiavelli
 		}
 	}
 
-	std::map<std::string, CharacterCard> Game::drawn_character_card(const Player& exclude, const std::string& exclude_card) const
+	std::map<std::string, CharacterCard> Game::drawn_character_cards(const Player& exclude, const std::string& exclude_card) const
 	{
 		std::map<std::string, CharacterCard> temp;
 
 		for (auto player : players) {
 			auto& p = player->get_player();
 
-			if (p == exclude)
+			if (p == exclude) {
 				continue;
+			}
 
 			for (auto &card : p.getPlayerCharacterCards()) {
-				if (card.name() == exclude_card)
+				if (card.name() == exclude_card) {
 					continue;
+				}
 
 				temp.insert_or_assign(p.name(), card);
 			}
@@ -247,8 +247,9 @@ namespace machiavelli
 		for (auto player : players) {
 			auto& p = player->get_player();
 
-			if (p != me)
+			if (p != me) {
 				return p;
+			}
 		}
 	}
 
