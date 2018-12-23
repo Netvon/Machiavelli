@@ -70,6 +70,8 @@ namespace machiavelli::actions
 
 			other_player.swap_building_cards(p);
 
+			context->state()->broadcast("Player cards have been switched, type the 'cards' and 'buildings' command to see your new cards and buildings.");
+
 			context->print_info(s, p);
 		}, true );
 
@@ -133,15 +135,23 @@ namespace machiavelli::actions
 		}, true);
 	}
 
-	void add_take_option(const std::shared_ptr<machiavelli::Phase> &context, const size_t &i, std::function<void(void)> do_after_complete)
+	void add_take_option(const std::shared_ptr<machiavelli::Phase> &context, size_t amount, std::function<void(void)> do_after_complete)
 	{
-		context->add_option(std::to_string(i), "Take " + std::to_string(i) + " new cards", [&, context, do_after_complete](const Socket& s2, Player& p2) {
+		auto text = "Take " + std::to_string(amount);
+		if (amount == 1) {
+			text += " card";
+		}
+		else {
+			text += " cards";
+		}
+
+		context->add_option(std::to_string(amount), text, [&, context, do_after_complete, amount](const Socket& s2, Player& p2) {
 
 			do_after_complete();
 
 			auto& game = context->state()->game();
 
-			size_t count_down = i;
+			size_t count_down = amount;
 
 			while (count_down > 0) {
 				count_down--;
@@ -149,7 +159,7 @@ namespace machiavelli::actions
 				game.discard_card(std::move(p2.drawFromBuildingDeck()));
 			}
 
-			auto new_cards = game.drawAmountOfBuildingCards(static_cast<int>(i));
+			auto new_cards = game.drawAmountOfBuildingCards(static_cast<int>(amount));
 
 			for (auto& card : new_cards) {
 				p2.addBuildingCardToDeck(card);

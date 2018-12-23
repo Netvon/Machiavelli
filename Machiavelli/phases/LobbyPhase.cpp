@@ -85,10 +85,14 @@ namespace machiavelli
 		p2.gold() += 999;
 
 		size_t card_amount = 0;
-		if (give_cards)
+
+		if (give_cards) {
 			card_amount = 2;
-		if (test_win)
+		}
+
+		if (test_win) {
 			card_amount = 8;
+		}
 
 		for (size_t i = 0; i < card_amount; i++)
 		{
