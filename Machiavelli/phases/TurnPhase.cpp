@@ -16,14 +16,27 @@ namespace machiavelli
 			usingCharacterAction = false;
 			newTurn = true;
 
-			// naar volgende turn (via PlayPhase?)
+			auto next_character_pos = state()->getCharacterPosition() + 1;
+			auto max_character_pos = static_cast<unsigned int>(CharacterCard::loaded_amount());
 
-			for (auto player : state()->game().getPlayers()) {
-				player->get_player().reset_effects();
+			state()->changeCharacterOrder(next_character_pos);
+
+			// true als alle characters zijn opgeroepen.
+			// er is dan een speelronde gedaan.
+			// alle effecten worden gereset
+			if (next_character_pos > max_character_pos) {
+				for (auto player : state()->game().getPlayers()) {
+					player->get_player().reset_effects();
+					player->get_player().discard_character_cards();
+				}
+
+				state()->navigate_to("game");
+			}
+			else {
+				state()->navigate_to("play");
 			}
 
-			state()->changeCharacterOrder(state()->getCharacterPosition() + 1);
-			state()->navigate_to("play");
+			
 		}
 	}
 

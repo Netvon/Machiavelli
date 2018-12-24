@@ -179,6 +179,11 @@ namespace machiavelli {
 		building_cards.swapStack(player.building_cards);
 	}
 
+	void Player::discard_character_cards()
+	{
+		character_cards = character_card_deck();
+	}
+
 	size_t Player::building_card_amount() const
 	{
 		return building_cards.size();

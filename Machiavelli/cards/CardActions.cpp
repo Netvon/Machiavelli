@@ -109,7 +109,7 @@ namespace machiavelli::actions
 			for (const auto& building : other_player.built_buildings()) {
 
 				options_added++;
-				context->add_option(std::to_string(index), building.name(), [&building, context, &other_player, do_after_complete](const Socket& s2, Player& p2)
+				context->add_option(std::to_string(index), building.name(), [building, context, &other_player, do_after_complete](const Socket& s2, Player& p2)
 				{
 					do_after_complete();
 					context->reset_options(true);
@@ -123,6 +123,8 @@ namespace machiavelli::actions
 
 
 				}, true);
+
+				index++;
 			}
 
 			if (options_added == 0) {
@@ -131,6 +133,8 @@ namespace machiavelli::actions
 				do_after_complete();
 				context->reset_options(true);
 			}
+
+			context->print_info(s, p);
 
 		}, true);
 	}
@@ -163,6 +167,8 @@ namespace machiavelli::actions
 
 			for (auto& card : new_cards) {
 				p2.addBuildingCardToDeck(card);
+
+				s2 << "You got a '" + card.name() + "' card!";
 			}
 
 			context->reset_options(true);
