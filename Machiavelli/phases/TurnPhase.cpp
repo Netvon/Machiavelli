@@ -71,6 +71,8 @@ namespace machiavelli
 			reset_options(true);
 			newTurn = false;
 		}
+
+		print_info(socket, player);
 	}
 
 	void TurnPhase::add_options()
@@ -164,7 +166,7 @@ namespace machiavelli
 
 			reset_options(true);
 
-			add_option("0", card1.name(), [this, &game, card1, card2](const auto& a, auto& b) {
+			add_option("0", card1.all_info(), [this, &game, card1, card2](const auto& a, auto& b) {
 				auto& game = state()->game();
 
 				takenBuildingCards = true;
@@ -184,7 +186,7 @@ namespace machiavelli
 
 			}, true);
 
-			add_option("1", card2.name(), [this, &game, card1, card2](const auto& a, auto& b) {
+			add_option("1", card2.all_info(), [this, &game, card1, card2](const auto& a, auto& b) {
 				auto& game = state()->game();
 
 				takenBuildingCards = true;

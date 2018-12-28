@@ -43,6 +43,11 @@ namespace machiavelli
 		return _description;
 	}
 
+	std::string BuildingCard::all_info() const
+	{
+		return name() + " - " + category().name() + " ( " + std::to_string(cost().amount()) + " gold )";
+	}
+
 	const CardCategory & BuildingCard::category() const
 	{
 		return _category;

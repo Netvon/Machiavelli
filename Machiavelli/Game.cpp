@@ -251,6 +251,8 @@ namespace machiavelli
 				return p;
 			}
 		}
+
+		auto should_not = "be here";
 	}
 
 	void Game::discard_card(BuildingCard && card)

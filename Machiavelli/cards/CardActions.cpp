@@ -21,7 +21,7 @@ namespace machiavelli::actions
 					auto & player = game.getPlayerByName(kv.first)->get_player();
 					player.kill_character(kv.second.name());
 
-					s << "You killed '" << kv.second.name() <<"'\n";
+					s << "You've killed '" << kv.second.name() <<"'\n";
 
 					do_after_complete();
 					context->reset_options(true);
@@ -52,6 +52,11 @@ namespace machiavelli::actions
 				auto gold = other_player.gold();
 				p.gold() += gold;
 				other_player.gold() -= gold;
+
+				s << "You stole " + std::to_string(gold) + " gold from the other player\r\n";
+			}
+			else {
+				s << "The other player has no money left to steal!\r\n";
 			}
 
 			context->print_info(s, p);
@@ -109,18 +114,20 @@ namespace machiavelli::actions
 			for (const auto& building : other_player.built_buildings()) {
 
 				options_added++;
-				context->add_option(std::to_string(index), building.name(), [building, context, &other_player, do_after_complete](const Socket& s2, Player& p2)
+				context->add_option(std::to_string(index), "Destroy the '" + building.name() + "' building", [building, context, &other_player, do_after_complete](const Socket& s2, Player& p2)
 				{
 					do_after_complete();
 					context->reset_options(true);
 
-					p2.gold() -= building.cost() - 1_g;
+					if (building.cost() > 1_g) {
+						p2.gold() -= building.cost() - 1_g;
+					}
 
 					other_player.destroy_building(building.name());
 					other_player.discardBuildingCardFromDeck(building);
 
 					context->state()->broadcast(p2.name() + " destroyed the other player's '" + building.name() + "' building.");
-
+					context->print_info(s2, p2);
 
 				}, true);
 
@@ -155,23 +162,31 @@ namespace machiavelli::actions
 
 			auto& game = context->state()->game();
 
-			size_t count_down = amount;
-
-			while (count_down > 0) {
-				count_down--;
-
-				game.discard_card(std::move(p2.drawFromBuildingDeck()));
+			if (game.isBuildingDeckEmpty()) {
+				s2 << "There are no more Building Cards left in the pile\r\n";
 			}
+			else {
 
-			auto new_cards = game.drawAmountOfBuildingCards(static_cast<int>(amount));
+				size_t count_down = amount;
 
-			for (auto& card : new_cards) {
-				p2.addBuildingCardToDeck(card);
+				while (count_down > 0) {
+					count_down--;
 
-				s2 << "You got a '" + card.name() + "' card!";
+					game.discard_card(std::move(p2.drawFromBuildingDeck()));
+				}
+
+				auto new_cards = game.drawAmountOfBuildingCards(static_cast<int>(amount));
+
+				for (auto& card : new_cards) {
+					p2.addBuildingCardToDeck(card);
+
+					s2 << "You got a '" + card.name() + "' card!\r\n";
+					s2 << card.all_info() << "\r\n";
+				}
 			}
 
 			context->reset_options(true);
+			context->print_info(s2, p2);
 
 		}, true);
 	}
@@ -180,10 +195,28 @@ namespace machiavelli::actions
 	{
 		context->add_option(key, "Take 2 building cards", [&, context, do_after_complete](const Socket& s2, Player& p2) {
 			auto& game = context->state()->game();
-			p2.addBuildingCardToDeck(game.drawBuildingCard());
+
+			if (game.isBuildingDeckEmpty()) {
+				s2 << "There are no more Building Cards left in the pile\r\n";
+			}
+			else {
+
+				auto card_one = game.drawBuildingCard();
+				auto card_two = game.drawBuildingCard();
+
+				p2.addBuildingCardToDeck(card_one);
+				p2.addBuildingCardToDeck(card_two);
+
+				s2 << "You got a '" + card_one.name() + "' card!\r\n";
+				s2 << card_one.all_info() << "\r\n";
+
+				s2 << "You got a '" + card_two.name() + "' card!\r\n";
+				s2 << card_two.all_info() << "\r\n";
+			}
 
 			do_after_complete();
 			context->reset_options(true);
+			context->print_info(s2, p2);
 		});
 	}
 
@@ -200,7 +233,7 @@ namespace machiavelli::actions
 			for (const auto& bc : p2.getPlayerBuildingCards()) {
 				if (!bc.getIsBuilt() && p2.gold() >= bc.cost()) {
 
-					context->add_option(std::to_string(index), bc.name(), [&, context, bc, do_after_complete](const Socket& s, Player& p)
+					context->add_option(std::to_string(index), bc.all_info(), [&, context, bc, do_after_complete](const Socket& s, Player& p)
 					{
 						if (p.gold() >= bc.cost()) {
 							p.built_building(bc);
@@ -223,11 +256,15 @@ namespace machiavelli::actions
 							context->reset_options(true);
 						}
 
+						context->print_info(s, p);
+
 					}, true);
 
 					index++;
 				}
 			}
+
+			context->print_info(s2, p2);
 
 		}, true);
 	}

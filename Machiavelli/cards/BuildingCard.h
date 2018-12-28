@@ -23,6 +23,7 @@ namespace machiavelli
 		const Gold& cost() const;
 		const std::string& name() const;
 		const std::string& description() const;
+		std::string all_info() const;
 		const CardCategory& category() const;
 
 		/*void operator () (Game& game);

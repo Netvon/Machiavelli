@@ -134,19 +134,21 @@ namespace machiavelli
 
 		for (auto& card : player.getPlayerBuildingCards()) {
 			if (!card.getIsBuilt()) {
-				if (card.description().empty()) {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\r\n";
+					
+				socket << card.all_info();
+
+				if (!card.description().empty()) {
+					socket << " - " << card.description() << "\r\n";
 				}
-				else {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\r\n";
-				}
+
+				socket << "\r\n";
 			}
 		}
 
 		for (auto& card : player.getPlayerCharacterCards()) {
 			socket << "#" << card.getOrder() << ". " << card.name();
 			if (card.is_murdered()) {
-				socket << " [dead this turn]";
+				socket << " [ has been murdered ]";
 			}
 
 			socket << "\r\n";
@@ -160,12 +162,13 @@ namespace machiavelli
 
 		for (auto& card : player.getPlayerBuildingCards()) {
 			if (card.getIsBuilt()) {
-				if (card.description().empty()) {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\r\n";
+				socket << card.all_info();
+
+				if (!card.description().empty()) {
+					socket << " - " << card.description() << "\r\n";
 				}
-				else {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\r\n";
-				}
+
+				socket << "\r\n";
 			}
 		}
 	}

@@ -42,6 +42,7 @@ namespace machiavelli
 		//nextTurn(socket, player);
 
 		reset_options(true);
+		print_info(socket, player);
 	}
 
 	void PlayPhase::add_options()
@@ -58,8 +59,9 @@ namespace machiavelli
 	{
 		auto& game = state()->game();
 		auto characterPosition = state()->getCharacterPosition();
+		auto card_name = CharacterCard::get_name_by_order(characterPosition);
 
-		game.broadcast("Calling " + CharacterCard::get_name_by_order(characterPosition) + " to action.\r\n");
+		game.broadcast("Calling " + card_name + " to action.\r\n");
 
 		for (auto& player : game.getPlayers()) {
 			auto& p = player->get_player();
@@ -76,7 +78,7 @@ namespace machiavelli
 			}
 		}
 
-		game.broadcast("Nobody has the " + CharacterCard::get_name_by_order(characterPosition) + " card.\r\n");
+		game.broadcast("Nobody has the " + card_name + " card.\r\n");
 
 		//if (characterPosition < 8) {
 		state()->changeCharacterOrder(characterPosition + 1);
