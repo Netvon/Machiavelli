@@ -73,9 +73,9 @@ namespace machiavelli {
 		_murdered = new_value;
 	}
 
-	bool CharacterCard::empty() const
+	bool CharacterCard::is_empty() const
 	{
-		return _name == "<no name>";
+		return _name == def::NO_NAME_SET;
 	}
 
 	std::string CharacterCard::get_name_by_order(unsigned int order)

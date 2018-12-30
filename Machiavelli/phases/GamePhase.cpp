@@ -31,7 +31,7 @@ namespace machiavelli
 		game.shuffleCharacterCards();
 		CharacterCard drawnCard = game.drawCharacterCard();
 
-		if (!drawnCard.empty()) {
+		if (!drawnCard.is_empty()) {
 			socket << "You have drawn this card: " << drawnCard.name() <<  "\r\n";
 			socket << "This card will put face-down on the table." << "\r\n";
 			game.addCardtoTableDeck(drawnCard);
@@ -47,7 +47,7 @@ namespace machiavelli
 
 			CharacterCard characterCard = game.drawCharacterCard();
 
-			if (!characterCard.empty()) {
+			if (!characterCard.is_empty()) {
 				a << "You have drawn this card: " << characterCard.name() << "\r\n";
 				if (characterCard.name() == "Koning") {
 					if (game.getKing()->get_player() != b) {

@@ -1,4 +1,5 @@
 #pragma once
+#include "../util/defines.h"
 #include "..\Gold.h"
 #include "CardCategory.h"
 #include <string>
@@ -10,6 +11,7 @@ namespace machiavelli
 	class BuildingCard
 	{
 	public:
+
 		BuildingCard() = default;
 		~BuildingCard() = default;
 
@@ -32,9 +34,11 @@ namespace machiavelli
 		void setIsBuilt(bool pIsBuilt);
 		bool getIsBuilt() const;
 
+		bool is_empty() const;
+
 	private:
 		Gold _cost{ 1_g };
-		std::string _name{ "<no name>" };
+		std::string _name{ def::NO_NAME_SET };
 		std::string _description;
 		CardCategory _category{ CardCategory::none() };
 		CardEffect _effect;

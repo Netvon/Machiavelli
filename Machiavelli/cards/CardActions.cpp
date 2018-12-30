@@ -11,7 +11,7 @@ namespace machiavelli::actions
 
 			auto& game = context->state()->game();
 
-			auto cards = game.drawn_character_cards(p, "Moordenaar");
+			auto cards = game.drawn_character_cards(p, characters::MOORDENAAR);
 
 			int index = 1;
 
@@ -108,37 +108,50 @@ namespace machiavelli::actions
 				return;
 			}
 
-			int index = 0;
-			int options_added = 0;
+			if (other_player.has_character(characters::PREDIKER)) {
 
-			for (const auto& building : other_player.built_buildings()) {
-
-				options_added++;
-				context->add_option(std::to_string(index), "Destroy the '" + building.name() + "' building", [building, context, &other_player, do_after_complete](const Socket& s2, Player& p2)
-				{
-					do_after_complete();
-					context->reset_options(true);
-
-					if (building.cost() > 1_g) {
-						p2.gold() -= building.cost() - 1_g;
-					}
-
-					other_player.destroy_building(building.name());
-					other_player.discardBuildingCardFromDeck(building);
-
-					context->state()->broadcast(p2.name() + " destroyed the other player's '" + building.name() + "' building.");
-					context->print_info(s2, p2);
-
-				}, true);
-
-				index++;
-			}
-
-			if (options_added == 0) {
-				s << "The other player doesn't have any built Buildings.\n";
+				s << "The buildings of this Player are protected by the '" << characters::PREDIKER << "'. You cannot destroy any buildings.\r\n";
 
 				do_after_complete();
 				context->reset_options(true);
+			}
+			else {
+				int index = 0;
+				int options_added = 0;
+
+				for (const auto& building : other_player.built_buildings()) {
+
+					if (building.name() == "Kerker") {
+						continue;
+					}
+
+					options_added++;
+					context->add_option(std::to_string(index), "Destroy the '" + building.name() + "' building", [building, context, &other_player, do_after_complete](const Socket& s2, Player& p2)
+					{
+						do_after_complete();
+						context->reset_options(true);
+
+						if (building.cost() > 1_g) {
+							p2.gold() -= building.cost() - 1_g;
+						}
+
+						other_player.destroy_building(building.name());
+						other_player.discardBuildingCardFromDeck(building);
+
+						context->state()->broadcast(p2.name() + " destroyed the other player's '" + building.name() + "' building.");
+						context->print_info(s2, p2);
+
+					}, true);
+
+					index++;
+				}
+
+				if (options_added == 0) {
+					s << "The other player doesn't have any built Buildings.\n";
+
+					do_after_complete();
+					context->reset_options(true);
+				}
 			}
 
 			context->print_info(s, p);
@@ -233,10 +246,11 @@ namespace machiavelli::actions
 			for (const auto& bc : p2.getPlayerBuildingCards()) {
 				if (!bc.getIsBuilt() && p2.gold() >= bc.cost()) {
 
-					context->add_option(std::to_string(index), bc.all_info(), [&, context, bc, do_after_complete](const Socket& s, Player& p)
+					context->add_option(std::to_string(index), "Build " + bc.all_info(), [&, context, bc, do_after_complete](const Socket& s, Player& p)
 					{
 						if (p.gold() >= bc.cost()) {
 							p.built_building(bc);
+							s << "You have constructed " << bc.all_info() << "\r\n";
 							can_build--;
 						}
 
@@ -271,10 +285,10 @@ namespace machiavelli::actions
 
 	void add_actions_for(const Player::character_card & card, std::shared_ptr<Phase> context, std::function<void(void)> do_after_complete)
 	{
-		if (card.name() == "Moordenaar") { add_murdered_option("murderer", context, do_after_complete); }
-		if (card.name() == "Dief") { add_thief_option("thief", context, do_after_complete); }
-		if (card.name() == "Magiër") { add_mage_option("mage", context, do_after_complete); }
-		if (card.name() == "Condottiere") { add_condottiere_option("condottiere", context, do_after_complete); }
-		if (card.name() == "Bouwmeester") { add_masterbuilder_option("masterbuilder", context, do_after_complete); }
+		if (card.name() == characters::MOORDENAAR) { add_murdered_option("murderer", context, do_after_complete); }
+		if (card.name() == characters::DIEF) { add_thief_option("thief", context, do_after_complete); }
+		if (card.name() == characters::MAGIER) { add_mage_option("mage", context, do_after_complete); }
+		if (card.name() == characters::CONDOTTIERE) { add_condottiere_option("condottiere", context, do_after_complete); }
+		if (card.name() == characters::BOUWMEESTER) { add_masterbuilder_option("masterbuilder", context, do_after_complete); }
 	}
 }

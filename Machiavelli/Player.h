@@ -54,8 +54,7 @@ namespace machiavelli {
 		int build_per_turn() const;
 		void build_per_turn(int new_value);
 
-		void set_protected_against(const std::string& character);
-		bool is_protected_against(const std::string& character);
+		bool has_character(const std::string& character);
 
 		void apply_card_effects();
 		void reset_effects();
@@ -77,7 +76,7 @@ namespace machiavelli {
 		int id{ util::random(0, 1000) };
 
 		Gold _gold{ 0_g };
-		std::string player_name{ "<no name>" };
+		std::string player_name{ def::NO_NAME_SET };
 
 		building_card_deck building_cards;
 		character_card_deck character_cards;

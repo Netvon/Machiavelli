@@ -127,14 +127,13 @@ namespace machiavelli {
 		_build_per_turn = new_value;
 	}
 
-	void Player::set_protected_against(const std::string & character)
+	bool Player::has_character(const std::string & character)
 	{
-		protected_against.insert(character);
-	}
+		auto result = std::find_if(character_cards.begin(), character_cards.end(), [character](const CharacterCard& card) {
+			return card.name() == character;
+		});
 
-	bool Player::is_protected_against(const std::string & character)
-	{
-		return protected_against.find(character) != protected_against.end();
+		return result != character_cards.end();
 	}
 
 	void Player::apply_card_effects()

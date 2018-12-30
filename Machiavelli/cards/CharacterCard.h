@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../util/defines.h"
 #include <string>
 #include "../CardEffect.h"
 #include <map>
@@ -27,14 +28,14 @@ namespace machiavelli {
 		bool is_murdered() const;
 		void is_murdered(bool new_value);
 
-		bool empty() const;
+		bool is_empty() const;
 
 		static std::string get_name_by_order(unsigned int order);
 		static CharacterCard get_by_name(std::string name);
 		static std::size_t loaded_amount();
 
 	private:
-		std::string _name{ "<no name>" };
+		std::string _name{ def::NO_NAME_SET };
 		CardEffect _effect;
 		unsigned int order = 0;
 		bool isVisible = true;

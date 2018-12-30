@@ -50,7 +50,7 @@ namespace machiavelli {
 		void print_gold(const Socket& socket, const Player& player);
 
 		std::vector<Option> options;
-		std::string _name = "<no name>";
+		std::string _name = def::NO_NAME_SET;
 		std::shared_ptr<State> _state;
 
 		virtual void handle_option_selected(const Option& option, const Socket & socket, Player& player) {};

@@ -34,8 +34,8 @@ namespace machiavelli
 		}
 
 	private:
-		std::string _command = "<no command>";
-		std::string _name = "<no name>";
+		std::string _command = def::NO_COMMAND_SET;
+		std::string _name = def::NO_NAME_SET;
 		handler _func;
 		bool _for_current_player = false;
 	};

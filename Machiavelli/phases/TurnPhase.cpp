@@ -88,10 +88,10 @@ namespace machiavelli
 
 			socket << "Je bent nu de: " << current_card.name() << "\r\n";
 
-			auto effect = current_card.effect();
+			/*auto effect = current_card.effect();
 			if (effect) {
 				effect(currentPlayer);
-			}
+			}*/
 
 			if (!usedCharacterAction) {
 				add_option("0", "Gebruik het karaktereigenschap van de " + current_card.name(), [&, current_card](const Socket& s, Player& p) {

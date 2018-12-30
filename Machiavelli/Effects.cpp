@@ -1,27 +1,19 @@
 #include "Effects.h"
+#include <algorithm>
 
 namespace machiavelli::effects
 {
 	CardEffect KingCardEffect() {
 		return [](machiavelli::Player& player)
 		{
-			for (auto& card : player.built_buildings()) {
-				if (card.category() == CardCategory::yellow()) {
-					player.gold() += 1_g;
-				}
-			}
-
+			AddGoldForCardCategory(player, CardCategory::yellow());
 		};
 	}
 
 	CardEffect PreacherCardEffect() {
 		return [](machiavelli::Player& player)
 		{
-			for (auto& card : player.built_buildings()) {
-				if (card.category() == CardCategory::blue()) {
-					player.gold() += 1_g;
-				}
-			}
+			AddGoldForCardCategory(player, CardCategory::blue());
 		};
 	}
 
@@ -30,11 +22,7 @@ namespace machiavelli::effects
 		{
 			player.gold() += 1_g;
 
-			for (auto& card : player.built_buildings()) {
-				if (card.category() == CardCategory::green()) {
-					player.gold() += 1_g;
-				}
-			}
+			AddGoldForCardCategory(player, CardCategory::green());
 		};
 	}
 
@@ -50,21 +38,27 @@ namespace machiavelli::effects
 	{
 		return [](machiavelli::Player& player)
 		{
-			for (auto& card : player.built_buildings()) {
-				if (card.category() == CardCategory::red()) {
-					player.gold() += 1_g;
-				}
-			}
+			AddGoldForCardCategory(player, CardCategory::red());
 		};
+	}
+
+	void AddGoldForCardCategory(machiavelli::Player & player, machiavelli::CardCategory cat, Gold amount_per_building)
+	{
+		auto buildings = player.built_buildings();
+		auto count = std::count_if(buildings.cbegin(), buildings.cend(), [cat](const BuildingCard& card) {
+			return card.category() == cat;
+		});
+
+		player.gold() += amount_per_building * count;
 	}
 
 	CardEffect CardEffectFactory(const std::string & name)
 	{
-		if (name == "Koning") { return KingCardEffect(); }
-		if (name == "Prediker") { return PreacherCardEffect(); }
-		if (name == "Koopman") { return MerchantCardEffect(); }
-		if (name == "Bouwmeester") { return ArchitectCardEffect(); }
-		if (name == "Condottiere") { return CondottiereCardEffect(); }
+		if (name == characters::KONING) { return KingCardEffect(); }
+		if (name == characters::PREDIKER) { return PreacherCardEffect(); }
+		if (name == characters::KOOPMAN) { return MerchantCardEffect(); }
+		if (name == characters::BOUWMEESTER) { return ArchitectCardEffect(); }
+		if (name == characters::CONDOTTIERE) { return CondottiereCardEffect(); }
 
 		return CardEffect();
 	}

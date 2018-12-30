@@ -73,6 +73,11 @@ namespace machiavelli
 		return _isBuilt;
 	}
 
+	bool BuildingCard::is_empty() const
+	{
+		return _name == def::NO_NAME_SET;
+	}
+
 	std::istream & operator>>(std::istream & is, BuildingCard & card)
 	{
 		std::istream::sentry s(is);
