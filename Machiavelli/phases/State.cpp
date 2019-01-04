@@ -14,6 +14,7 @@ namespace machiavelli
 				else {
 					no_state_set_yet = false;
 				}
+
 				current_phase_name = phase_name;
 
 				for (auto player : _game.getPlayers()) {

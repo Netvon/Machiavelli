@@ -81,7 +81,7 @@ namespace machiavelli
 			}
 		}
 		else {
-			state()->add_phase<PlayPhase>("play");
+			//state()->add_phase<PlayPhase>("play");
 			state()->navigate_to("play");
 		}
 	}

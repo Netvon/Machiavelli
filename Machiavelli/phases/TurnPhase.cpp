@@ -89,6 +89,12 @@ namespace machiavelli
 
 			auto& current_card = currentPlayer.findCardByOrder(currentPosition);
 
+			if (current_card.name() == def::NO_NAME_SET) {
+				// TODO: fix de no-names
+				// kan te maken hebben met het te ver doorlopen van de CharacterPosition...
+				auto break_me = "here";
+			}
+
 			socket << "Je bent nu de: " << current_card.name() << "\r\n";
 
 			/*auto effect = current_card.effect();

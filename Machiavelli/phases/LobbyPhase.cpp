@@ -1,6 +1,7 @@
 #include "LobbyPhase.h"
 #include "GamePhase.h"
 #include "PlayPhase.h"
+#include "TurnPhase.h"
 
 namespace machiavelli
 {
@@ -22,6 +23,8 @@ namespace machiavelli
 		if (amount_in_game >= 2) {
 
 			state()->add_phase<machiavelli::GamePhase>("game");
+			state()->add_phase<machiavelli::PlayPhase>("play");
+			state()->add_phase<machiavelli::TurnPhase>("turn");
 
 			if (!cheat_mode) {
 				//state()->broadcast("Okay, that's two players! Let's begin.\r\n");
@@ -144,8 +147,6 @@ namespace machiavelli
 			p2.addCharacterCardToDeck(game.drawCharacterCard());
 		}
 
-
-		state()->add_phase<machiavelli::PlayPhase>("play");
 		state()->navigate_to("play");
 	}
 }

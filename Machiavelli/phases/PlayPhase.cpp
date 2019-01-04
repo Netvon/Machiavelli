@@ -73,8 +73,6 @@ namespace machiavelli
 				reset_options(false);
 
 				state()->changeCharacterOrder(characterPosition + 1);
-
-				state()->add_phase<TurnPhase>("turn");
 				state()->navigate_to("turn");
 				return;
 			}
