@@ -68,6 +68,8 @@ namespace machiavelli {
 		std::vector<building_card> built_buildings();
 		void built_building(const building_card & pCard);
 		size_t building_card_amount() const;
+		
+		int unbuilt_buildings_amount() const;
 		void destroy_building(const std::string& name);
 
 		void finished_first(bool new_value);

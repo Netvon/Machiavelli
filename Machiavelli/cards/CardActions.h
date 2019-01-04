@@ -2,6 +2,8 @@
 #include "../phases/Option.h"
 #include "../phases/Phase.h"
 #include <memory>
+#undef min
+#include <algorithm>
 #include <functional>
 
 namespace machiavelli::actions 

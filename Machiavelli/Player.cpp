@@ -199,6 +199,19 @@ namespace machiavelli {
 		}
 	}
 
+	int Player::unbuilt_buildings_amount() const
+	{
+		auto count = 0;
+		for (const auto & card : building_cards) {
+
+			if (!card.getIsBuilt()) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 	void Player::destroy_building(const std::string & name)
 	{
 		if (name == "Kerker") {

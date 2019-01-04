@@ -240,11 +240,16 @@ namespace machiavelli::actions
 			do_on_enter_menu();
 			context->reset_options(true);
 
-			int can_build = p2.build_per_turn();
-			int index = 0;
+			auto per_turn = std::min(p2.build_per_turn(), p2.unbuilt_buildings_amount());
 
-			s2 << "You will be able to build a total of " << can_build;
-			if (can_build == 1) {
+			auto can_build = std::make_shared<int>(per_turn);
+			auto index = std::make_shared<int>(0);
+
+			/*int can_build = p2.build_per_turn();
+			int index = 0;*/
+
+			s2 << "You will be able to build a total of " << *can_build;
+			if ((*can_build) == 1) {
 				s2 << " building";
 			}
 			else {
@@ -256,25 +261,26 @@ namespace machiavelli::actions
 			for (const auto& bc : p2.getPlayerBuildingCards()) {
 				if (!bc.getIsBuilt() && p2.gold() >= bc.cost()) {
 
-					context->add_option(std::to_string(index), "Build " + bc.all_info(), [&, context, bc, do_after_complete](const Socket& s, Player& p)
+					auto _this_index = *index;
+					context->add_option(std::to_string(*index), "Build " + bc.all_info(), [can_build, index, _this_index, context, bc, do_after_complete](const Socket& s, Player& p)
 					{
 						if (p.gold() >= bc.cost()) {
 							p.built_building(bc);
 							s << "You have constructed " << bc.all_info() << "\r\n";
-							can_build--;
+							(*can_build)--;
 						}
 
 						bool any_left_to_built = false;
 
-						for (const auto& card : p2.getPlayerBuildingCards()) {
-							if (!bc.getIsBuilt() && p2.gold() >= bc.cost()) {
+						for (const auto& card : p.getPlayerBuildingCards()) {
+							if (!card.getIsBuilt() && p.gold() >= card.cost()) {
 								any_left_to_built = true;
 								break;
 							}
 						}
 						
 						if (can_build > 0 && p.gold() > 0 && any_left_to_built) {
-							context->remove_option(std::to_string(index));
+							context->remove_option(std::to_string(_this_index));
 						} else {
 							do_after_complete();
 							context->reset_options(true);
@@ -284,7 +290,7 @@ namespace machiavelli::actions
 
 					}, true);
 
-					index++;
+					(*index)++;
 				}
 			}
 
