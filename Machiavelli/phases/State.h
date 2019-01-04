@@ -22,6 +22,7 @@ namespace machiavelli
 		}
 
 		void navigate_to(const std::string& phase_name);
+		bool has_phase(const std::string& phase_name) const;
 
 		std::shared_ptr<Phase> current_phase() const;
 		Game& game();

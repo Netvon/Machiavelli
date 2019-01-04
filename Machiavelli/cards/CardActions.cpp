@@ -279,7 +279,7 @@ namespace machiavelli::actions
 							}
 						}
 						
-						if (can_build > 0 && p.gold() > 0 && any_left_to_built) {
+						if ((*can_build) > 0 && p.gold() > 0 && any_left_to_built) {
 							context->remove_option(std::to_string(_this_index));
 						} else {
 							do_after_complete();

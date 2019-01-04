@@ -72,6 +72,8 @@ namespace machiavelli
 				game.broadcast(p.name() + " is nu aan de beurt!\r\n");
 				reset_options(false);
 
+				state()->changeCharacterOrder(characterPosition + 1);
+
 				state()->add_phase<TurnPhase>("turn");
 				state()->navigate_to("turn");
 				return;
@@ -80,12 +82,8 @@ namespace machiavelli
 
 		game.broadcast("Nobody has the " + card_name + " card.\r\n");
 
-		//if (characterPosition < 8) {
+
 		state()->changeCharacterOrder(characterPosition + 1);
-		/*}
-		else {
-			state()->changeCharacterOrder(1);
-		}*/
 
 		print_info(socket, player);
 	}

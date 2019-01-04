@@ -24,7 +24,7 @@ namespace machiavelli
 			// true als alle characters zijn opgeroepen.
 			// er is dan een speelronde gedaan.
 			// alle effecten worden gereset
-			if (next_character_pos > max_character_pos) {
+			/*if (next_character_pos > max_character_pos) {
 				for (auto player : state()->game().getPlayers()) {
 					player->get_player().reset_effects();
 					player->get_player().discard_character_cards();
@@ -34,7 +34,7 @@ namespace machiavelli
 			}
 			else {
 				state()->navigate_to("play");
-			}
+			}*/
 
 			
 		}
@@ -77,7 +77,10 @@ namespace machiavelli
 
 	void TurnPhase::add_options()
 	{
-		if (!takingBuildingCardsNow && !usingCharacterAction && !buildingBuilding) {
+		auto cphase = std::type_index(typeid(*state()->current_phase()));
+		auto wanted_phase = std::type_index(typeid(TurnPhase));
+
+		if (!takingBuildingCardsNow && !usingCharacterAction && !buildingBuilding && cphase == wanted_phase) {
 			auto currentPosition = state()->getCharacterPosition();
 			auto& game = state()->game();
 			auto& currentPlayer = game.current_player()->get_player();

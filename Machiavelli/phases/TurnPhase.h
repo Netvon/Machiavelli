@@ -4,6 +4,8 @@
 #include <string>
 #include <functional>
 #include <memory>
+#include <typeinfo>
+#include <typeindex>
 
 namespace machiavelli
 {

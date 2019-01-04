@@ -25,6 +25,13 @@ namespace machiavelli
 		}
 	}
 
+	bool State::has_phase(const std::string & phase_name) const
+	{
+		return std::any_of(phases.cbegin(), phases.cend(), [phase_name](auto phase) {
+			return phase->name() == phase_name;
+		});
+	}
+
 	std::shared_ptr<Phase> State::current_phase() const {
 		for (auto phase : phases) {
 			if (phase->name() == current_phase_name) {
@@ -79,9 +86,22 @@ namespace machiavelli
 
 	void State::changeCharacterOrder(const unsigned int position)
 	{
-		if (position > static_cast<unsigned int>(CharacterCard::loaded_amount()))
+		auto max_pos = static_cast<unsigned int>(CharacterCard::loaded_amount());
+
+		if (position > max_pos) {
 			_characterPosition = 1;
-		else
+
+			for (auto& player : game().getPlayers()) {
+				player->get_player().reset_effects();
+				player->get_player().discard_character_cards();
+			}
+
+			navigate_to("game");
+		}
+		else {
 			_characterPosition = position;
+
+			navigate_to("play");
+		}
 	}
 }

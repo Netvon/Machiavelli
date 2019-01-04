@@ -21,9 +21,10 @@ namespace machiavelli
 
 		if (amount_in_game >= 2) {
 
+			state()->add_phase<machiavelli::GamePhase>("game");
+
 			if (!cheat_mode) {
 				//state()->broadcast("Okay, that's two players! Let's begin.\r\n");
-				state()->add_phase<machiavelli::GamePhase>("game");
 				state()->navigate_to("game");
 			}
 			else {
