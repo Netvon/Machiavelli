@@ -8,7 +8,7 @@ namespace characters {
 	constexpr auto MOORDENAAR	= "Moordenaar";
 	constexpr auto DIEF			= "Dief";
 	constexpr auto MAGIER		= "Magiër";
-	constexpr auto KONING		= "Moordenaar";
+	constexpr auto KONING		= "Koning";
 	constexpr auto PREDIKER		= "Prediker";
 	constexpr auto KOOPMAN		= "Koopman";
 	constexpr auto BOUWMEESTER	= "Bouwmeester";

@@ -7,7 +7,8 @@
 
 namespace machiavelli
 {
-	class TurnPhase : public Phase
+	class TurnPhase 
+		: public Phase
 	{
 	private:
 		void handle_get_gold(const Socket& socket, Player& player);
@@ -26,7 +27,7 @@ namespace machiavelli
 		bool usingCharacterAction = false;
 		bool buildingBuilding = false;
 
-		bool newTurn = false;
+		bool newTurn = true;
 
 		void check_next_turn();
 	public:

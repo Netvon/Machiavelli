@@ -93,6 +93,10 @@ namespace machiavelli
 				effect(currentPlayer);
 			}*/
 
+			if (!actions::card_has_action(current_card.name())) {
+				usedCharacterAction = true;
+			}
+
 			if (!usedCharacterAction) {
 				add_option("0", "Gebruik het karaktereigenschap van de " + current_card.name(), [&, current_card](const Socket& s, Player& p) {
 
@@ -161,52 +165,46 @@ namespace machiavelli
 		BuildingCard card1 = game.drawBuildingCard();
 		BuildingCard card2 = game.drawBuildingCard();
 
-		if (!discardedBuildingCard) {
-			socket << "Je hebt " << card1.name() << " en " << card2.name() << " gekregen. Welke leg je af?\r\n";
+		socket << "Je hebt " << card1.name() << " en " << card2.name() << " gekregen. Welke leg je af?\r\n";
 
-			reset_options(true);
+		reset_options();
 
-			add_option("0", card1.all_info(), [this, &game, card1, card2](const auto& a, auto& b) {
-				auto& game = state()->game();
+		add_option("0", card1.all_info(), [this, card1, card2](const auto& a, auto& b) {
+			auto& game = state()->game();
 
-				takenBuildingCards = true;
-				takingBuildingCardsNow = false;
-				gotGold = true;
-				reset_options(true);
+			takenBuildingCards = true;
+			takingBuildingCardsNow = false;
+			gotGold = true;
+			
 
-				if (!discardedBuildingCard) {
-					game.discard_card(card1);
-					b.addBuildingCardToDeck(card2);
+			game.discard_card(card1);
+			b.addBuildingCardToDeck(card2);
 
-					check_next_turn();
-				}
+			reset_options();
+			check_next_turn();
 
-				discardedBuildingCard = true;
-				
+			print_info(a, b);
 
-			}, true);
+		}, true);
 
-			add_option("1", card2.all_info(), [this, &game, card1, card2](const auto& a, auto& b) {
-				auto& game = state()->game();
+		add_option("1", card2.all_info(), [this, card1, card2](const auto& a, auto& b) {
+			auto& game = state()->game();
 
-				takenBuildingCards = true;
-				takingBuildingCardsNow = false;
-				gotGold = true;
-				reset_options(true);
+			takenBuildingCards = true;
+			takingBuildingCardsNow = false;
+			gotGold = true;
 
-				if (!discardedBuildingCard) {
-					game.discard_card(card2);
-					b.addBuildingCardToDeck(card1);
+			game.discard_card(card2);
+			b.addBuildingCardToDeck(card1);
 
-					check_next_turn();
-				}
+			reset_options();
+			check_next_turn();
 
-				discardedBuildingCard = true;
+			print_info(a, b);
 
-			}, true);
+		}, true);
 
-			print_info(socket, player);
-		}
+		print_info(socket, player);
 	}
 
 	void TurnPhase::nextTurn(const Socket & socket, const Player & player)

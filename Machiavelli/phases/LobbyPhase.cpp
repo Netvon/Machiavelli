@@ -47,6 +47,11 @@ namespace machiavelli
 			cheat_mode = true;
 		});
 
+		add_option("cheatnomoney", "activate cheat-mode, don't give extra money", [&](const auto& a, auto& b) {
+			cheat_mode = true;
+			do_not_add_extra_money = true;
+		});
+
 		add_option("cheatcard", "activate cheat-mode and give buildingcards", [&](const auto& a, auto& b) {
 			cheat_mode = true;
 			give_cards = true;
@@ -69,6 +74,12 @@ namespace machiavelli
 			test_effect = true;
 			give_cards = true;
 		});
+
+		add_option("cheatdraw1", "activate cheat-mode for testing drawing Building Cards with a character that has no Actions", [&](const auto& a, auto& b) {
+			cheat_mode = true;
+			give_cards = true;
+			test_draw_one = true;
+		});
 	}
 
 	void LobbyPhase::set_cheat_data()
@@ -81,8 +92,10 @@ namespace machiavelli
 		game.shuffleCharacterCards();
 		game.shuffleBuildingCards();
 
-		p1.gold() += 999;
-		p2.gold() += 999;
+		if (!do_not_add_extra_money) {
+			p1.gold() += 999;
+			p2.gold() += 999;
+		}
 
 		size_t card_amount = 0;
 
@@ -108,12 +121,19 @@ namespace machiavelli
 
 		if (test_action) {
 
-			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Moordenaar"));
-			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Dief"));
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::MOORDENAAR));
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::DIEF));
 
-			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Magiër"));
-			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Condottiere"));
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::MAGIER));
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::CONDOTTIERE));
 
+		}
+		else if (test_draw_one) {
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::KONING));
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::PREDIKER));
+
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::KOOPMAN));
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::BOUWMEESTER));
 		}
 		else {
 			p1.addCharacterCardToDeck(game.drawCharacterCard());

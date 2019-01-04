@@ -16,5 +16,7 @@ namespace machiavelli::actions
 	void add_build_options(std::shared_ptr<Phase> context, std::function<void(void)> do_on_enter_menu, std::function<void(void)> do_after_complete);
 
 	void add_actions_for(const Player::character_card & card, std::shared_ptr<Phase> context, std::function<void(void)> do_after_complete);
+
+	bool card_has_action(std::string card_name);
 }
 

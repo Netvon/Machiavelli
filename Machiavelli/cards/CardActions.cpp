@@ -243,6 +243,16 @@ namespace machiavelli::actions
 			int can_build = p2.build_per_turn();
 			int index = 0;
 
+			s2 << "You will be able to build a total of " << can_build;
+			if (can_build == 1) {
+				s2 << " building";
+			}
+			else {
+				s2 << " buildings";
+			}
+
+			s2 << " this turn.\r\n";
+
 			for (const auto& bc : p2.getPlayerBuildingCards()) {
 				if (!bc.getIsBuilt() && p2.gold() >= bc.cost()) {
 
@@ -290,5 +300,16 @@ namespace machiavelli::actions
 		if (card.name() == characters::MAGIER) { add_mage_option("mage", context, do_after_complete); }
 		if (card.name() == characters::CONDOTTIERE) { add_condottiere_option("condottiere", context, do_after_complete); }
 		if (card.name() == characters::BOUWMEESTER) { add_masterbuilder_option("masterbuilder", context, do_after_complete); }
+	}
+
+	bool card_has_action(std::string card_name)
+	{
+		if (   card_name == characters::MOORDENAAR
+			|| card_name == characters::DIEF
+			|| card_name == characters::MAGIER
+			|| card_name == characters::CONDOTTIERE
+			|| card_name == characters::BOUWMEESTER) { return true; }
+		
+		return false;
 	}
 }
