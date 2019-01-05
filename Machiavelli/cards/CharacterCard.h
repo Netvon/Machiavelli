@@ -3,6 +3,7 @@
 #include "../util/defines.h"
 #include <string>
 #include "../CardEffect.h"
+#include "CardCategory.h"
 #include <map>
 
 namespace machiavelli {
@@ -34,9 +35,12 @@ namespace machiavelli {
 		static CharacterCard get_by_name(std::string name);
 		static std::size_t loaded_amount();
 
+		const CardCategory& category() const;
+
 	private:
 		std::string _name{ def::NO_NAME_SET };
 		CardEffect _effect;
+		CardCategory _category{ CardCategory::none() };
 		unsigned int order = 0;
 		bool isVisible = true;
 

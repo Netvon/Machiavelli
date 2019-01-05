@@ -80,17 +80,19 @@ namespace machiavelli::actions
 			context->print_info(s, p);
 		}, true );
 
-		context->add_option(key + "b", "Take new cards", [&, context, do_after_complete](const Socket& s, Player& p)
-		{
-			context->reset_options(true);
-
-			for (size_t i = 1llu; i < p.building_card_amount(); i++)
+		if (context->state()->current_player()->get_player().building_card_amount() > 0) {
+			context->add_option(key + "b", "Take new cards", [&, context, do_after_complete](const Socket& s, Player& p)
 			{
-				add_take_option(context, i, do_after_complete);
-			}
+				context->reset_options(true);
 
-			context->print_info(s, p);
-		}, true);
+				for (size_t i = 1llu; i < p.building_card_amount(); i++)
+				{
+					add_take_option(context, i, do_after_complete);
+				}
+
+				context->print_info(s, p);
+			}, true);
+		}
 	}
 
 	void add_condottiere_option(const std::string & key, std::shared_ptr<Phase> context, std::function<void(void)> do_after_complete)
@@ -265,7 +267,7 @@ namespace machiavelli::actions
 					context->add_option(std::to_string(*index), "Build " + bc.all_info(), [can_build, index, _this_index, context, bc, do_after_complete](const Socket& s, Player& p)
 					{
 						if (p.gold() >= bc.cost()) {
-							p.built_building(bc);
+							p.build_building(bc);
 							s << "You have constructed " << bc.all_info() << "\r\n";
 							(*can_build)--;
 						}

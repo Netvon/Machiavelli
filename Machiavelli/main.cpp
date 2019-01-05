@@ -32,6 +32,7 @@
 #include "phases/EndPhase.h"
 #include "main.h"
 #include "phases/LobbyPhase.h"
+#include "cards/CharacterCard.h"
 
 namespace machiavelli {
 	const int tcp_port{ 1080 };
@@ -141,14 +142,14 @@ void handle_client(Socket client) // this function runs in a separate thread
 						socket.close();
 						break; // out of game loop, will end this thread and close connection
 					}
-					else if (cmd == "start") {
+					/*else if (cmd == "start") {
 						state->add_phase<machiavelli::GamePhase>("game");
 						state->add_phase<machiavelli::PlayPhase>("play");
 						state->add_phase<machiavelli::TurnPhase>("turn");
 						state->add_phase<machiavelli::EndPhase>("end");
 						state->navigate_to("game");
 						continue;
-					}
+					}*/
 					else if (cmd == "quit_server") {
 						running = false;
 					}
@@ -244,6 +245,7 @@ int main(int argc, const char * argv[])
 	}
 
 	state.~shared_ptr();
+
 	return 0;
 }
 

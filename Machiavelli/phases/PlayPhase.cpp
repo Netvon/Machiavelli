@@ -22,8 +22,8 @@ namespace machiavelli
 			if (p.built_buildings().size() >= 8) {
 				game.broadcast(p.name() + " heeft 8 gebouwen gebouwd! De punten worden nu geteld.\r\n");
 
-				state()->add_phase<EndPhase>("end");
 				state()->navigate_to("end");
+				return;
 			}
 		}
 	}
@@ -61,32 +61,37 @@ namespace machiavelli
 		auto characterPosition = state()->getCharacterPosition();
 		auto card_name = CharacterCard::get_name_by_order(characterPosition);
 
+		bool someone_has_card = false;
+
 		game.broadcast("Calling " + card_name + " to action.\r\n");
 
 		for (auto& player : game.getPlayers()) {
 			auto& p = player->get_player();
-			auto characterCards = p.getPlayerCharacterCards();
 
 			if (p.hasCharacterCardByOrder(characterPosition)) {
 				game.current_player(p.name());
 				game.broadcast(p.name() + " is nu aan de beurt!\r\n");
-				reset_options(false);
 
-				state()->changeCharacterOrder(characterPosition + 1);
-				state()->navigate_to("turn");
-				return;
+				someone_has_card = true;
+				break;
 			}
 		}
 
-		game.broadcast("Nobody has the " + card_name + " card.\r\n");
 
+		if (someone_has_card) {
+			
+			state()->navigate_to("turn");
 
-		state()->changeCharacterOrder(characterPosition + 1);
+		}
+		else {
 
-		print_info(socket, player);
+			state()->changeCharacterOrder(characterPosition + 1);
+			game.broadcast("Nobody has the " + card_name + " card.\r\n");
+			print_info(socket, player);
+
+		}
+		
 	}
-
-
 
 	void PlayPhase::nextTurn(const Socket & socket, const Player & player)
 	{

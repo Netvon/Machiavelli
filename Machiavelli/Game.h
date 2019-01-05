@@ -60,6 +60,11 @@ namespace machiavelli
 		void discard_card(BuildingCard && card);
 		void discard_card(const BuildingCard & card);
 
+		void discard_card(CharacterCard && card);
+		void discard_card(const CharacterCard & card);
+
+		void return_players_character_cards();
+
 	private:
 		std::vector<std::shared_ptr<ClientInfo>> players;
 

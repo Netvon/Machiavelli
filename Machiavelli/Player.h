@@ -45,6 +45,8 @@ namespace machiavelli {
 		building_card_deck getPlayerBuildingCards() const;
 		character_card_deck getPlayerCharacterCards() const;
 
+		character_card_deck& getPlayerCharacterCards();
+
 		bool hasCharacterCardByOrder(unsigned int pOrder);
 		const character_card findCardByOrder(unsigned int pOrder) const;
 
@@ -66,7 +68,7 @@ namespace machiavelli {
 		void discard_character_cards();
 
 		std::vector<building_card> built_buildings();
-		void built_building(const building_card & pCard);
+		void build_building(const building_card & pCard);
 		size_t building_card_amount() const;
 		
 		int unbuilt_buildings_amount() const;

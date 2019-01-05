@@ -85,6 +85,11 @@ namespace machiavelli {
 		return character_cards;
 	}
 
+	Player::character_card_deck & Player::getPlayerCharacterCards()
+	{
+		return character_cards;
+	}
+
 	bool Player::hasCharacterCardByOrder(const unsigned int pOrder)
 	{
 		for (auto& card : character_cards) {
@@ -188,7 +193,7 @@ namespace machiavelli {
 		return building_cards.size();
 	}
 
-	void Player::built_building(const building_card & pCard)
+	void Player::build_building(const building_card & pCard)
 	{
 		for (auto & card : building_cards) {
 

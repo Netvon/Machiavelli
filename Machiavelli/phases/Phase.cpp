@@ -146,7 +146,7 @@ namespace machiavelli
 		}
 
 		for (auto& card : player.getPlayerCharacterCards()) {
-			socket << "#" << card.getOrder() << ". " << card.name();
+			socket << "#" << card.getOrder() << ". " << card.name() << " - " << card.category().name();
 			if (card.is_murdered()) {
 				socket << " [ has been murdered ]";
 			}

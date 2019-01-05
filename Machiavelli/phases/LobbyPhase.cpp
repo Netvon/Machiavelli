@@ -2,6 +2,7 @@
 #include "GamePhase.h"
 #include "PlayPhase.h"
 #include "TurnPhase.h"
+#include "EndPhase.h"
 
 namespace machiavelli
 {
@@ -25,6 +26,7 @@ namespace machiavelli
 			state()->add_phase<machiavelli::GamePhase>("game");
 			state()->add_phase<machiavelli::PlayPhase>("play");
 			state()->add_phase<machiavelli::TurnPhase>("turn");
+			state()->add_phase<machiavelli::EndPhase>("end");
 
 			if (!cheat_mode) {
 				//state()->broadcast("Okay, that's two players! Let's begin.\r\n");
@@ -73,6 +75,11 @@ namespace machiavelli
 			test_win = true;
 		});
 
+		add_option("cheatalmostwin", "activate cheat-mode to test win", [&](const auto& a, auto& b) {
+			cheat_mode = true;
+			test_almost_win = true;
+		});
+
 		add_option("cheateffect", "activate cheat-mode and give buildings", [&](const auto& a, auto& b) {
 			cheat_mode = true;
 			test_effect = true;
@@ -107,7 +114,7 @@ namespace machiavelli
 			card_amount = 2;
 		}
 
-		if (test_win) {
+		if (test_win || test_almost_win) {
 			card_amount = 8;
 		}
 
@@ -119,8 +126,19 @@ namespace machiavelli
 
 		if (test_win || test_effect) {
 			for (auto& card : p1.getPlayerBuildingCards()) {
-				p1.built_building(card);
+				p1.build_building(card);
 			}
+		}
+
+		if (test_almost_win) {
+			std::for_each_n(p1.getPlayerBuildingCards().begin(), 7, [&p1](auto & card) {
+
+				p1.build_building(card);
+			});
+
+			std::for_each_n(p2.getPlayerBuildingCards().begin(), 7, [&p2](auto & card) {
+				p2.build_building(card);
+			});
 		}
 
 		if (test_action) {

@@ -17,7 +17,7 @@ namespace machiavelli
 			newTurn = true;
 
 			auto next_character_pos = state()->getCharacterPosition() + 1;
-			auto max_character_pos = static_cast<unsigned int>(CharacterCard::loaded_amount());
+			//auto max_character_pos = static_cast<unsigned int>(CharacterCard::loaded_amount());
 
 			state()->changeCharacterOrder(next_character_pos);
 
@@ -102,7 +102,7 @@ namespace machiavelli
 				effect(currentPlayer);
 			}*/
 
-			if (!actions::card_has_action(current_card.name())) {
+			if (!actions::card_has_action(current_card.name()) || current_card.is_murdered()) {
 				usedCharacterAction = true;
 			}
 

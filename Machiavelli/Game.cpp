@@ -258,6 +258,33 @@ namespace machiavelli
 		building_deck.push_discard_top(std::move(card));
 	}
 
+	void Game::discard_card(CharacterCard && card)
+	{
+		character_deck.push_bottom_stack(std::move(card));
+	}
+
+	void Game::discard_card(const CharacterCard & card)
+	{
+		character_deck.push_bottom_stack(std::move(card));
+	}
+
+	void Game::return_players_character_cards()
+	{
+		for (auto player : players) {
+			auto & p = player->get_player();
+
+			for (auto& card : p.getPlayerCharacterCards()) {
+				character_deck.push_top_stack(card);
+			}
+
+			p.discard_character_cards();
+		}
+
+		for (auto & card : table_deck) {
+			character_deck.push_top_stack(card);
+		}
+	}
+
 	void Game::setKing()
 	{
 		auto randomIndex = random(0llu, 1llu);

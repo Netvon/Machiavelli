@@ -94,8 +94,11 @@ namespace machiavelli
 
 			for (auto& player : game().getPlayers()) {
 				player->get_player().reset_effects();
-				player->get_player().discard_character_cards();
 			}
+
+			game().return_players_character_cards();
+			game().shuffleCharacterCards();
+			game().shuffleBuildingCards();
 
 			navigate_to("game");
 		}

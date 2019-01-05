@@ -21,6 +21,7 @@ namespace machiavelli
 		int amount_in_game{ 0 };
 		bool cheat_mode{ false };
 		bool test_win{ false };
+		bool test_almost_win{ false };
 		bool give_cards{ false };
 		bool test_effect{ false };
 		bool test_action{ false };
