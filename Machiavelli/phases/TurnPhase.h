@@ -29,6 +29,9 @@ namespace machiavelli
 		bool usingCharacterAction = false;
 		bool buildingBuilding = false;
 
+		bool disable_end = false;
+		bool disable_top = false;
+
 		bool newTurn = true;
 
 		void check_next_turn();

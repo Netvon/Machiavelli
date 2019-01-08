@@ -14,6 +14,8 @@ namespace machiavelli
 			discardedBuildingCard = false;
 			takingBuildingCardsNow = false;
 			usingCharacterAction = false;
+			disable_end = false;
+			disable_top = false;
 			newTurn = true;
 
 			auto next_character_pos = state()->getCharacterPosition() + 1;
@@ -83,6 +85,32 @@ namespace machiavelli
 		auto cphase = std::type_index(typeid(*state()->current_phase()));
 		auto wanted_phase = std::type_index(typeid(TurnPhase));
 
+		if ((usingCharacterAction || takingBuildingCardsNow || buildingBuilding) && !disable_top) {
+			add_option("top", "Return the top menu", [&](const Socket& s, Player& p) {
+				usingCharacterAction = false;
+				takingBuildingCardsNow = false;
+				buildingBuilding = false;
+
+				check_next_turn();
+
+				reset_options(true);
+				print_info(s, p);
+
+				
+			}, true);
+		}
+
+		if (!disable_end) {
+			add_option("end", "Go to the next Character", [&](const Socket& s, Player& p) {
+				usedCharacterAction = true;
+				gotGold = true;
+				takenBuildingCards = true;
+
+				reset_options(true);
+				check_next_turn();
+			}, true);
+		}
+
 		if (!takingBuildingCardsNow && !usingCharacterAction && !buildingBuilding && cphase == wanted_phase) {
 			auto currentPosition = state()->getCharacterPosition();
 			auto& game = state()->game();
@@ -113,12 +141,12 @@ namespace machiavelli
 				add_option("0", "Gebruik het karaktereigenschap van de " + current_card.name(), [&, current_card](const Socket& s, Player& p) {
 
 					usingCharacterAction = true;
-					usedCharacterAction = true;
 
 					reset_options(true);
 
 					machiavelli::actions::add_actions_for(current_card, state()->current_phase(), [this]() {
 						usingCharacterAction = false;
+						usedCharacterAction = true;
 						reset_options(true);
 
 						check_next_turn();
@@ -171,6 +199,9 @@ namespace machiavelli
 
 	void TurnPhase::handle_take_buildingcards(const Socket & socket, Player & player)
 	{
+		disable_end = true;
+		disable_top = true;
+
 		takingBuildingCardsNow = true;
 		auto& game = state()->game();
 		
@@ -181,13 +212,15 @@ namespace machiavelli
 
 		reset_options();
 
-		add_option("0", card1.all_info(), [this, card1, card2](const auto& a, auto& b) {
+		add_option("0", "Discard " + card1.all_info(), [this, card1, card2](const auto& a, auto& b) {
 			auto& game = state()->game();
 
 			takenBuildingCards = true;
 			takingBuildingCardsNow = false;
 			gotGold = true;
-			
+
+			disable_end = false;
+			disable_top = false;
 
 			game.discard_card(card1);
 			b.addBuildingCardToDeck(card2);
@@ -199,12 +232,15 @@ namespace machiavelli
 
 		}, true);
 
-		add_option("1", card2.all_info(), [this, card1, card2](const auto& a, auto& b) {
+		add_option("1", "Discard " + card2.all_info(), [this, card1, card2](const auto& a, auto& b) {
 			auto& game = state()->game();
 
 			takenBuildingCards = true;
 			takingBuildingCardsNow = false;
 			gotGold = true;
+
+			disable_end = false;
+			disable_top = false;
 
 			game.discard_card(card2);
 			b.addBuildingCardToDeck(card1);
