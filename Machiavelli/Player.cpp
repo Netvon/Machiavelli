@@ -252,16 +252,32 @@ namespace machiavelli {
 					temp += 2_g;
 				}
 
-				has_categories.insert(card.category());
+
+				if (card.category() != CardCategory::none()) {
+					has_categories.insert(card.category());
+				}
 			}
 		}
 
-		if (has_categories.size() >= CardCategory::total_amount()) {
+		if (has_categories.size() >= CardCategory::total_amount() - 1) {
 			temp += 3;
 		}
 
 		if (_finished_first) {
 			temp += 4;
+		}
+
+		return temp;
+	}
+
+	int Player::building_score() const
+	{
+		int temp = 0;
+
+		for (auto & card : building_cards) {
+			if (card.getIsBuilt()) {
+				temp += card.cost();
+			}
 		}
 
 		return temp;
