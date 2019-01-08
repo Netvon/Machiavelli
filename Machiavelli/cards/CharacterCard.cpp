@@ -98,6 +98,12 @@ namespace machiavelli {
 		return _category;
 	}
 
+	void CharacterCard::dispose()
+	{
+		names_by_order.clear();
+		loaded.clear();
+	}
+
 	std::istream & operator>>(std::istream & is, CharacterCard & card)
 	{
 		std::istream::sentry s(is);

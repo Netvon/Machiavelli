@@ -77,7 +77,6 @@ namespace machiavelli
 				return T();
 			}
 
-			// TODO: make exceptionsafe :)
 			auto drawnCard = deck.front();
 			deck.erase(std::remove(deck.begin(), deck.end(), drawnCard));
 

@@ -202,6 +202,7 @@ int load_decks(bool &retflag)
 int main(int argc, const char * argv[])
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetBreakAlloc(470);
 
 	state->add_phase<machiavelli::LobbyPhase>("lobby");
 	state->navigate_to("lobby");

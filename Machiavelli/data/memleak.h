@@ -11,3 +11,7 @@
 #else
 #define DBG_NEW new
 #endif
+
+#ifdef _DEBUG
+#define new DBG_NEW
+#endif

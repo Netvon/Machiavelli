@@ -63,8 +63,11 @@ namespace machiavelli
 
 		//nextTurn(socket, player);
 
-		for (auto player : state()->game().getPlayers()) {
-			player->get_player().apply_card_effects();
+		if (state()->is_new_turn()) {
+
+			for (auto player : state()->game().getPlayers()) {
+				player->get_player().apply_card_effects();
+			}
 		}
 
 		if (newTurn) {

@@ -14,6 +14,8 @@ namespace machiavelli
 	{
 	public:
 
+		~State();
+
 		template<typename TPhase, typename ...TArgs>
 		void add_phase(const std::string& with_name, TArgs&&... arguments) 
 		{
@@ -42,11 +44,17 @@ namespace machiavelli
 		unsigned int getCharacterPosition() const;
 		void changeCharacterOrder(unsigned int position);
 
+		const std::size_t& turn_count() const;
+		const bool& is_new_turn() const;
+
 	private:
 		std::vector<std::shared_ptr<Phase>> phases;
 		std::string current_phase_name;
 		unsigned int _characterPosition = 1;
 		std::string _last_phase;
+		std::size_t _turn_count{ 1llu };
+
+		bool _new_turn{ true };
 
 		Game _game;
 

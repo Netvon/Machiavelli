@@ -94,7 +94,8 @@ namespace machiavelli
 	{
 		bool is_current_player = state()->current_player()->get_player() == player;
 
-		socket << "========= Info =========\r\nCurrent State: " << state()->current_phase()->name()  << " | Name: " << player.name() << " | Gold: " << player.gold() << "\r\n";
+		socket << "========= Info =========\r\nCurrent State: " << state()->current_phase()->name()  
+			<< " | Name: " << player.name() << " | Gold: " << player.gold() << " | Turn: " << std::to_string(state()->turn_count()) << "\r\n" ;
 
 		if (is_current_player) {
 			socket << "\r\n|> it's your turn\r\n";

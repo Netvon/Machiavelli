@@ -2,6 +2,11 @@
 
 namespace machiavelli
 {
+	State::~State()
+	{
+		std::cerr << "goodbye from State" << std::endl;
+	}
+
 	void State::navigate_to(const std::string & phase_name)
 	{
 		for (auto phase : phases) {
@@ -88,6 +93,7 @@ namespace machiavelli
 	void State::changeCharacterOrder(const unsigned int position)
 	{
 		auto max_pos = static_cast<unsigned int>(CharacterCard::loaded_amount());
+		
 
 		if (position > max_pos) {
 			_characterPosition = 1;
@@ -100,12 +106,26 @@ namespace machiavelli
 			game().shuffleCharacterCards();
 			game().shuffleBuildingCards();
 
+			_new_turn = true;
+			_turn_count++;
+
 			navigate_to("game");
 		}
 		else {
+			_new_turn = false;
 			_characterPosition = position;
 
 			navigate_to("play");
 		}
+	}
+
+	const std::size_t & State::turn_count() const
+	{
+		return _turn_count;
+	}
+
+	const bool & State::is_new_turn() const
+	{
+		return _new_turn;
 	}
 }

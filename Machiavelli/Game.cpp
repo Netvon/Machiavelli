@@ -208,7 +208,7 @@ namespace machiavelli
 	void Game::broadcast(const std::string & message)
 	{
 		for (auto player : players) {
-			player->get_socket() << message;
+			player->get_socket() << message << "\r\n";
 		}
 	}
 

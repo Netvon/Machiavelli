@@ -91,6 +91,12 @@ namespace machiavelli
 			give_cards = true;
 			test_draw_one = true;
 		});
+
+		add_option("cheatdraw2", "activate cheat-mode for testing Magir", [&](const auto& a, auto& b) {
+			cheat_mode = true;
+			give_cards = true;
+			test_draw_two = true;
+		});
 	}
 
 	void LobbyPhase::set_cheat_data()
@@ -120,8 +126,11 @@ namespace machiavelli
 
 		for (size_t i = 0; i < card_amount; i++)
 		{
+			
 			p1.addBuildingCardToDeck(game.drawBuildingCard());
-			p2.addBuildingCardToDeck(game.drawBuildingCard());
+			if (!test_draw_two) {
+				p2.addBuildingCardToDeck(game.drawBuildingCard());
+			}
 		}
 
 		if (test_win || test_effect) {
@@ -155,6 +164,13 @@ namespace machiavelli
 			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::PREDIKER));
 
 			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::KOOPMAN));
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::BOUWMEESTER));
+		}
+		else if (test_draw_two) {
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::KONING));
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::PREDIKER));
+
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::MAGIER));
 			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::BOUWMEESTER));
 		}
 		else {

@@ -72,7 +72,7 @@ namespace machiavelli::actions
 
 			auto& game = context->state()->game();
 			auto& other_player = game.get_other_player(p);
-
+				
 			other_player.swap_building_cards(p);
 
 			context->state()->broadcast("Player cards have been switched, type the 'cards' and 'buildings' command to see your new cards and buildings.");
@@ -250,16 +250,6 @@ namespace machiavelli::actions
 			/*int can_build = p2.build_per_turn();
 			int index = 0;*/
 
-			s2 << "You will be able to build a total of " << *can_build;
-			if ((*can_build) == 1) {
-				s2 << " building";
-			}
-			else {
-				s2 << " buildings";
-			}
-
-			s2 << " this turn.\r\n";
-
 			for (const auto& bc : p2.getPlayerBuildingCards()) {
 				if (!bc.getIsBuilt() && p2.gold() >= bc.cost()) {
 
@@ -294,6 +284,23 @@ namespace machiavelli::actions
 
 					(*index)++;
 				}
+			}
+
+			if ((*index) == 0) {
+				s2 << "You do not have enough money to construct any buildings.\r\n";
+				do_after_complete();
+				context->reset_options(true);
+			}
+			else {
+				s2 << "You will be able to build a total of " << *can_build;
+				if ((*can_build) == 1) {
+					s2 << " building";
+				}
+				else {
+					s2 << " buildings";
+				}
+
+				s2 << " this turn.\r\n";
 			}
 
 			context->print_info(s2, p2);

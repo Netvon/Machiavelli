@@ -37,6 +37,8 @@ namespace machiavelli {
 
 		const CardCategory& category() const;
 
+		static void dispose();
+
 	private:
 		std::string _name{ def::NO_NAME_SET };
 		CardEffect _effect;

@@ -26,6 +26,7 @@ namespace machiavelli
 		bool test_effect{ false };
 		bool test_action{ false };
 		bool test_draw_one{ false };
+		bool test_draw_two{ false };
 		bool do_not_add_extra_money{ false };
 
 		void set_cheat_data();
