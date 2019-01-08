@@ -26,8 +26,8 @@ namespace machiavelli
 		auto player2Score = game.getPlayers().at(1)->get_player().score();
 
 		if (player1Score == player2Score) {
-			player1Score == game.getPlayers().at(0)->get_player().building_score();
-			player2Score == game.getPlayers().at(1)->get_player().building_score();
+			player1Score = game.getPlayers().at(0)->get_player().building_score();
+			player2Score = game.getPlayers().at(1)->get_player().building_score();
 		}
 
 		std::ostringstream scores;
