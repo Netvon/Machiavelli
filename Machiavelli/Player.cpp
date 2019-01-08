@@ -180,7 +180,11 @@ namespace machiavelli {
 			return;
 		}*/
 
-		building_cards.swapStack(player.building_cards);
+		building_cards.swap_if(player.building_cards, [](const Player::building_card& card) {
+			return !card.getIsBuilt();
+		});
+
+		//building_cards.swapStack(player.building_cards);
 	}
 
 	void Player::discard_character_cards()

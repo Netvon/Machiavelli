@@ -3,6 +3,7 @@
 #include <deque>
 #include <algorithm>
 #include <random>
+#include <functional>
 #include "util\RandomGenerator.h"
 
 namespace machiavelli
@@ -69,6 +70,28 @@ namespace machiavelli
 		void swapStack(Deck<T>& pOther)
 		{
 			deck.swap(pOther.deck);
+		}
+
+		void swap_if(Deck<T>& other, std::function<bool(const T&)> predicate) 
+		{
+			std::deque<T> temp_a;
+			std::deque<T> temp_b;
+
+			for (const T& item : deck) {
+				if (predicate && predicate(item)) {
+					temp_a.push_back(item);
+				}
+			}
+
+			for (const T& item : other.deck) {
+				if (predicate && predicate(item)) {
+					temp_b.push_back(item);
+				}
+			}
+
+			other.deck.swap(temp_a);
+			deck.swap(temp_b);
+
 		}
 
 		T draw()
