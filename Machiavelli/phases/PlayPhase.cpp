@@ -12,7 +12,7 @@ namespace machiavelli
 		add_options();
 	}
 
-	void PlayPhase::checkWin()
+	bool PlayPhase::checkWin()
 	{
 		auto& game = state()->game();
 
@@ -23,9 +23,11 @@ namespace machiavelli
 				game.broadcast(p.name() + " heeft 8 gebouwen gebouwd! De punten worden nu geteld.\r\n");
 
 				state()->navigate_to("end");
-				return;
+				return true;
 			}
 		}
+
+		return false;
 	}
 
 	void PlayPhase::print(const Socket & socket, const Player & player)
@@ -35,14 +37,15 @@ namespace machiavelli
 
 	void PlayPhase::entered_phase(const Socket & socket, const Player & player)
 	{
-		checkWin();
+		if (!checkWin()) {
 
-		socket << "Welcome to the PlayPhase!\r\n";
+			socket << "Welcome to the PlayPhase!\r\n";
 
-		//nextTurn(socket, player);
+			//nextTurn(socket, player);
 
-		reset_options(true);
-		print_info(socket, player);
+			reset_options(true);
+			print_info(socket, player);
+		}
 	}
 
 	void PlayPhase::add_options()

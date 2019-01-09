@@ -169,6 +169,11 @@ namespace machiavelli
 			deck = std::move(other.deck);
 		}
 
+		void clear() {
+			deck.clear();
+			discardPile.clear();
+		}
+
 	private:
 		std::deque<T> deck;
 		std::deque<T> discardPile;

@@ -66,6 +66,7 @@ namespace machiavelli {
 		void swap_building_cards(Player& player);
 
 		void discard_character_cards();
+		void discard_building_cards();
 
 		std::vector<building_card> built_buildings();
 		void build_building(const building_card & pCard);

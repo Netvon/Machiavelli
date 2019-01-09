@@ -49,54 +49,56 @@ namespace machiavelli
 
 	void LobbyPhase::add_options()
 	{
-		add_option("cheat", "activate cheat-mode", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-		});
+		if (!cheat_mode) {
+			add_option("cheat", "activate cheat-mode", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+			});
 
-		add_option("cheatnomoney", "activate cheat-mode, don't give extra money", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			do_not_add_extra_money = true;
-		});
+			add_option("cheatnomoney", "activate cheat-mode, don't give extra money", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				do_not_add_extra_money = true;
+			});
 
-		add_option("cheatcard", "activate cheat-mode and give buildingcards", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			give_cards = true;
-		});
+			add_option("cheatcard", "activate cheat-mode and give buildingcards", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				give_cards = true;
+			});
 
-		add_option("cheataction", "activate cheat-mode and give buildingcards to test actions", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			give_cards = true;
-			test_action = true;
-			test_effect = true;
-		});
+			add_option("cheataction", "activate cheat-mode and give buildingcards to test actions", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				give_cards = true;
+				test_action = true;
+				test_effect = true;
+			});
 
-		add_option("cheatwin", "activate cheat-mode to test win", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			test_win = true;
-		});
+			add_option("cheatwin", "activate cheat-mode to test win", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				test_win = true;
+			});
 
-		add_option("cheatalmostwin", "activate cheat-mode to test win", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			test_almost_win = true;
-		});
+			add_option("cheatalmostwin", "activate cheat-mode to test win", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				test_almost_win = true;
+			});
 
-		add_option("cheateffect", "activate cheat-mode and give buildings", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			test_effect = true;
-			give_cards = true;
-		});
+			add_option("cheateffect", "activate cheat-mode and give buildings", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				test_effect = true;
+				give_cards = true;
+			});
 
-		add_option("cheatdraw1", "activate cheat-mode for testing drawing Building Cards with a character that has no Actions", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			give_cards = true;
-			test_draw_one = true;
-		});
+			add_option("cheatdraw1", "activate cheat-mode for testing drawing Building Cards with a character that has no Actions", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				give_cards = true;
+				test_draw_one = true;
+			});
 
-		add_option("cheatdraw2", "activate cheat-mode for testing Magir", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			give_cards = true;
-			test_draw_two = true;
-		});
+			add_option("cheatdraw2", "activate cheat-mode for testing Magir", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				give_cards = true;
+				test_draw_two = true;
+			});
+		}
 	}
 
 	void LobbyPhase::set_cheat_data()
@@ -187,6 +189,17 @@ namespace machiavelli
 	void LobbyPhase::reset()
 	{
 		amount_in_game = 0;
+
+		cheat_mode = false;
+		test_win = false;
+		test_almost_win = false;
+		give_cards = false;
+		test_effect = false;
+		test_action = false;
+		test_draw_one = false;
+		test_draw_two = false;
+		do_not_add_extra_money = false;
+
 		reset_options();
 	}
 }

@@ -16,7 +16,7 @@ namespace machiavelli
 		PlayPhase(const std::string & name, std::shared_ptr<State> state);
 		~PlayPhase() = default;
 
-		void checkWin();
+		bool checkWin();
 
 		// Inherited via Phase
 		void print(const Socket & socket, const Player& player) override;

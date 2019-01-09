@@ -189,7 +189,12 @@ namespace machiavelli {
 
 	void Player::discard_character_cards()
 	{
-		character_cards = character_card_deck();
+		character_cards.clear();
+	}
+
+	void Player::discard_building_cards()
+	{
+		building_cards.clear();
 	}
 
 	size_t Player::building_card_amount() const

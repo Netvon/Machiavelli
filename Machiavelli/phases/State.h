@@ -50,6 +50,8 @@ namespace machiavelli
 		const std::size_t& turn_count() const;
 		const bool& is_new_turn() const;
 
+		void reset();
+
 	private:
 		std::vector<std::shared_ptr<Phase>> phases;
 		std::string current_phase_name;

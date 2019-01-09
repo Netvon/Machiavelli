@@ -75,15 +75,10 @@ namespace machiavelli
 
 	void State::remove_player(std::shared_ptr<ClientInfo> player)
 	{
-		_game.removePlayer(player);
 		_game.end();
+		_game.removePlayer(player);
 
-		_turn_count = 1llu;
-		_characterPosition = 1;
-
-		for (auto phase : phases) {
-			phase.reset();
-		}
+		reset();
 
 		navigate_to("lobby");
 	}
@@ -142,5 +137,17 @@ namespace machiavelli
 	const bool & State::is_new_turn() const
 	{
 		return _new_turn;
+	}
+
+	void State::reset()
+	{
+		_turn_count = 1llu;
+		_characterPosition = 1;
+
+		for (auto phase : phases) {
+			phase->reset();
+		}
+
+		
 	}
 }

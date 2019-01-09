@@ -35,6 +35,8 @@ namespace machiavelli
 
 			p.gold() = 2_g;
 		}
+
+		table_deck.clear();
 	}
 
 	bool Game::addPlayer(std::shared_ptr<ClientInfo> player)
@@ -306,6 +308,8 @@ namespace machiavelli
 		for (auto & card : table_deck) {
 			character_deck.push_top_stack(card);
 		}
+
+		table_deck.clear();
 	}
 
 	void Game::return_players_building_cards()
@@ -315,8 +319,10 @@ namespace machiavelli
 
 			for (auto& card : p.getPlayerBuildingCards()) {
 				card.setIsBuilt(false);
-				building_deck.push_top_stack(card);
+				building_deck.push_top_stack(std::move(card));
 			}
+
+			p.discard_building_cards();
 		}
 	}
 
