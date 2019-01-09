@@ -55,6 +55,11 @@ namespace machiavelli
 		//}
 	}
 
+	void PlayPhase::reset()
+	{
+		reset_options();
+	}
+
 	void PlayPhase::handle_turn(const Socket & socket, const Player & player)
 	{
 		auto& game = state()->game();

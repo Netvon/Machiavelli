@@ -138,6 +138,7 @@ void handle_client(Socket client) // this function runs in a separate thread
 					std::cerr << '[' << socket.get_dotted_ip() << " (" << socket.get_socket() << ") " << player.name() << "] " << cmd << "\r\n";
 
 					if (cmd == "quit") {
+						state->remove_player(client_info);
 						socket.write("Bye!\r\n");
 						socket.close();
 						break; // out of game loop, will end this thread and close connection

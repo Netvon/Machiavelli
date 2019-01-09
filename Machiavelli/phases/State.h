@@ -19,8 +19,10 @@ namespace machiavelli
 		template<typename TPhase, typename ...TArgs>
 		void add_phase(const std::string& with_name, TArgs&&... arguments) 
 		{
-			auto shared = std::make_shared<TPhase>(with_name, shared_from_this(), std::forward<TArgs>(arguments)...);
-			phases.push_back(shared);
+			if (!has_phase(with_name)) {
+				auto shared = std::make_shared<TPhase>(with_name, shared_from_this(), std::forward<TArgs>(arguments)...);
+				phases.push_back(shared);
+			}
 		}
 
 		void navigate_to(const std::string& phase_name);
@@ -36,6 +38,7 @@ namespace machiavelli
 		void handle_input(const Socket & socket, Player& player, const std::string& command);
 
 		bool add_player(std::shared_ptr<ClientInfo> player);
+		void remove_player(std::shared_ptr<ClientInfo> player);
 
 		bool phase_changed();
 

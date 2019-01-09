@@ -35,6 +35,7 @@ namespace machiavelli {
 		std::shared_ptr<State> state() const;
 
 		void virtual entered_phase(const Socket & socket, const Player& player) = 0;
+		void virtual reset() = 0;
 
 		void enable_defaults();
 		void reset_options(bool enable_defaults = true);

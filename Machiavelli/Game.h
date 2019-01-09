@@ -17,8 +17,10 @@ namespace machiavelli
 		~Game() = default;
 
 		void start();
+		void end();
 
 		bool addPlayer(std::shared_ptr<ClientInfo> player);
+		void removePlayer(std::shared_ptr<ClientInfo> player);
 		std::shared_ptr<ClientInfo> getPlayerByIndex(size_t pIndex);
 		std::shared_ptr<ClientInfo> getPlayerByName(const std::string& name) const;
 		std::vector<std::shared_ptr<ClientInfo>> getPlayers() const;
@@ -64,6 +66,7 @@ namespace machiavelli
 		void discard_card(const CharacterCard & card);
 
 		void return_players_character_cards();
+		void return_players_building_cards();
 
 	private:
 		std::vector<std::shared_ptr<ClientInfo>> players;

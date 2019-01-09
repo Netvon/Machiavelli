@@ -179,6 +179,22 @@ namespace machiavelli
 		}
 	}
 
+	void TurnPhase::reset()
+	{
+		gotGold = false;
+		builtBuilding = false;
+		takenBuildingCards = false;
+		usedCharacterAction = false;
+		discardedBuildingCard = false;
+		takingBuildingCardsNow = false;
+		usingCharacterAction = false;
+		disable_end = false;
+		disable_top = false;
+		newTurn = true;
+
+		reset_options();
+	}
+
 	void TurnPhase::handle_get_gold(const Socket & socket, Player & player)
 	{
 		auto& game = state()->game();

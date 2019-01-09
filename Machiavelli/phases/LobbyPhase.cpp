@@ -183,4 +183,10 @@ namespace machiavelli
 
 		state()->navigate_to("play");
 	}
+
+	void LobbyPhase::reset()
+	{
+		amount_in_game = 0;
+		reset_options();
+	}
 }

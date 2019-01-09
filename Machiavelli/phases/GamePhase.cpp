@@ -25,6 +25,11 @@ namespace machiavelli
 		print_info(socket, player);
 	}
 
+	void GamePhase::reset()
+	{
+		reset_options();
+	}
+
 	void GamePhase::handle_character_cards(const Socket & socket, Player & player)
 	{
 		auto& game = state()->game();

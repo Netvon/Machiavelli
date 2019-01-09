@@ -73,6 +73,21 @@ namespace machiavelli
 		return _game.addPlayer(player);
 	}
 
+	void State::remove_player(std::shared_ptr<ClientInfo> player)
+	{
+		_game.removePlayer(player);
+		_game.end();
+
+		_turn_count = 1llu;
+		_characterPosition = 1;
+
+		for (auto phase : phases) {
+			phase.reset();
+		}
+
+		navigate_to("lobby");
+	}
+
 	bool State::phase_changed()
 	{
 		auto result = _phase_changed;

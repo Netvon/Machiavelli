@@ -26,6 +26,10 @@ namespace machiavelli
 		add_option("turn", "turn command", std::bind(&TestPhase::handle_turn, this, _1, _2));
 	}
 
+	void TestPhase::reset()
+	{
+	}
+
 	void TestPhase::handle_cool(const Socket & socket, Player & player)
 	{
 		socket << "Cool! " << player.name() << "\r\n";

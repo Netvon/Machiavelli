@@ -21,6 +21,22 @@ namespace machiavelli
 		}
 	}
 
+	void Game::end()
+	{
+		_started = false;
+
+		_current_player = 0llu;
+
+		return_players_character_cards();
+		return_players_building_cards();
+
+		for (auto& player : players) {
+			auto& p = player->get_player();
+
+			p.gold() = 2_g;
+		}
+	}
+
 	bool Game::addPlayer(std::shared_ptr<ClientInfo> player)
 	{
 		if (players.size() >= 2) {
@@ -34,6 +50,13 @@ namespace machiavelli
 		}
 
 		return true;
+	}
+
+	void Game::removePlayer(std::shared_ptr<ClientInfo> player)
+	{
+		players.erase(std::remove_if(players.begin(), players.end(), [player](auto element) {
+			return element == player;
+		}), players.end());
 	}
 
 	std::shared_ptr<ClientInfo> Game::getPlayerByIndex(size_t pIndex)
@@ -282,6 +305,18 @@ namespace machiavelli
 
 		for (auto & card : table_deck) {
 			character_deck.push_top_stack(card);
+		}
+	}
+
+	void Game::return_players_building_cards()
+	{
+		for (auto player : players) {
+			auto & p = player->get_player();
+
+			for (auto& card : p.getPlayerBuildingCards()) {
+				card.setIsBuilt(false);
+				building_deck.push_top_stack(card);
+			}
 		}
 	}
 

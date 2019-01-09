@@ -12,6 +12,11 @@ namespace machiavelli
 	{
 	}
 
+	void EndPhase::reset()
+	{
+		reset_options();
+	}
+
 	void EndPhase::entered_phase(const Socket & socket, const Player & player)
 	{
 		//print_info(socket, player);

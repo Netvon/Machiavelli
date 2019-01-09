@@ -30,5 +30,8 @@ namespace machiavelli
 		bool do_not_add_extra_money{ false };
 
 		void set_cheat_data();
+
+		// Inherited via Phase
+		virtual void reset() override;
 	};
 }
