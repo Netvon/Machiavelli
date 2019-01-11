@@ -35,6 +35,7 @@ namespace machiavelli {
 		std::shared_ptr<State> state() const;
 
 		void virtual entered_phase(const Socket & socket, const Player& player) = 0;
+		void virtual reset() = 0;
 
 		void enable_defaults();
 		void reset_options(bool enable_defaults = true);
@@ -50,7 +51,7 @@ namespace machiavelli {
 		void print_gold(const Socket& socket, const Player& player);
 
 		std::vector<Option> options;
-		std::string _name = "<no name>";
+		std::string _name = def::NO_NAME_SET;
 		std::shared_ptr<State> _state;
 
 		virtual void handle_option_selected(const Option& option, const Socket & socket, Player& player) {};

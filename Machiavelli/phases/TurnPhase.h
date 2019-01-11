@@ -4,10 +4,13 @@
 #include <string>
 #include <functional>
 #include <memory>
+#include <typeinfo>
+#include <typeindex>
 
 namespace machiavelli
 {
-	class TurnPhase : public Phase
+	class TurnPhase 
+		: public Phase
 	{
 	private:
 		void handle_get_gold(const Socket& socket, Player& player);
@@ -26,7 +29,10 @@ namespace machiavelli
 		bool usingCharacterAction = false;
 		bool buildingBuilding = false;
 
-		bool newTurn = false;
+		bool disable_end = false;
+		bool disable_top = false;
+
+		bool newTurn = true;
 
 		void check_next_turn();
 	public:
@@ -37,5 +43,8 @@ namespace machiavelli
 		void print(const Socket & socket, const Player& player) override;
 		void entered_phase(const Socket & socket, const Player & player) override;
 		void add_options() override;
+
+		// Inherited via Phase
+		virtual void reset() override;
 	};
 }

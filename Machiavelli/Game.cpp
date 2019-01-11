@@ -19,13 +19,24 @@ namespace machiavelli
 
 			p.gold() = 2_g;
 		}
-
-		doTurn();
 	}
 
-	void Game::doTurn()
+	void Game::end()
 	{
-		
+		_started = false;
+
+		_current_player = 0llu;
+
+		return_players_character_cards();
+		return_players_building_cards();
+
+		for (auto& player : players) {
+			auto& p = player->get_player();
+
+			p.gold() = 2_g;
+		}
+
+		table_deck.clear();
 	}
 
 	bool Game::addPlayer(std::shared_ptr<ClientInfo> player)
@@ -41,6 +52,13 @@ namespace machiavelli
 		}
 
 		return true;
+	}
+
+	void Game::removePlayer(std::shared_ptr<ClientInfo> player)
+	{
+		players.erase(std::remove_if(players.begin(), players.end(), [player](auto element) {
+			return element == player;
+		}), players.end());
 	}
 
 	std::shared_ptr<ClientInfo> Game::getPlayerByIndex(size_t pIndex)
@@ -215,7 +233,7 @@ namespace machiavelli
 	void Game::broadcast(const std::string & message)
 	{
 		for (auto player : players) {
-			player->get_socket() << message;
+			player->get_socket() << message << "\r\n";
 		}
 	}
 
@@ -251,6 +269,8 @@ namespace machiavelli
 				return p;
 			}
 		}
+
+		auto should_not = "be here";
 	}
 
 	void Game::discard_card(BuildingCard && card)
@@ -261,6 +281,49 @@ namespace machiavelli
 	void Game::discard_card(const BuildingCard & card)
 	{
 		building_deck.push_discard_top(std::move(card));
+	}
+
+	void Game::discard_card(CharacterCard && card)
+	{
+		character_deck.push_bottom_stack(std::move(card));
+	}
+
+	void Game::discard_card(const CharacterCard & card)
+	{
+		character_deck.push_bottom_stack(std::move(card));
+	}
+
+	void Game::return_players_character_cards()
+	{
+		for (auto player : players) {
+			auto & p = player->get_player();
+
+			for (auto& card : p.getPlayerCharacterCards()) {
+				character_deck.push_top_stack(card);
+			}
+
+			p.discard_character_cards();
+		}
+
+		for (auto & card : table_deck) {
+			character_deck.push_top_stack(card);
+		}
+
+		table_deck.clear();
+	}
+
+	void Game::return_players_building_cards()
+	{
+		for (auto player : players) {
+			auto & p = player->get_player();
+
+			for (auto& card : p.getPlayerBuildingCards()) {
+				card.setIsBuilt(false);
+				building_deck.push_top_stack(std::move(card));
+			}
+
+			p.discard_building_cards();
+		}
 	}
 
 	void Game::setKing()

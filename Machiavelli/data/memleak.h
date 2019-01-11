@@ -2,6 +2,7 @@
 #define _CRTDBG_MAP_ALLOC
 #include <cstdlib>
 #include <crtdbg.h>
+#include "../util/defines.h"
 
 #ifdef _DEBUG
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
@@ -9,4 +10,8 @@
 // allocations to be of _CLIENT_BLOCK type
 #else
 #define DBG_NEW new
+#endif
+
+#ifdef _DEBUG
+#define new DBG_NEW
 #endif

@@ -1,6 +1,8 @@
 #include "LobbyPhase.h"
 #include "GamePhase.h"
 #include "PlayPhase.h"
+#include "TurnPhase.h"
+#include "EndPhase.h"
 
 namespace machiavelli
 {
@@ -21,9 +23,13 @@ namespace machiavelli
 
 		if (amount_in_game >= 2) {
 
+			state()->add_phase<machiavelli::GamePhase>("game");
+			state()->add_phase<machiavelli::PlayPhase>("play");
+			state()->add_phase<machiavelli::TurnPhase>("turn");
+			state()->add_phase<machiavelli::EndPhase>("end");
+
 			if (!cheat_mode) {
 				//state()->broadcast("Okay, that's two players! Let's begin.\r\n");
-				state()->add_phase<machiavelli::GamePhase>("game");
 				state()->navigate_to("game");
 			}
 			else {
@@ -43,32 +49,56 @@ namespace machiavelli
 
 	void LobbyPhase::add_options()
 	{
-		add_option("cheat", "activate cheat-mode", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-		});
+		if (!cheat_mode) {
+			add_option("cheat", "activate cheat-mode", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+			});
 
-		add_option("cheatcard", "activate cheat-mode and give buildingcards", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			give_cards = true;
-		});
+			add_option("cheatnomoney", "activate cheat-mode, don't give extra money", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				do_not_add_extra_money = true;
+			});
 
-		add_option("cheataction", "activate cheat-mode and give buildingcards to test actions", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			give_cards = true;
-			test_action = true;
-			test_effect = true;
-		});
+			add_option("cheatcard", "activate cheat-mode and give buildingcards", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				give_cards = true;
+			});
 
-		add_option("cheatwin", "activate cheat-mode to test win", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			test_win = true;
-		});
+			add_option("cheataction", "activate cheat-mode and give buildingcards to test actions", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				give_cards = true;
+				test_action = true;
+				test_effect = true;
+			});
 
-		add_option("cheateffect", "activate cheat-mode and give buildings", [&](const auto& a, auto& b) {
-			cheat_mode = true;
-			test_effect = true;
-			give_cards = true;
-		});
+			add_option("cheatwin", "activate cheat-mode to test win", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				test_win = true;
+			});
+
+			add_option("cheatalmostwin", "activate cheat-mode to test win", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				test_almost_win = true;
+			});
+
+			add_option("cheateffect", "activate cheat-mode and give buildings", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				test_effect = true;
+				give_cards = true;
+			});
+
+			add_option("cheatdraw1", "activate cheat-mode for testing drawing Building Cards with a character that has no Actions", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				give_cards = true;
+				test_draw_one = true;
+			});
+
+			add_option("cheatdraw2", "activate cheat-mode for testing Magir", [&](const auto& a, auto& b) {
+				cheat_mode = true;
+				give_cards = true;
+				test_draw_two = true;
+			});
+		}
 	}
 
 	void LobbyPhase::set_cheat_data()
@@ -81,8 +111,10 @@ namespace machiavelli
 		game.shuffleCharacterCards();
 		game.shuffleBuildingCards();
 
-		p1.gold() += 999;
-		p2.gold() += 999;
+		if (!do_not_add_extra_money) {
+			p1.gold() += 999;
+			p2.gold() += 999;
+		}
 
 		size_t card_amount = 0;
 
@@ -90,30 +122,58 @@ namespace machiavelli
 			card_amount = 2;
 		}
 
-		if (test_win) {
+		if (test_win || test_almost_win) {
 			card_amount = 8;
 		}
 
 		for (size_t i = 0; i < card_amount; i++)
 		{
+			
 			p1.addBuildingCardToDeck(game.drawBuildingCard());
-			p2.addBuildingCardToDeck(game.drawBuildingCard());
+			if (!test_draw_two) {
+				p2.addBuildingCardToDeck(game.drawBuildingCard());
+			}
 		}
 
 		if (test_win || test_effect) {
 			for (auto& card : p1.getPlayerBuildingCards()) {
-				p1.built_building(card);
+				p1.build_building(card);
 			}
+		}
+
+		if (test_almost_win) {
+			std::for_each_n(p1.getPlayerBuildingCards().begin(), 7, [&p1](auto & card) {
+
+				p1.build_building(card);
+			});
+
+			std::for_each_n(p2.getPlayerBuildingCards().begin(), 7, [&p2](auto & card) {
+				p2.build_building(card);
+			});
 		}
 
 		if (test_action) {
 
-			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Moordenaar"));
-			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Dief"));
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::MOORDENAAR));
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::DIEF));
 
-			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Magiër"));
-			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name("Condottiere"));
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::MAGIER));
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::CONDOTTIERE));
 
+		}
+		else if (test_draw_one) {
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::KONING));
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::PREDIKER));
+
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::KOOPMAN));
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::BOUWMEESTER));
+		}
+		else if (test_draw_two) {
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::KONING));
+			p1.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::PREDIKER));
+
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::MAGIER));
+			p2.addCharacterCardToDeck(machiavelli::CharacterCard::get_by_name(characters::BOUWMEESTER));
 		}
 		else {
 			p1.addCharacterCardToDeck(game.drawCharacterCard());
@@ -123,8 +183,23 @@ namespace machiavelli
 			p2.addCharacterCardToDeck(game.drawCharacterCard());
 		}
 
-
-		state()->add_phase<machiavelli::PlayPhase>("play");
 		state()->navigate_to("play");
+	}
+
+	void LobbyPhase::reset()
+	{
+		amount_in_game = 0;
+
+		cheat_mode = false;
+		test_win = false;
+		test_almost_win = false;
+		give_cards = false;
+		test_effect = false;
+		test_action = false;
+		test_draw_one = false;
+		test_draw_two = false;
+		do_not_add_extra_money = false;
+
+		reset_options();
 	}
 }

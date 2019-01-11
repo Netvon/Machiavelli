@@ -12,32 +12,51 @@ namespace machiavelli
 	{
 	}
 
+	void EndPhase::reset()
+	{
+		player1Score = -1;
+		player2Score = -1;
+		in_phase = 0;
+
+		reset_options();
+	}
+
 	void EndPhase::entered_phase(const Socket & socket, const Player & player)
 	{
+		in_phase++;
 		//print_info(socket, player);
 		countPoints(socket, player);
 	}
 
 	void EndPhase::countPoints(const Socket & socket, const Player & player)
 	{
-		auto& game = state()->game();
+		if (player1Score == -1 && player2Score == -1 && in_phase == 2) {
+			auto& game = state()->game();
 
-		auto player1Score = game.getPlayers().at(0)->get_player().score();
-		auto player2Score = game.getPlayers().at(1)->get_player().score();
+			player1Score = game.getPlayers().at(0)->get_player().score();
+			player2Score = game.getPlayers().at(1)->get_player().score();
 
-		std::ostringstream scores;
+			if (player1Score == player2Score) {
+				player1Score = game.getPlayers().at(0)->get_player().building_score();
+				player2Score = game.getPlayers().at(1)->get_player().building_score();
+			}
 
-		scores << "Scores;\r\n";
-		scores << "- " << game.getPlayers().at(0)->get_player().name() << ": " << player1Score << "\r\n";
-		scores << "- " << game.getPlayers().at(1)->get_player().name() << ": " << player2Score << "\r\n";
+			std::ostringstream scores;
 
-		socket << scores.str();
+			scores << "Scores;\r\n";
+			scores << "- " << game.getPlayers().at(0)->get_player().name() << ": " << player1Score << "\r\n";
+			scores << "- " << game.getPlayers().at(1)->get_player().name() << ": " << player2Score << "\r\n";
 
-		if (player1Score > player2Score) {
-			socket << game.getPlayers().at(0)->get_player().name() + " is the winner!\r\n";
-		}
-		else {
-			socket << game.getPlayers().at(1)->get_player().name() + " is the winner!\r\n";
+			state()->broadcast(scores.str());
+
+			if (player1Score > player2Score) {
+				state()->broadcast(game.getPlayers().at(0)->get_player().name() + " is the winner!\r\n");
+			}
+			else {
+				state()->broadcast(game.getPlayers().at(1)->get_player().name() + " is the winner!\r\n");
+			}
+
+			state()->broadcast("Quit and reconnect to start another game.");
 		}
 	}
 

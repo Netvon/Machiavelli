@@ -3,6 +3,7 @@
 #include <deque>
 #include <algorithm>
 #include <random>
+#include <functional>
 #include "util\RandomGenerator.h"
 
 namespace machiavelli
@@ -71,13 +72,34 @@ namespace machiavelli
 			deck.swap(pOther.deck);
 		}
 
+		void swap_if(Deck<T>& other, std::function<bool(const T&)> predicate) 
+		{
+			std::deque<T> temp_a;
+			std::deque<T> temp_b;
+
+			for (const T& item : deck) {
+				if (predicate && predicate(item)) {
+					temp_a.push_back(item);
+				}
+			}
+
+			for (const T& item : other.deck) {
+				if (predicate && predicate(item)) {
+					temp_b.push_back(item);
+				}
+			}
+
+			other.deck.swap(temp_a);
+			deck.swap(temp_b);
+
+		}
+
 		T draw()
 		{
 			if (deck.empty()) {
 				return T();
 			}
 
-			// TODO: make exceptionsafe :)
 			auto drawnCard = deck.front();
 			deck.erase(std::remove(deck.begin(), deck.end(), drawnCard));
 
@@ -145,6 +167,11 @@ namespace machiavelli
 
 		void replace_deck(Deck<T>& other) {
 			deck = std::move(other.deck);
+		}
+
+		void clear() {
+			deck.clear();
+			discardPile.clear();
 		}
 
 	private:

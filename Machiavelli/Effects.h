@@ -9,6 +9,8 @@ namespace machiavelli::effects
 	CardEffect ArchitectCardEffect();
 	CardEffect CondottiereCardEffect();
 
+	void AddGoldForCardCategory(machiavelli::Player & player, machiavelli::CardCategory cat, Gold amount_per_building = 1_g);
+
 	CardEffect CardEffectFactory(const std::string& name);
 }
 

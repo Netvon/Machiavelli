@@ -14,14 +14,19 @@ namespace machiavelli
 	{
 	public:
 
+		~State();
+
 		template<typename TPhase, typename ...TArgs>
 		void add_phase(const std::string& with_name, TArgs&&... arguments) 
 		{
-			auto shared = std::make_shared<TPhase>(with_name, shared_from_this(), std::forward<TArgs>(arguments)...);
-			phases.push_back(shared);
+			if (!has_phase(with_name)) {
+				auto shared = std::make_shared<TPhase>(with_name, shared_from_this(), std::forward<TArgs>(arguments)...);
+				phases.push_back(shared);
+			}
 		}
 
 		void navigate_to(const std::string& phase_name);
+		bool has_phase(const std::string& phase_name) const;
 
 		std::shared_ptr<Phase> current_phase() const;
 		Game& game();
@@ -33,6 +38,7 @@ namespace machiavelli
 		void handle_input(const Socket & socket, Player& player, const std::string& command);
 
 		bool add_player(std::shared_ptr<ClientInfo> player);
+		void remove_player(std::shared_ptr<ClientInfo> player);
 
 		bool phase_changed();
 
@@ -41,11 +47,19 @@ namespace machiavelli
 		unsigned int getCharacterPosition() const;
 		void changeCharacterOrder(unsigned int position);
 
+		const std::size_t& turn_count() const;
+		const bool& is_new_turn() const;
+
+		void reset();
+
 	private:
 		std::vector<std::shared_ptr<Phase>> phases;
 		std::string current_phase_name;
 		unsigned int _characterPosition = 1;
 		std::string _last_phase;
+		std::size_t _turn_count{ 1llu };
+
+		bool _new_turn{ true };
 
 		Game _game;
 

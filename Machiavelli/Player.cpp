@@ -85,6 +85,11 @@ namespace machiavelli {
 		return character_cards;
 	}
 
+	Player::character_card_deck & Player::getPlayerCharacterCards()
+	{
+		return character_cards;
+	}
+
 	bool Player::hasCharacterCardByOrder(const unsigned int pOrder)
 	{
 		for (auto& card : character_cards) {
@@ -127,14 +132,13 @@ namespace machiavelli {
 		_build_per_turn = new_value;
 	}
 
-	void Player::set_protected_against(const std::string & character)
+	bool Player::has_character(const std::string & character)
 	{
-		protected_against.insert(character);
-	}
+		auto result = std::find_if(character_cards.begin(), character_cards.end(), [character](const CharacterCard& card) {
+			return card.name() == character;
+		});
 
-	bool Player::is_protected_against(const std::string & character)
-	{
-		return protected_against.find(character) != protected_against.end();
+		return result != character_cards.end();
 	}
 
 	void Player::apply_card_effects()
@@ -172,11 +176,25 @@ namespace machiavelli {
 
 	void Player::swap_building_cards(Player & player)
 	{
-		if (player.building_cards.stackIsEmpty()) {
+		/*if (player.building_cards.stackIsEmpty()) {
 			return;
-		}
+		}*/
 
-		building_cards.swapStack(player.building_cards);
+		building_cards.swap_if(player.building_cards, [](const Player::building_card& card) {
+			return !card.getIsBuilt();
+		});
+
+		//building_cards.swapStack(player.building_cards);
+	}
+
+	void Player::discard_character_cards()
+	{
+		character_cards.clear();
+	}
+
+	void Player::discard_building_cards()
+	{
+		building_cards.clear();
 	}
 
 	size_t Player::building_card_amount() const
@@ -184,7 +202,7 @@ namespace machiavelli {
 		return building_cards.size();
 	}
 
-	void Player::built_building(const building_card & pCard)
+	void Player::build_building(const building_card & pCard)
 	{
 		for (auto & card : building_cards) {
 
@@ -193,6 +211,19 @@ namespace machiavelli {
 				_gold -= card.cost();
 			}
 		}
+	}
+
+	int Player::unbuilt_buildings_amount() const
+	{
+		auto count = 0;
+		for (const auto & card : building_cards) {
+
+			if (!card.getIsBuilt()) {
+				count++;
+			}
+		}
+
+		return count;
 	}
 
 	void Player::destroy_building(const std::string & name)
@@ -226,16 +257,32 @@ namespace machiavelli {
 					temp += 2_g;
 				}
 
-				has_categories.insert(card.category());
+
+				if (card.category() != CardCategory::none()) {
+					has_categories.insert(card.category());
+				}
 			}
 		}
 
-		if (has_categories.size() >= CardCategory::total_amount()) {
+		if (has_categories.size() >= CardCategory::total_amount() - 1) {
 			temp += 3;
 		}
 
 		if (_finished_first) {
 			temp += 4;
+		}
+
+		return temp;
+	}
+
+	int Player::building_score() const
+	{
+		int temp = 0;
+
+		for (auto & card : building_cards) {
+			if (card.getIsBuilt()) {
+				temp += card.cost();
+			}
 		}
 
 		return temp;

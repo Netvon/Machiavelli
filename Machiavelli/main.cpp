@@ -32,6 +32,7 @@
 #include "phases/EndPhase.h"
 #include "main.h"
 #include "phases/LobbyPhase.h"
+#include "cards/CharacterCard.h"
 
 namespace machiavelli {
 	const int tcp_port{ 1080 };
@@ -137,18 +138,19 @@ void handle_client(Socket client) // this function runs in a separate thread
 					std::cerr << '[' << socket.get_dotted_ip() << " (" << socket.get_socket() << ") " << player.name() << "] " << cmd << "\r\n";
 
 					if (cmd == "quit") {
+						state->remove_player(client_info);
 						socket.write("Bye!\r\n");
 						socket.close();
 						break; // out of game loop, will end this thread and close connection
 					}
-					else if (cmd == "start") {
+					/*else if (cmd == "start") {
 						state->add_phase<machiavelli::GamePhase>("game");
 						state->add_phase<machiavelli::PlayPhase>("play");
 						state->add_phase<machiavelli::TurnPhase>("turn");
 						state->add_phase<machiavelli::EndPhase>("end");
 						state->navigate_to("game");
 						continue;
-					}
+					}*/
 					else if (cmd == "quit_server") {
 						running = false;
 					}
@@ -201,6 +203,7 @@ int load_decks(bool &retflag)
 int main(int argc, const char * argv[])
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetBreakAlloc(470);
 
 	state->add_phase<machiavelli::LobbyPhase>("lobby");
 	state->navigate_to("lobby");
@@ -244,6 +247,7 @@ int main(int argc, const char * argv[])
 	}
 
 	state.~shared_ptr();
+
 	return 0;
 }
 

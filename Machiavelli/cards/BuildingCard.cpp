@@ -43,6 +43,11 @@ namespace machiavelli
 		return _description;
 	}
 
+	std::string BuildingCard::all_info() const
+	{
+		return name() + " - " + category().name() + " ( " + std::to_string(cost().amount()) + " gold )";
+	}
+
 	const CardCategory & BuildingCard::category() const
 	{
 		return _category;
@@ -66,6 +71,11 @@ namespace machiavelli
 	bool BuildingCard::getIsBuilt() const
 	{
 		return _isBuilt;
+	}
+
+	bool BuildingCard::is_empty() const
+	{
+		return _name == def::NO_NAME_SET;
 	}
 
 	std::istream & operator>>(std::istream & is, BuildingCard & card)

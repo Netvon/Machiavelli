@@ -73,9 +73,9 @@ namespace machiavelli {
 		_murdered = new_value;
 	}
 
-	bool CharacterCard::empty() const
+	bool CharacterCard::is_empty() const
 	{
-		return _name == "<no name>";
+		return _name == def::NO_NAME_SET;
 	}
 
 	std::string CharacterCard::get_name_by_order(unsigned int order)
@@ -93,6 +93,17 @@ namespace machiavelli {
 		return loaded.size();
 	}
 
+	const CardCategory & CharacterCard::category() const
+	{
+		return _category;
+	}
+
+	void CharacterCard::dispose()
+	{
+		names_by_order.clear();
+		loaded.clear();
+	}
+
 	std::istream & operator>>(std::istream & is, CharacterCard & card)
 	{
 		std::istream::sentry s(is);
@@ -101,17 +112,21 @@ namespace machiavelli {
 			std::string order_string;
 			std::string name;
 			CardEffect effect;
+			std::string category_string;
+			CardCategory category;
 
 			unsigned int order{ 0 };
 
 			std::getline(is, order_string, ';');
-			std::getline(is, name, '\n');
+			std::getline(is, name, ';');
+			std::getline(is, category_string, '\n');
 
-			if (!order_string.empty() && !name.empty()) {
+			if (!order_string.empty() && !name.empty() && !category_string.empty()) {
 				try
 				{
 					effect = machiavelli::effects::CardEffectFactory(name);
 					order = std::stoi(order_string);
+					category = CardCategory(category_string);
 				}
 				catch (const std::exception&)
 				{
@@ -122,6 +137,7 @@ namespace machiavelli {
 				card._name = name;
 				card.order = order;
 				card._effect = effect;
+				card._category = category;
 
 				CharacterCard::names_by_order.insert_or_assign(order, name);
 				CharacterCard::loaded.insert_or_assign(name, card);

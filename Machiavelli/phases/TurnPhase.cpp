@@ -14,16 +14,31 @@ namespace machiavelli
 			discardedBuildingCard = false;
 			takingBuildingCardsNow = false;
 			usingCharacterAction = false;
+			disable_end = false;
+			disable_top = false;
 			newTurn = true;
 
-			// naar volgende turn (via PlayPhase?)
+			auto next_character_pos = state()->getCharacterPosition() + 1;
+			//auto max_character_pos = static_cast<unsigned int>(CharacterCard::loaded_amount());
 
-			for (auto player : state()->game().getPlayers()) {
-				player->get_player().reset_effects();
+			state()->changeCharacterOrder(next_character_pos);
+
+			// true als alle characters zijn opgeroepen.
+			// er is dan een speelronde gedaan.
+			// alle effecten worden gereset
+			/*if (next_character_pos > max_character_pos) {
+				for (auto player : state()->game().getPlayers()) {
+					player->get_player().reset_effects();
+					player->get_player().discard_character_cards();
+				}
+
+				state()->navigate_to("game");
 			}
+			else {
+				state()->navigate_to("play");
+			}*/
 
-			state()->changeCharacterOrder(state()->getCharacterPosition() + 1);
-			state()->navigate_to("play");
+			
 		}
 	}
 
@@ -50,19 +65,53 @@ namespace machiavelli
 
 		//nextTurn(socket, player);
 
-		for (auto player : state()->game().getPlayers()) {
-			player->get_player().apply_card_effects();
+		if (state()->is_new_turn()) {
+
+			for (auto player : state()->game().getPlayers()) {
+				player->get_player().apply_card_effects();
+			}
 		}
 
 		if (newTurn) {
 			reset_options(true);
 			newTurn = false;
 		}
+
+		print_info(socket, player);
 	}
 
 	void TurnPhase::add_options()
 	{
-		if (!takingBuildingCardsNow && !usingCharacterAction && !buildingBuilding) {
+		auto cphase = std::type_index(typeid(*state()->current_phase()));
+		auto wanted_phase = std::type_index(typeid(TurnPhase));
+
+		if ((usingCharacterAction || takingBuildingCardsNow || buildingBuilding) && !disable_top) {
+			add_option("top", "Return the top menu", [&](const Socket& s, Player& p) {
+				usingCharacterAction = false;
+				takingBuildingCardsNow = false;
+				buildingBuilding = false;
+
+				check_next_turn();
+
+				reset_options(true);
+				print_info(s, p);
+
+				
+			}, true);
+		}
+
+		if (!disable_end) {
+			add_option("end", "Go to the next Character", [&](const Socket& s, Player& p) {
+				usedCharacterAction = true;
+				gotGold = true;
+				takenBuildingCards = true;
+
+				reset_options(true);
+				check_next_turn();
+			}, true);
+		}
+
+		if (!takingBuildingCardsNow && !usingCharacterAction && !buildingBuilding && cphase == wanted_phase) {
 			auto currentPosition = state()->getCharacterPosition();
 			auto& game = state()->game();
 			auto& currentPlayer = game.current_player()->get_player();
@@ -71,23 +120,33 @@ namespace machiavelli
 
 			auto& current_card = currentPlayer.findCardByOrder(currentPosition);
 
+			if (current_card.name() == def::NO_NAME_SET) {
+				// TODO: fix de no-names
+				// kan te maken hebben met het te ver doorlopen van de CharacterPosition...
+				auto break_me = "here";
+			}
+
 			socket << "Je bent nu de: " << current_card.name() << "\r\n";
 
-			auto effect = current_card.effect();
+			/*auto effect = current_card.effect();
 			if (effect) {
 				effect(currentPlayer);
+			}*/
+
+			if (!actions::card_has_action(current_card.name()) || current_card.is_murdered()) {
+				usedCharacterAction = true;
 			}
 
 			if (!usedCharacterAction) {
 				add_option("0", "Gebruik het karaktereigenschap van de " + current_card.name(), [&, current_card](const Socket& s, Player& p) {
 
 					usingCharacterAction = true;
-					usedCharacterAction = true;
 
 					reset_options(true);
 
 					machiavelli::actions::add_actions_for(current_card, state()->current_phase(), [this]() {
 						usingCharacterAction = false;
+						usedCharacterAction = true;
 						reset_options(true);
 
 						check_next_turn();
@@ -120,6 +179,22 @@ namespace machiavelli
 		}
 	}
 
+	void TurnPhase::reset()
+	{
+		gotGold = false;
+		builtBuilding = false;
+		takenBuildingCards = false;
+		usedCharacterAction = false;
+		discardedBuildingCard = false;
+		takingBuildingCardsNow = false;
+		usingCharacterAction = false;
+		disable_end = false;
+		disable_top = false;
+		newTurn = true;
+
+		reset_options();
+	}
+
 	void TurnPhase::handle_get_gold(const Socket & socket, Player & player)
 	{
 		auto& game = state()->game();
@@ -140,58 +215,60 @@ namespace machiavelli
 
 	void TurnPhase::handle_take_buildingcards(const Socket & socket, Player & player)
 	{
+		disable_end = true;
+		disable_top = true;
+
 		takingBuildingCardsNow = true;
 		auto& game = state()->game();
 		
 		BuildingCard card1 = game.drawBuildingCard();
 		BuildingCard card2 = game.drawBuildingCard();
 
-		if (!discardedBuildingCard) {
-			socket << "Je hebt " << card1.name() << " en " << card2.name() << " gekregen. Welke leg je af?\r\n";
+		socket << "Je hebt " << card1.name() << " en " << card2.name() << " gekregen. Welke leg je af?\r\n";
 
-			reset_options(true);
+		reset_options();
 
-			add_option("0", card1.name(), [this, &game, card1, card2](const auto& a, auto& b) {
-				auto& game = state()->game();
+		add_option("0", "Discard " + card1.all_info(), [this, card1, card2](const auto& a, auto& b) {
+			auto& game = state()->game();
 
-				takenBuildingCards = true;
-				takingBuildingCardsNow = false;
-				gotGold = true;
-				reset_options(true);
+			takenBuildingCards = true;
+			takingBuildingCardsNow = false;
+			gotGold = true;
 
-				if (!discardedBuildingCard) {
-					game.discard_card(card1);
-					b.addBuildingCardToDeck(card2);
+			disable_end = false;
+			disable_top = false;
 
-					check_next_turn();
-				}
+			game.discard_card(card1);
+			b.addBuildingCardToDeck(card2);
 
-				discardedBuildingCard = true;
-				
+			reset_options();
+			check_next_turn();
 
-			}, true);
+			print_info(a, b);
 
-			add_option("1", card2.name(), [this, &game, card1, card2](const auto& a, auto& b) {
-				auto& game = state()->game();
+		}, true);
 
-				takenBuildingCards = true;
-				takingBuildingCardsNow = false;
-				gotGold = true;
-				reset_options(true);
+		add_option("1", "Discard " + card2.all_info(), [this, card1, card2](const auto& a, auto& b) {
+			auto& game = state()->game();
 
-				if (!discardedBuildingCard) {
-					game.discard_card(card2);
-					b.addBuildingCardToDeck(card1);
+			takenBuildingCards = true;
+			takingBuildingCardsNow = false;
+			gotGold = true;
 
-					check_next_turn();
-				}
+			disable_end = false;
+			disable_top = false;
 
-				discardedBuildingCard = true;
+			game.discard_card(card2);
+			b.addBuildingCardToDeck(card1);
 
-			}, true);
+			reset_options();
+			check_next_turn();
 
-			print_info(socket, player);
-		}
+			print_info(a, b);
+
+		}, true);
+
+		print_info(socket, player);
 	}
 
 	void TurnPhase::nextTurn(const Socket & socket, const Player & player)

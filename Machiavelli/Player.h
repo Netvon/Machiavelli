@@ -45,6 +45,8 @@ namespace machiavelli {
 		building_card_deck getPlayerBuildingCards() const;
 		character_card_deck getPlayerCharacterCards() const;
 
+		character_card_deck& getPlayerCharacterCards();
+
 		bool hasCharacterCardByOrder(unsigned int pOrder);
 		const character_card findCardByOrder(unsigned int pOrder) const;
 
@@ -54,8 +56,7 @@ namespace machiavelli {
 		int build_per_turn() const;
 		void build_per_turn(int new_value);
 
-		void set_protected_against(const std::string& character);
-		bool is_protected_against(const std::string& character);
+		bool has_character(const std::string& character);
 
 		void apply_card_effects();
 		void reset_effects();
@@ -64,18 +65,24 @@ namespace machiavelli {
 
 		void swap_building_cards(Player& player);
 
+		void discard_character_cards();
+		void discard_building_cards();
+
 		std::vector<building_card> built_buildings();
-		void built_building(const building_card & pCard);
+		void build_building(const building_card & pCard);
 		size_t building_card_amount() const;
+		
+		int unbuilt_buildings_amount() const;
 		void destroy_building(const std::string& name);
 
 		void finished_first(bool new_value);
 		int score() const;
+		int building_score() const;
 	private:
 		int id{ util::random(0, 1000) };
 
 		Gold _gold{ 0_g };
-		std::string player_name{ "<no name>" };
+		std::string player_name{ def::NO_NAME_SET };
 
 		building_card_deck building_cards;
 		character_card_deck character_cards;

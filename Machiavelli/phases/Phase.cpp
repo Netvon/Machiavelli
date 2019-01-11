@@ -94,7 +94,8 @@ namespace machiavelli
 	{
 		bool is_current_player = state()->current_player()->get_player() == player;
 
-		socket << "========= Info =========\r\nCurrent State: " << state()->current_phase()->name()  << " | Name: " << player.name() << " | Gold: " << player.gold() << "\r\n";
+		socket << "========= Info =========\r\nCurrent State: " << state()->current_phase()->name()  
+			<< " | Name: " << player.name() << " | Gold: " << player.gold() << " | Turn: " << std::to_string(state()->turn_count()) << "\r\n" ;
 
 		if (is_current_player) {
 			socket << "\r\n|> it's your turn\r\n";
@@ -134,19 +135,21 @@ namespace machiavelli
 
 		for (auto& card : player.getPlayerBuildingCards()) {
 			if (!card.getIsBuilt()) {
-				if (card.description().empty()) {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\r\n";
+					
+				socket << card.all_info();
+
+				if (!card.description().empty()) {
+					socket << " - " << card.description() << "\r\n";
 				}
-				else {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\r\n";
-				}
+
+				socket << "\r\n";
 			}
 		}
 
 		for (auto& card : player.getPlayerCharacterCards()) {
-			socket << "#" << card.getOrder() << ". " << card.name();
+			socket << "#" << card.getOrder() << ". " << card.name() << " - " << card.category().name();
 			if (card.is_murdered()) {
-				socket << " [dead this turn]";
+				socket << " [ has been murdered ]";
 			}
 
 			socket << "\r\n";
@@ -160,12 +163,13 @@ namespace machiavelli
 
 		for (auto& card : player.getPlayerBuildingCards()) {
 			if (card.getIsBuilt()) {
-				if (card.description().empty()) {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ")\r\n";
+				socket << card.all_info();
+
+				if (!card.description().empty()) {
+					socket << " - " << card.description() << "\r\n";
 				}
-				else {
-					socket << card.name() << " (" << card.category().name() << ", " << card.cost() << ", " << card.description() << ")\r\n";
-				}
+
+				socket << "\r\n";
 			}
 		}
 	}

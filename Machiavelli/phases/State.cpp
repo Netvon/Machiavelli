@@ -2,6 +2,11 @@
 
 namespace machiavelli
 {
+	State::~State()
+	{
+		std::cerr << "goodbye from State" << std::endl;
+	}
+
 	void State::navigate_to(const std::string & phase_name)
 	{
 		for (auto phase : phases) {
@@ -14,6 +19,7 @@ namespace machiavelli
 				else {
 					no_state_set_yet = false;
 				}
+
 				current_phase_name = phase_name;
 
 				for (auto player : _game.getPlayers()) {
@@ -23,6 +29,13 @@ namespace machiavelli
 				return;
 			}
 		}
+	}
+
+	bool State::has_phase(const std::string & phase_name) const
+	{
+		return std::any_of(phases.cbegin(), phases.cend(), [phase_name](auto phase) {
+			return phase->name() == phase_name;
+		});
 	}
 
 	std::shared_ptr<Phase> State::current_phase() const {
@@ -60,6 +73,16 @@ namespace machiavelli
 		return _game.addPlayer(player);
 	}
 
+	void State::remove_player(std::shared_ptr<ClientInfo> player)
+	{
+		_game.end();
+		_game.removePlayer(player);
+
+		reset();
+
+		navigate_to("lobby");
+	}
+
 	bool State::phase_changed()
 	{
 		auto result = _phase_changed;
@@ -79,9 +102,52 @@ namespace machiavelli
 
 	void State::changeCharacterOrder(const unsigned int position)
 	{
-		if (position > static_cast<unsigned int>(CharacterCard::loaded_amount()))
+		auto max_pos = static_cast<unsigned int>(CharacterCard::loaded_amount());
+		
+
+		if (position > max_pos) {
 			_characterPosition = 1;
-		else
+
+			for (auto& player : game().getPlayers()) {
+				player->get_player().reset_effects();
+			}
+
+			game().return_players_character_cards();
+			game().shuffleCharacterCards();
+			game().shuffleBuildingCards();
+
+			_new_turn = true;
+			_turn_count++;
+
+			navigate_to("game");
+		}
+		else {
+			_new_turn = false;
 			_characterPosition = position;
+
+			navigate_to("play");
+		}
+	}
+
+	const std::size_t & State::turn_count() const
+	{
+		return _turn_count;
+	}
+
+	const bool & State::is_new_turn() const
+	{
+		return _new_turn;
+	}
+
+	void State::reset()
+	{
+		_turn_count = 1llu;
+		_characterPosition = 1;
+
+		for (auto phase : phases) {
+			phase->reset();
+		}
+
+		
 	}
 }
